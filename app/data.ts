@@ -69,7 +69,7 @@ export const navGroups: NavGroup[] = [
         label: "Flow",
         icon: "LayoutGrid",
         children: [
-          { id: "sop", label: "SOP", icon: "BookOpen" },
+          { id: "sop", label: "SOP", icon: "ClipboardList" },
           { id: "agent", label: "Agent", icon: "Box" },
         ],
       },

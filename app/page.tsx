@@ -97,6 +97,7 @@ const iconMap: Record<string, LucideIcon> = {
   MessageSquare,
   Link2,
   BookOpenText,
+  ClipboardList,
   Flag,
   Check,
   Calendar,
@@ -363,13 +364,13 @@ export default function Home() {
         ) : activeNav === "memos" ? (
           <PlaceholderPage title="Memos" subtitle="Notes you save from chats and flows" />
         ) : activeNav === "followups" ? (
-          <FollowUpsPage />
+          <PlaceholderPage title="Follow-ups" subtitle="Things you tracked for later" />
         ) : activeNav === "votes" ? (
           <PlaceholderPage title="Votes" subtitle="Team decisions and quick polls" />
         ) : activeNav === "calendar" ? (
           <CalendarPage />
         ) : activeNav === "sop" ? (
-          <SopsPage />
+          <PlaceholderPage title="SOP library" subtitle="Reusable procedures captured from flows" />
         ) : activeNav === "agent" ? (
           <AgentPage />
         ) : activeNav === "chat" ? (
@@ -1270,7 +1271,7 @@ function ListColumn({
                                 {item.title}
                               </p>
                               {item.unread && (
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shrink-0" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-warm-black shrink-0" />
                               )}
                             </div>
                             <p className="text-[12px] text-warm-2 truncate">{item.preview}</p>
@@ -1301,22 +1302,24 @@ function GroupAvatar({
   color: string;
   size?: number;
 }) {
-  // Reference style: solid colored circle with a Users icon,
-  // plus a slightly offset paler duplicate behind for the "group" stacked look.
-  const innerIcon = size * 0.5;
-  const offset = Math.max(4, Math.round(size * 0.22));
+  // `size` is the TOTAL footprint so this aligns 1:1 with single-person
+  // avatars in chat lists. The main solid circle sits at bottom-left,
+  // a small ghost duplicate peeks out at top-right.
+  const offset = Math.max(3, Math.round(size * 0.16));
+  const inner = size - offset;
+  const innerIcon = inner * 0.55;
   return (
     <span
       className="relative inline-block shrink-0"
-      style={{ width: size + offset, height: size + offset }}
+      style={{ width: size, height: size }}
     >
       {/* back ghost circle */}
       <span
         aria-hidden
         className="absolute rounded-full"
         style={{
-          width: size,
-          height: size,
+          width: inner,
+          height: inner,
           background: color,
           opacity: 0.32,
           top: 0,
@@ -1327,8 +1330,8 @@ function GroupAvatar({
       <span
         className="absolute rounded-full flex items-center justify-center text-white"
         style={{
-          width: size,
-          height: size,
+          width: inner,
+          height: inner,
           background: color,
           bottom: 0,
           left: 0,
@@ -1384,11 +1387,11 @@ function ChatRow({
           <div className="flex items-center justify-between gap-2">
             <p className="text-[12px] text-warm-2 truncate">{item.preview}</p>
             {item.unreadCount ? (
-              <span className="shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-[#3b82f6] text-white text-[10px] font-medium flex items-center justify-center tabular-nums">
+              <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-warm-black text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
                 {item.unreadCount > 99 ? "99+" : item.unreadCount}
               </span>
             ) : item.unread ? (
-              <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-warm-black shrink-0" />
             ) : null}
           </div>
         </div>
@@ -2795,7 +2798,7 @@ function AgentPage() {
                     <div className="flex items-center justify-between gap-2 mb-1">
                       <p className="text-[13px] truncate text-warm-black">{a.name}</p>
                       {a.count != null && (
-                        <span className="shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-[#3b82f6] text-white text-[10px] font-medium flex items-center justify-center tabular-nums">
+                        <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-warm-black text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
                           {a.count}
                         </span>
                       )}
@@ -2809,96 +2812,20 @@ function AgentPage() {
         </ul>
       </aside>
 
-      {/* Right detail */}
-      <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
-        <div className="h-[60px] shrink-0 px-6 flex items-center justify-between">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <span
-              className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-              style={{ background: selected.iconBg, color: selected.iconColor }}
-            >
-              <selected.icon className="w-4 h-4" strokeWidth={1.8} />
-            </span>
-            <div className="leading-tight min-w-0">
-              <div className="flex items-center gap-2 min-w-0">
-                <p className="text-base truncate">{selected.name}</p>
-                <span className="shrink-0 inline-flex items-center gap-1 px-1.5 py-[2px] rounded text-[10px] font-semibold bg-[#dcfce7] text-[#15803d]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#15803d]" />
-                  {selected.status}
-                </span>
-              </div>
-              <p className="text-[11px] text-warm-2 truncate mt-0.5">{selected.description}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-1 text-warm-2">
-            <IconBtn title="Search">
-              <Search className="w-4 h-4" strokeWidth={1.8} />
-            </IconBtn>
-            <button
-              className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-warm-base"
-              title="Ask agent"
-            >
-              <SiriOrb />
-            </button>
-          </div>
-        </div>
-
-        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin">
-          <div className="max-w-[920px] mx-auto px-8 py-4">
-            {/* Yellow callout */}
-            {selected.count != null && (
-              <button className="w-full text-left rounded-xl border border-[#fde68a] bg-[#fffaeb] px-4 py-3 flex items-center gap-3 hover:border-[#fcd34d] transition">
-                <span className="w-7 h-7 rounded-full bg-[#fde68a] text-[#92400e] flex items-center justify-center">
-                  <Bell className="w-3.5 h-3.5" strokeWidth={2} />
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-[14px] font-semibold text-[#92400e]">
-                    {selected.count} items with you
-                  </p>
-                  <p className="text-[12px] text-[#92400e]/80 mt-0.5">
-                    Review in Tasks · Awaiting →
-                  </p>
-                </div>
-                <ArrowRight className="w-4 h-4 text-[#92400e]" strokeWidth={2} />
-              </button>
-            )}
-
-            {/* At a glance */}
-            <p className="mt-6 mb-3 text-[10.5px] font-semibold tracking-[0.08em] text-warm-2 uppercase">
-              At a glance · Today
-            </p>
-            <div className="grid grid-cols-3 gap-3">
-              <StatTile value="47" label="Triaged" />
-              <StatTile value="9" label="Drafted" />
-              <StatTile value="12" label="Replies sent" />
-            </div>
-            <p className="mt-3 text-[12px] text-warm-2">
-              <span className="font-semibold tracking-[0.06em] text-warm-black/70">THIS WEEK</span>{" "}
-              → 287 emails triaged · 94% your-preference match
-            </p>
-
-            {/* Now doing */}
-            <p className="mt-6 mb-3 text-[10.5px] font-semibold tracking-[0.08em] text-warm-2 uppercase">
-              What I&apos;m doing now
-            </p>
-            <div className="flex flex-col gap-2">
-              <AgentTaskRow color="#f59e0b" title="Reply to Globex · David Chen" badge="AWAITING YOU" badgeBg="#fef3c7" badgeFg="#92400e" />
-              <AgentTaskRow color="#3b82f6" title="File sales emails from Q1" badge="RUNNING" badgeBg="#dbeafe" badgeFg="#1d4ed8" />
-              <AgentTaskRow color="#a855f7" title="Overnight Slack digest" badge="SCHEDULED" badgeBg="#f3e8ff" badgeFg="#7e22ce" />
-            </div>
-
-            {/* Capabilities */}
-            <p className="mt-6 mb-2 text-[10.5px] font-semibold tracking-[0.08em] text-warm-2 uppercase">
-              Capabilities
-            </p>
-            <ul className="text-[14px] text-warm-black space-y-1.5 list-disc pl-5">
-              <li>Triage inboxes and flag urgent threads</li>
-              <li>Draft replies in your voice</li>
-              <li>Summarize long threads</li>
-              <li>Chase unresponded threads</li>
-            </ul>
-          </div>
-        </div>
+      {/* Right detail — empty state for now */}
+      <div className="flex-1 min-w-0 flex flex-col items-center justify-center text-center px-8">
+        <span className="w-14 h-14 rounded-full bg-white border border-warm-gray-2 flex items-center justify-center mb-4 text-warm-black">
+          <selected.icon className="w-6 h-6" strokeWidth={1.6} />
+        </span>
+        <p className="text-[18px] font-semibold text-warm-black mb-1">
+          {selected.name}
+        </p>
+        <p className="text-[13px] text-warm-2 max-w-[360px]">
+          {selected.description}
+        </p>
+        <p className="text-[12px] text-warm-2 mt-6">
+          Detail view coming soon — pick another agent from the list to switch.
+        </p>
       </div>
     </div>
   );
@@ -3100,7 +3027,7 @@ function SopCardView({ card }: { card: SopCard }) {
  * Calendar page
  * =========================== */
 
-type CalendarView = "month" | "week" | "agenda";
+type CalendarView = "day" | "week" | "month";
 
 type CalEvent = {
   id: string;
@@ -3174,20 +3101,48 @@ function CalendarPage() {
       {/* Empty top — 60px non-scrollable */}
       <div className="h-[60px] shrink-0" />
 
-      {/* Fixed page header (title + view toggle + New event) */}
-      <div className="shrink-0 px-10">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-baseline gap-3 flex-wrap">
-            <h1 className="text-[28px] font-semibold tracking-tight leading-none">
-              Calendar
-            </h1>
-            <p className="text-[13px] text-warm-2">
-              Schedule recurring and one-time tasks for your agents.
-            </p>
+      {/* Fixed page header (title row + toolbar row) */}
+      <div className="shrink-0 max-w-[1080px] mx-auto w-full px-10">
+        <div className="flex items-start justify-between mb-1">
+          <h1 className="text-[28px] font-bold tracking-tight">Calendar</h1>
+          <button className="h-8 px-3 mt-1 inline-flex items-center gap-1.5 rounded-lg border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base shrink-0">
+            <Plus className="w-3.5 h-3.5" strokeWidth={2} />
+            New event
+          </button>
+        </div>
+        <p className="text-[13px] text-warm-2 mb-5">
+          Schedule recurring and one-time tasks for your agents.
+        </p>
+
+        {/* Toolbar — Today / prev / next / date range + view toggle */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button className="h-8 px-3 rounded-lg border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base">
+              Today
+            </button>
+            <div className="flex items-center">
+              <button
+                className="w-8 h-8 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
+                title="Previous"
+              >
+                <ChevronLeft className="w-4 h-4" strokeWidth={1.8} />
+              </button>
+              <button
+                className="w-8 h-8 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
+                title="Next"
+              >
+                <ChevronRight className="w-4 h-4" strokeWidth={1.8} />
+              </button>
+            </div>
+            <button className="inline-flex items-center gap-1 text-[15px] font-medium text-warm-black hover:bg-warm-base rounded-md px-2 h-8">
+              May 10 – 16, 2026
+              <ChevronDown className="w-3.5 h-3.5 text-warm-2" strokeWidth={1.8} />
+            </button>
           </div>
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="inline-flex items-center p-[3px] rounded-lg bg-warm-base">
-              {(["month", "week", "agenda"] as CalendarView[]).map((v) => (
+          <div className="inline-flex items-center p-[3px] rounded-lg bg-warm-base shrink-0">
+            {(["day", "week", "month"] as CalendarView[]).map((v) => {
+              const label = v === "day" ? "Day" : v === "week" ? "Week" : "Month";
+              return (
                 <button
                   key={v}
                   onClick={() => setView(v)}
@@ -3197,48 +3152,16 @@ function CalendarPage() {
                       : "text-warm-2 hover:text-warm-black"
                   }`}
                 >
-                  {v[0].toUpperCase() + v.slice(1)}
+                  {label}
                 </button>
-              ))}
-            </div>
-            <button className="h-8 px-3 inline-flex items-center gap-1.5 rounded-lg border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base">
-              <Plus className="w-3.5 h-3.5" strokeWidth={2} />
-              New event
-            </button>
-          </div>
-        </div>
-
-        {/* Date range bar */}
-        <div className="mt-5 flex items-center justify-between">
-          <p className="text-[15px] font-medium text-warm-black">
-            May 10–16, 2026
-          </p>
-          <div className="flex items-center gap-1">
-            <button
-              className="w-8 h-8 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
-              title="Previous week"
-            >
-              <ChevronLeft className="w-4 h-4" strokeWidth={1.8} />
-            </button>
-            <button className="h-8 px-3 rounded-md text-[13px] font-medium text-warm-2 hover:text-warm-black hover:bg-warm-base">
-              Today
-            </button>
-            <button
-              className="w-8 h-8 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
-              title="Next week"
-            >
-              <ChevronRight className="w-4 h-4" strokeWidth={1.8} />
-            </button>
-            <button className="ml-2 h-8 px-3 inline-flex items-center gap-1.5 rounded-md border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base">
-              <CalendarDays className="w-3.5 h-3.5" strokeWidth={1.8} />
-              2026年5月12日
-            </button>
+              );
+            })}
           </div>
         </div>
       </div>
 
       {/* Calendar grid */}
-      <div className="flex-1 min-h-0 mt-3 px-10 pb-6">
+      <div className="flex-1 min-h-0 mt-3 max-w-[1080px] mx-auto w-full px-10 pb-6">
         <div className="h-full rounded-lg border border-warm-gray-2 bg-white overflow-hidden flex flex-col">
           {/* Day header row */}
           <div className="grid border-b border-warm-gray-2 shrink-0"
