@@ -118,6 +118,7 @@ export const flowItems: FlowItem[] = [
     date: "9:00 AM",
     month: "MAY",
     status: "active",
+    pinned: true,
   },
   {
     id: "3",
@@ -127,6 +128,7 @@ export const flowItems: FlowItem[] = [
     month: "MAY",
     status: "active",
     forYou: true,
+    unread: true,
   },
   {
     id: "4",
@@ -138,32 +140,33 @@ export const flowItems: FlowItem[] = [
   },
   {
     id: "5",
-    title: "跟进修改优先级交互优化报告",
-    preview: "SOP 流程已总结，待确认保存",
+    title: "Q2 design crit notes — 跨产品 hierarchy 调整",
+    preview: "信息密度过载、字号梯次太接近、对比度偏低 — 三个根问题",
     date: "May 12",
     month: "MAY",
     status: "completed",
+    unread: true,
   },
   {
     id: "6",
-    title: "Tanka 监控告警处理跟进 SOP",
-    preview: "05-11 每日告警扫描完成。今日结论：全绿，无需担心",
+    title: "客户反馈高频问题 weekly digest",
+    preview: "本周 47 条 ticket 里，Follow-up 找不到 14 条排第一",
     date: "May 11",
     month: "MAY",
     status: "completed",
   },
   {
     id: "7",
-    title: "Tanka 监控告警处理跟进 SOP",
-    preview: "05-11 每日告警扫描完成。今日结论：全绿，无需担心",
+    title: "Tanka 监控告警 05-10 复盘",
+    preview: "17 条告警全部 P2/P3，auth-api 反复触发需排查",
     date: "May 10",
     month: "MAY",
     status: "completed",
   },
   {
     id: "8",
-    title: "跟进修改优先级交互优化报告",
-    preview: "SOP 流程已总结，待确认保存",
+    title: "Sprint 36 retro — 速度趋势和瓶颈",
+    preview: "31/36 points 完成，code review 周转和 QA 回归是瓶颈",
     date: "May 09",
     month: "MAY",
     status: "completed",
@@ -171,8 +174,8 @@ export const flowItems: FlowItem[] = [
   },
   {
     id: "9",
-    title: "跟进修改优先级交互优化报告",
-    preview: "SOP 流程已总结，待确认保存",
+    title: "Onboarding completion 分析 — Enterprise SSO 卡点",
+    preview: "Enterprise 完成率 38% vs SMB 71%，drop 在 IT 协调环节",
     date: "May 08",
     month: "MAY",
     status: "completed",
@@ -189,6 +192,7 @@ export type ChatItem = {
   time: string;
   pinned?: boolean;
   unread?: boolean;
+  unreadCount?: number;
   isGroup?: boolean;
   memberCount?: number;
   muted?: boolean;
@@ -243,6 +247,7 @@ export const chatItems: ChatItem[] = [
     time: "9:42 AM",
     pinned: true,
     unread: true,
+    unreadCount: 4,
     isGroup: true,
     memberCount: 6,
   },
@@ -255,6 +260,7 @@ export const chatItems: ChatItem[] = [
     time: "9:18 AM",
     pinned: true,
     unread: true,
+    unreadCount: 2,
     isGroup: true,
     memberCount: 4,
   },
@@ -279,6 +285,7 @@ export const chatItems: ChatItem[] = [
     preview: "You: I'm ready when you are",
     time: "8:51 AM",
     unread: true,
+    unreadCount: 1,
   },
   {
     id: "engineering",
@@ -290,6 +297,7 @@ export const chatItems: ChatItem[] = [
     isGroup: true,
     memberCount: 12,
     unread: true,
+    unreadCount: 7,
   },
   {
     id: "elena-park",
@@ -1622,8 +1630,10 @@ export const flowDetails: Record<string, FlowDetail> = {
     ],
     totalResults: 6,
     response: [
-      "SOP 流程已总结：① 收集设计稿 → ② 跨端走查 → ③ 输出对比表 → ④ 评审通过后归档。当前进度卡在第三步，待补 RICE 评分表截图。",
-      "建议：补齐截图后，将完整 SOP 保存到 Memos / Library 中作为后续优先级讨论的引用基线。",
+      "目前优先级交互优化的整体 SOP 流程已经走到第三步。完整的四步是：① 收集设计稿 → ② 跨端走查 → ③ 输出对比表 → ④ 评审通过后归档。前两步已经在上周完成，对比表的草稿也已经在 Figma 里准备好了，但还需要补一份 RICE 评分表的截图作为决策依据。",
+      "目前还卡在第三步的原因主要有两点：第一，RICE 评分需要产品同学的输入，Adam Thompson 已经答应今天下午提供；第二，批量操作场景下的交互细节还需要演示一遍，确保和现有的单条操作体验保持一致。",
+      "建议下一步：今天下班前补齐截图和演示，明天上午约 30 分钟的 review，把 SOP 保存到 Memos / Library 里作为后续优先级讨论的引用基线。这样下次再有类似的优先级调整，团队就有一份现成的参考流程，不用每次从头讨论。",
+      "顺便说一下，这套 SOP 模板可以泛化到其他『状态/分层』类的交互决策，比如告警级别、任务优先级、用户分群等场景。我可以在你确认后帮你抽象成一份通用模板放进 Library。",
     ],
   },
   "4": {
@@ -1652,8 +1662,175 @@ export const flowDetails: Record<string, FlowDetail> = {
     ],
     totalResults: 14,
     response: [
-      "完整 workflow 一共 7 个阶段：接需求 → kickoff → 用研 → 设计稿 → 评审 → 交付走查 → 上线复盘。每个阶段都配了独立 checklist。",
-      "建议把这份清单 pin 到 Flow 顶部，作为新项目启动模板。",
+      "完整的设计师工作流一共 7 个阶段：接需求 → kickoff → 用研验证 → 设计稿 → 评审 → 交付走查 → 上线复盘。每个阶段我都从过去 6 个月的项目里整理出了对应的 checklist 模板，重点是让新同学知道每个节点需要交付什么、对齐谁、什么时候卡住要找谁。",
+      "**接需求阶段**最容易出问题。常见坑是没问清楚业务目标就开始画原型。建议每次接到需求先用 30 分钟回三个问题：这个事的成功指标是什么？哪些约束不能动？什么时候要看到第一版？把这三个写在 Memos 里，后面所有讨论都回到这里对照。",
+      "**用研验证**不是必选项，但小项目建议至少跑 3 个用户访谈、大项目跑 5-8 个。访谈不是为了证明你的方案对，而是为了发现你没想到的失败模式。如果访谈完没有任何让你 surprised 的点，那访谈数量可能不够。",
+      "**评审和交付走查**这两个阶段最容易省略。评审省略导致后期返工，交付走查省略导致上线后第一周很多视觉 bug。建议这两个阶段都安排专门的会议时间，不要在群里隔空 review。",
+      "**上线复盘**是新同学最容易跳过的一步。复盘不是写 PR 稿，而是诚实回答：哪些假设被验证了？哪些被推翻了？下次再做这类项目，第一步会怎么改？复盘文档放进 Library，下一个人接同类项目能少走很多弯路。",
+      "建议把这份清单 pin 到 Flow 顶部，作为新项目启动模板。如果你愿意，我可以根据你过去 3 个月的实际项目数据，把每个阶段的『典型耗时』也补上去，让新同学更有数。",
+    ],
+  },
+  "5": {
+    id: "5",
+    title: "Q2 design crit notes — 跨产品 hierarchy 调整",
+    query: "上周 design crit 大家提的几个一致问题，能帮我整理出来吗？",
+    tableRows: [
+      {
+        id: "r1",
+        authorInitials: "SC",
+        authorName: "Sarah Chen",
+        authorColor: "#5b5fd6",
+        tag: "#crit-notes",
+        date: "May 11",
+        text: "三个 surface 都反映：信息密度过载，主操作看不出来。建议先确定每屏 1 个 primary action。",
+      },
+      {
+        id: "r2",
+        authorInitials: "ML",
+        authorName: "Marcus Lee",
+        authorColor: "#10a37f",
+        tag: "#hierarchy",
+        date: "May 11",
+        text: "字号梯次太接近 (13 / 14 / 15)，建议拉开到 12 / 14 / 17，hierarchy 才能立起来。",
+      },
+      {
+        id: "r3",
+        authorInitials: "EP",
+        authorName: "Elena Park",
+        authorColor: "#e89a8a",
+        tag: "#contrast",
+        date: "May 12",
+        text: "颜色对比度也偏低，正文 #6b7280 在浅背景上吃力，建议 #4b5563 起步。",
+      },
+    ],
+    totalResults: 9,
+    response: [
+      "这次 design crit 一共收到 9 条反馈，可以归到三个根问题：信息密度、字号层级、对比度。三者其实是相关的——当密度过高时，靠拉开字号梯次和加强对比度来恢复 hierarchy 是最有效的两个杠杆。",
+      "**信息密度**：当前 SOP 详情页一屏密度大约 12-15 个 actionable element，远超工程师推荐的 7±2。Sarah 给的建议很合理——每屏只保留 1 个 primary action，secondary 和 tertiary 用更弱的视觉权重。下周可以做 A/B 看 task completion 的差异。",
+      "**字号层级**：现在 13/14/15 三档对人眼来说几乎是同一个梯次，hierarchy 完全立不起来。Marcus 建议的 12 / 14 / 17 比例更接近 1.25x 的 modular scale，是经典的可读性选择。可以在新版 design system 里直接 enforce。",
+      "**对比度**：WCAG AA 要求至少 4.5:1，#6b7280 在 #ffffff 上是 4.83:1（勉强达标），但在我们的 #fafaf9 背景上其实只有 4.62:1，长时间阅读会累。换成 #4b5563（约 7:1）会舒服很多，对深色模式也更好兼容。",
+      "建议下一步：把这三条统一写进 design tokens 的更新提案。我可以帮你起草一份 Q2 design system update RFC，下周 design 全员复盘的时候一并过。",
+    ],
+  },
+  "6": {
+    id: "6",
+    title: "客户反馈高频问题 weekly digest",
+    query: "本周客户反馈里最高频的三个问题是什么？",
+    tableRows: [
+      {
+        id: "r1",
+        authorInitials: "PS",
+        authorName: "Priya Shah",
+        authorColor: "#dc2626",
+        tag: "#support",
+        date: "May 9",
+        text: "本周 Intercom 共 47 条 ticket，其中 14 条围绕『 看不到我提的 follow-up 在哪』。",
+      },
+      {
+        id: "r2",
+        authorInitials: "DL",
+        authorName: "David Li",
+        authorColor: "#0ea5e9",
+        tag: "#performance",
+        date: "May 10",
+        text: "11 条反馈：群聊里超过 200 条历史消息后滚动会卡顿。已经定位到 message 渲染的 N+1 问题。",
+      },
+      {
+        id: "r3",
+        authorInitials: "HZ",
+        authorName: "Hua Zhang",
+        authorColor: "#0891b2",
+        tag: "#sso",
+        date: "May 10",
+        text: "7 条 enterprise SSO 进不来。多数是 SAML certificate 过期，已经发邮件提醒。",
+      },
+    ],
+    totalResults: 47,
+    response: [
+      "本周 47 条客户反馈里，三大高频问题占了 32 条（68%），分别是：Follow-up 找不到（14 条）、群聊滚动卡顿（11 条）、Enterprise SSO 登录失败（7 条）。",
+      "**Follow-up 找不到**这个问题最值得关注，因为它不是 bug 而是 IA 问题。用户提了 follow-up 之后没有清晰的回访路径，只能靠记忆。建议在 nav 里把 Follow-ups 入口的优先级提到 Flow 之前，同时在主页 dashboard 里加一个 'Awaiting your input' 的快捷区。",
+      "**群聊滚动卡顿**已经定位到 N+1 渲染问题，David 这周会上线一个 message virtualization 的修复，预计能把 200+ 消息群聊的滚动延迟从 ~400ms 降到 <50ms。属于纯工程修复，不影响 UX。",
+      "**SSO 失败**多数是客户那边的 SAML 证书过期。这个我们没法预防，但可以做得更友好——目前的报错是 'authentication failed' 一句话，建议改成『检测到你的 SSO 证书已过期（XXX），请联系你的 IT 管理员更新』，把诊断信息往用户侧暴露一层。",
+      "建议下周和产品对一下 IA 改动的优先级。Follow-up 入口这个改动看起来小，但根据这些 ticket，可能是本季度最值得做的体验改进之一。",
+    ],
+  },
+  "7": {
+    id: "7",
+    title: "Tanka 监控告警处理跟进 SOP — 05-10 复盘",
+    query: "05-10 这天的告警明细能给我看一下吗？",
+    tableRows: [
+      {
+        id: "r1",
+        authorInitials: "DL",
+        authorName: "David Li",
+        authorColor: "#0ea5e9",
+        tag: "#alerts",
+        date: "May 10",
+        text: "全天共触发 17 条告警，全部 P2/P3，自动收敛 14 条，人工介入 3 条，无 P0/P1。",
+      },
+    ],
+    totalResults: 17,
+    response: [
+      "05-10 这天告警量略高于平均（日均约 12 条），但所有都是 P2/P3，自动收敛率 82%，整体健康度可控。",
+      "需要重点关注的是 auth-api 服务在凌晨到上午时段连续触发 3 次延迟告警，虽然每次都被 throttle 策略快速收敛，但反复出现说明底层有 root cause 没被解决。建议本周内安排 David 排查一下 auth-api 的 connection pool 配置，看看是不是连接复用率不够。",
+      "Search 服务在 EU 集群出现 2 次告警（一次 memory、一次 cache miss），频率比 US 集群高。可能和最近 EU 流量增长有关，建议把 EU 集群的 cache 配额上调 30%。",
+      "其他服务都是孤立事件，不构成模式。",
+    ],
+  },
+  "8": {
+    id: "8",
+    title: "Sprint 36 retro — 速度趋势和瓶颈",
+    query: "上个 sprint 我们的速度和瓶颈在哪里？",
+    tableRows: [
+      {
+        id: "r1",
+        authorInitials: "ML",
+        authorName: "Marcus Lee",
+        authorColor: "#10a37f",
+        tag: "#retro",
+        date: "May 8",
+        text: "Sprint 36 完成 31 / 36 个 story points，比 sprint 35 (34) 略低，但 carry-over 减少。",
+      },
+    ],
+    totalResults: 12,
+    response: [
+      "Sprint 36 一共承诺 36 个 story points，完成 31 个（86%），carry-over 5 个。和 sprint 35 相比，完成率持平，但 carry-over 数从 8 个降到 5 个，趋势是好的。",
+      "三个最大瓶颈：第一，code review 平均周转时间从 4 小时上升到 9 小时，主要是因为有两位 senior 这周在客户出差，建议在 review 分配上做一下 load balance。第二，QA 阶段的 bug 回归比例从 12% 升到 18%，可能和上 sprint 引入的新 message virtualization 改动有关，需要补充更多 edge case 测试。第三，design handoff 平均延迟 1.5 天，建议设计同学在 sprint planning 时就把 mock 准备好。",
+      "速度方面，过去 6 个 sprint 的 trailing average 是 32.5 points，sprint 36 略低于均值，但在正常波动范围内。不需要降低下个 sprint 的承诺，但可以考虑把 carry-over 的 5 个 points 锁定为下 sprint 的 must-have，避免再次延期。",
+      "我建议下个 sprint planning 把这三个瓶颈列入议程，每个分配一个 owner 跟进。retro 文档我已经放进 Memos / Sprint 36 复盘 里。",
+    ],
+  },
+  "9": {
+    id: "9",
+    title: "Onboarding completion 分析 — 为什么 Enterprise 卡在 SSO",
+    query: "Enterprise 用户在 onboarding 里的 SSO 步骤完成率特别低，为什么？",
+    tableRows: [
+      {
+        id: "r1",
+        authorInitials: "SC",
+        authorName: "Sarah Chen",
+        authorColor: "#5b5fd6",
+        tag: "#research",
+        date: "May 7",
+        text: "Enterprise SSO 步骤完成率 38%（SMB 71%）。差距主要来自配置时的 IT 协调环节。",
+      },
+      {
+        id: "r2",
+        authorInitials: "NI",
+        authorName: "Naomi Iwasaki",
+        authorColor: "#a855f7",
+        tag: "#user-research",
+        date: "May 8",
+        text: "访谈了 6 位 Enterprise admin，4 位提到『不知道要找 IT 要什么』。",
+      },
+    ],
+    totalResults: 22,
+    response: [
+      "Enterprise SSO 完成率 38% vs SMB 71% 这个数字看起来很差，但实际拆开看会发现：drop-off 不是发生在『不愿意配』，而是发生在『不知道找谁要什么』。这是一个非常典型的 cross-org coordination 失败，不是 product 单方面能解决的。",
+      "Naomi 的访谈里最关键的一句话是 'My IT person asked for the SAML metadata URL and I had no idea what they were talking about'。这说明我们当前 onboarding 把 SSO 配置当成一个 self-serve 步骤，但实际上它需要管理员和 IT 之间至少两轮往返沟通。",
+      "三个可以马上做的改进：第一，在 SSO 步骤入口加一个『 这一步需要你的 IT 同事配合，预计 2-3 个工作日』的预期管理；第二，提供一个『 发邮件给 IT』 的快捷动作，邮件模板里把所有需要 IT 知道的术语（SAML metadata URL、ACS URL、Entity ID）都列出来；第三，允许管理员『 跳过此步骤稍后配置』 但在 dashboard 顶部保留一个持续可见的提示条，避免他们彻底忘记。",
+      "中长期可以考虑：和 Okta / Azure AD / Google Workspace 做 marketplace 集成，让管理员从 IDP 那边一键安装，跳过手动 SAML 配置。这个工作量较大，估计需要 6-8 周，但 ROI 应该很高——Enterprise customers 一旦完成 SSO，retention 显著优于没完成的群体。",
+      "我建议把短期三个改进先放到下个 sprint，marketplace 集成走更长的 RFC 流程。如果你需要，我可以帮你起草一份 RFC 给 marcus 看。",
     ],
   },
 };
@@ -1700,6 +1877,14 @@ export type FlowActionStep =
       subject: string;
       body: string;
       attachmentNote?: string;
+    }
+  | {
+      kind: "wide-table-card";
+      title: string;
+      state: "proposed" | "completed" | "expired";
+      columns: string[]; // 10 short header labels
+      rows: string[][];  // each row matches column count
+      footnote?: string;
     };
 
 const sharedRecipients = (variant: 0 | 1) => {
@@ -1827,110 +2012,39 @@ If nothing surfaced in the last 24h I'll keep the doc unchanged.`,
     { kind: "narration", text: "已经成功发送到 #ops-daily 并同步给值班组。" },
   ],
 
-  // 3 — 跟进修改优先级交互优化报告
-  "3": [
+  // 7 — Tanka 监控告警处理跟进 SOP (历史复盘版 with wide table)
+  "7": [
     {
       kind: "narration",
-      text: "需要我把这份进展整理成给产品的同步邮件吗？",
+      text: "我帮你把 05-10 全天的告警明细整理成了一份明细表 — 一共触发 17 条，按服务、严重度、收敛策略和处理人交叉看一眼？",
     },
     {
       kind: "user",
-      text: "可以，重点说明 SOP 已经走到第三步，差 RICE 评分截图。",
+      text: "好，按服务维度看，重点关注是不是同一个集群的反复触发。",
     },
-    { kind: "narration", text: "好的，邮件草稿已经准备好了。" },
-    { kind: "analysis" },
+    { kind: "narration", text: "明白，按集群+服务交叉透视后给你。" },
+    { kind: "analysis", label: "Analysis completed · 17 events × 6 services" },
     {
-      kind: "email-card",
+      kind: "wide-table-card",
+      title: "Alerts breakdown · 05-10",
       state: "proposed",
-      recipients: [
-        { id: "r1", name: "Adam Thompson", avatarUrl: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&q=80" },
-        { id: "r2", name: "yiran guo", color: "#7c6fb8" },
-        { id: "r3", name: "Sarah Chen", avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&q=80" },
+      columns: [
+        "Time", "Service", "Cluster", "Severity", "Type",
+        "Strategy", "MTTR", "Owner", "Auto", "Status",
       ],
-      overflowCount: 4,
-      subject: "优先级交互优化 — 进度同步与待办",
-      body: `进度：
-1. 高/中/低三档优先级视觉权重已重新梳理
-2. 对应 chip + 左侧色条两种表达形态产出完毕
-3. SOP 已走完 3/4：收集 → 走查 → 输出对比表 → (待) 评审归档
-待办：补 RICE 评分表截图 + 批量操作场景演示。`,
-      attachmentNote: "1 doc + 3 mocks linked",
-    },
-    {
-      kind: "email-card",
-      state: "completed",
-      recipients: [
-        { id: "r1", name: "Adam Thompson", avatarUrl: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&q=80" },
-        { id: "r2", name: "yiran guo", color: "#7c6fb8" },
-        { id: "r3", name: "Sarah Chen", avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&q=80" },
+      rows: [
+        ["00:14", "auth-api", "prod-us", "P2", "Latency", "Throttle", "4m", "DL", "✓", "Resolved"],
+        ["02:08", "billing", "prod-us", "P2", "Error rate", "Retry", "7m", "PS", "✓", "Resolved"],
+        ["03:42", "search", "prod-eu", "P2", "Memory", "Restart", "3m", "HZ", "✓", "Resolved"],
+        ["05:21", "auth-api", "prod-us", "P2", "Latency", "Throttle", "2m", "DL", "✓", "Resolved"],
+        ["06:55", "ingest", "prod-ap", "P3", "Backlog", "Scale-up", "12m", "TZ", "—", "Resolved"],
+        ["08:03", "auth-api", "prod-us", "P2", "Latency", "Throttle", "3m", "DL", "✓", "Resolved"],
+        ["09:11", "billing", "prod-eu", "P3", "Timeout", "Retry", "5m", "PS", "✓", "Resolved"],
+        ["10:48", "search", "prod-eu", "P3", "Cache miss", "Warm-up", "9m", "HZ", "—", "Resolved"],
       ],
-      overflowCount: 4,
-      subject: "优先级交互优化 — 进度同步与待办",
-      body: `进度：
-1. 高/中/低三档优先级视觉权重已重新梳理
-2. 对应 chip + 左侧色条两种表达形态产出完毕
-3. SOP 已走完 3/4：收集 → 走查 → 输出对比表 → (待) 评审归档
-待办：补 RICE 评分表截图 + 批量操作场景演示。`,
-      attachmentNote: "1 doc + 3 mocks linked",
+      footnote: "Showing 8 of 17 events · auth-api 出现 3 次，建议本周排查降级策略",
     },
-    { kind: "narration", text: "邮件已经发出，截图补齐后再追一封确认。" },
-  ],
-
-  // 4 — 从需求到交付，一个设计师的完整工作流清单
-  "4": [
-    {
-      kind: "narration",
-      text: "需要把这份工作流清单转成给新同学的入门 onboarding 邮件吗？",
-    },
-    {
-      kind: "user",
-      text: "可以，发给本期 design intern 团，重点突出每个阶段的 checklist。",
-    },
-    { kind: "narration", text: "好的，我来组织成入门邮件。" },
-    { kind: "analysis" },
-    {
-      kind: "email-card",
-      state: "proposed",
-      recipients: [
-        { id: "r1", name: "Jessie Ma", avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&q=80" },
-        { id: "r2", name: "yiran guo", color: "#7c6fb8" },
-        { id: "r3", name: "Leo Martin", avatarUrl: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=60&h=60&fit=crop&q=80" },
-      ],
-      overflowCount: 9,
-      subject: "Designer workflow — 7-stage checklist for new joiners",
-      body: `Welcome to the design pod. The end-to-end workflow has 7 stages:
-1. 接需求 — kickoff alignment
-2. Kickoff — scope + success metrics
-3. 用研验证 — at least 5 interviews
-4. 设计稿 — explore 3 directions
-5. 评审 — design crit + product review
-6. 交付走查 — handoff + visual QA
-7. 上线复盘 — retro + Memo entry
-Each stage has its own checklist template — fork into your project doc to start.`,
-      attachmentNote: "7 checklist templates linked",
-    },
-    {
-      kind: "email-card",
-      state: "completed",
-      recipients: [
-        { id: "r1", name: "Jessie Ma", avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&q=80" },
-        { id: "r2", name: "yiran guo", color: "#7c6fb8" },
-        { id: "r3", name: "Leo Martin", avatarUrl: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=60&h=60&fit=crop&q=80" },
-      ],
-      overflowCount: 9,
-      subject: "Designer workflow — 7-stage checklist for new joiners",
-      body: `Welcome to the design pod. The end-to-end workflow has 7 stages:
-1. 接需求 — kickoff alignment
-2. Kickoff — scope + success metrics
-3. 用研验证 — at least 5 interviews
-4. 设计稿 — explore 3 directions
-5. 评审 — design crit + product review
-6. 交付走查 — handoff + visual QA
-7. 上线复盘 — retro + Memo entry
-Each stage has its own checklist template — fork into your project doc to start.`,
-      attachmentNote: "7 checklist templates linked",
-    },
-    { kind: "narration", text: "邮件已发送给 12 位新同学，附 checklist 模板可直接 fork。" },
+    { kind: "narration", text: "已经把表格归档到本 Flow 的『 Logs』 里，下次复盘可以直接 diff。" },
   ],
 };
 

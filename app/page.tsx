@@ -213,12 +213,18 @@ export default function Home() {
   }, [search]);
 
   const groupedFlowItems = useMemo(() => {
+    const pinned = filteredFlow.filter((f) => f.pinned);
+    const rest = filteredFlow.filter((f) => !f.pinned);
     const groups: Record<string, FlowItem[]> = {};
-    for (const item of filteredFlow) {
+    for (const item of rest) {
       groups[item.month] = groups[item.month] || [];
       groups[item.month].push(item);
     }
-    return Object.entries(groups).map(([month, items]) => ({ month, items }));
+    const out = Object.entries(groups).map(([month, items]) => ({ month, items }));
+    if (pinned.length > 0) {
+      out.unshift({ month: "PINNED", items: pinned });
+    }
+    return out;
   }, [filteredFlow]);
 
   const groupedChatItems = useMemo(() => {
@@ -468,16 +474,10 @@ function WorkspaceRail({
       <div className="h-[60px] w-full flex items-center justify-center shrink-0">
         <button
           onClick={onCollapse}
-          className="group/tanka relative w-[28px] h-[28px] flex items-center justify-center text-warm-black hover:bg-warm-gray-2/60 rounded-md transition-colors"
+          className="w-7 h-7 flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 rounded-md transition-colors"
           title="Hide organizations"
         >
-          <span className="flex items-center justify-center transition-opacity group-hover/tanka:opacity-0">
-            <TankaLogo />
-          </span>
-          <ChevronsLeft
-            className="absolute w-4 h-4 text-warm-2 opacity-0 transition-opacity group-hover/tanka:opacity-100"
-            strokeWidth={2}
-          />
+          <ChevronsLeft className="w-4 h-4" strokeWidth={2} />
         </button>
       </div>
 
@@ -528,7 +528,7 @@ function WorkspaceRail({
         <div className="w-4 border-t border-warm-gray-2 my-1" />
 
         <button
-          className="w-[32px] h-[32px] rounded-[10px] border-[1.5px] border-dashed border-warm-gray-2 flex items-center justify-center text-warm-2 hover:border-warm-border hover:text-warm-black"
+          className="w-[32px] h-[32px] rounded-[10px] border-[1.5px] border-dashed border-warm-border flex items-center justify-center text-warm-2 hover:bg-warm-gray-2/60 hover:text-warm-black hover:border-warm-2 transition-colors"
           title="Add workspace"
         >
           <Plus className="w-3.5 h-3.5" />
@@ -563,6 +563,12 @@ function navCreateMenu(itemId: string): MenuSection[] | null {
               label: "New SOP",
               description: "Capture a reusable procedure",
               icon: BookOpen,
+            },
+            {
+              id: "new-agent",
+              label: "New agent",
+              description: "Specialized AI for recurring work",
+              icon: Box,
             },
           ],
         },
@@ -655,6 +661,7 @@ function NavRow({
   onClick,
   createMenu,
   indent,
+  badgeCount,
 }: {
   icon: LucideIcon;
   label: string;
@@ -662,7 +669,9 @@ function NavRow({
   onClick: () => void;
   createMenu?: MenuSection[] | null;
   indent?: boolean;
+  badgeCount?: number;
 }) {
+  const showBadge = (badgeCount ?? 0) > 0;
   return (
     <div
       className={`group/nav relative w-[156px] mx-3 h-9 rounded-lg flex items-center text-[14px] font-medium transition-colors ${
@@ -672,7 +681,7 @@ function NavRow({
       <button
         onClick={onClick}
         className={`flex-1 flex items-center gap-2.5 h-full min-w-0 ${
-          indent ? "pl-7 pr-2" : "px-2.5"
+          indent ? "pl-7 pr-2" : showBadge || createMenu ? "pl-2.5 pr-8" : "px-2.5"
         }`}
       >
         <Icon
@@ -682,21 +691,32 @@ function NavRow({
         />
         <span className="flex-1 text-left truncate">{label}</span>
       </button>
-      {createMenu && (
-        <DropdownTrigger sections={createMenu} align="right-of-trigger" width={240}>
-          {({ open, toggle }) => (
-            <button
-              onClick={toggle}
-              className={`w-5 h-5 mr-1.5 rounded flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-bg ${
-                open ? "bg-warm-bg text-warm-black opacity-100" : "opacity-0 group-hover/nav:opacity-100"
-              }`}
-              title={`New ${label.toLowerCase()}`}
-            >
-              <Plus className="w-3.5 h-3.5" strokeWidth={2} />
-            </button>
-          )}
-        </DropdownTrigger>
-      )}
+
+      {/* Right slot — badge sits where + appears; on hover the + slides in and pushes badge left */}
+      <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-1 pointer-events-none">
+        {showBadge && (
+          <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-warm-black text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none pointer-events-auto">
+            {badgeCount! > 9 ? "9+" : badgeCount}
+          </span>
+        )}
+        {createMenu && (
+          <DropdownTrigger sections={createMenu} align="right-of-trigger" width={240}>
+            {({ open, toggle }) => (
+              <button
+                onClick={toggle}
+                className={`pointer-events-auto h-5 rounded flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-bg overflow-hidden transition-all ${
+                  open
+                    ? "w-5 opacity-100 bg-warm-bg text-warm-black"
+                    : "w-0 opacity-0 group-hover/nav:w-5 group-hover/nav:opacity-100"
+                }`}
+                title={`New ${label.toLowerCase()}`}
+              >
+                <Plus className="w-3.5 h-3.5 shrink-0" strokeWidth={2} />
+              </button>
+            )}
+          </DropdownTrigger>
+        )}
+      </div>
     </div>
   );
 }
@@ -725,6 +745,17 @@ function NavSidebar({
   onToggleCollapsed: () => void;
   onResize: (e: React.MouseEvent) => void;
 }) {
+  // Unread badge counts for nav items
+  const chatUnread = chatItems.reduce(
+    (sum, c) => sum + (c.unreadCount ?? (c.unread ? 1 : 0)),
+    0,
+  );
+  const flowUnread = flowItems.filter((f) => f.unread).length;
+  const navBadge: Partial<Record<string, number>> = {
+    chat: chatUnread,
+    flow: flowUnread,
+  };
+
   if (collapsed)
     return (
       <NavSidebarCollapsed
@@ -742,45 +773,42 @@ function NavSidebar({
       style={{ width }}
       className="group/navside relative shrink-0 bg-warm-bg border-r border-warm-gray-2 flex flex-col h-screen"
     >
-      <div className="h-[60px] flex items-stretch gap-0">
+      <div className="group/orghdr h-[60px] flex items-center px-2">
         {!orgRailOpen && (
           <button
             onClick={onToggleOrgRail}
-            className="w-8 h-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/40 transition-colors shrink-0"
+            className="overflow-hidden h-7 w-0 opacity-0 group-hover/orghdr:w-7 group-hover/orghdr:opacity-100 group-hover/orghdr:mr-1 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-all duration-150 shrink-0"
             title="Show organizations"
           >
-            <ChevronsRight className="w-4 h-4" strokeWidth={2} />
+            <ChevronsRight className="w-4 h-4 shrink-0" strokeWidth={2} />
           </button>
         )}
-        <button className={`flex-1 min-w-0 h-full flex items-center justify-between gap-2 ${orgRailOpen ? "px-3" : "pl-1 pr-3"} hover:bg-warm-gray-2/40 transition-colors`}>
-          <div className="flex items-center gap-2 min-w-0">
-            {workspace.avatar ? (
-              <img
-                src={workspace.avatar}
-                alt={workspace.name}
-                className="w-7 h-7 rounded-lg object-cover shrink-0"
-              />
-            ) : (
-              <span
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-[11px] font-bold shrink-0"
-                style={{
-                  background: workspace.color,
-                  color: workspace.textColor ?? "#fff",
-                  border:
-                    workspace.color.toLowerCase() === "#ffffff"
-                      ? "1px solid var(--color-warm-gray-2)"
-                      : undefined,
-                }}
-              >
-                {workspace.letter}
-              </span>
-            )}
-            <span className="text-[14px] font-medium text-warm-black truncate">
-              {workspace.name}
+        <div className="flex-1 min-w-0 flex items-center gap-2 px-1">
+          {workspace.avatar ? (
+            <img
+              src={workspace.avatar}
+              alt={workspace.name}
+              className="w-7 h-7 rounded-lg object-cover shrink-0"
+            />
+          ) : (
+            <span
+              className="w-7 h-7 rounded-lg flex items-center justify-center text-[11px] font-bold shrink-0"
+              style={{
+                background: workspace.color,
+                color: workspace.textColor ?? "#fff",
+                border:
+                  workspace.color.toLowerCase() === "#ffffff"
+                    ? "1px solid var(--color-warm-gray-2)"
+                    : undefined,
+              }}
+            >
+              {workspace.letter}
             </span>
-          </div>
-          <ChevronsUpDown className="w-4 h-4 text-warm-2 shrink-0" />
-        </button>
+          )}
+          <span className="text-[14px] font-medium text-warm-black truncate">
+            {workspace.name}
+          </span>
+        </div>
       </div>
 
       <div className="border-t border-warm-gray-2 mx-3" />
@@ -802,6 +830,7 @@ function NavSidebar({
                       active={isActive}
                       onClick={() => onSelect(item.id as NavKey)}
                       createMenu={navCreateMenu(item.id)}
+                      badgeCount={navBadge[item.id]}
                     />
                     {hasChildren && (
                       <ul className="mt-0.5">
@@ -830,22 +859,19 @@ function NavSidebar({
         ))}
       </nav>
 
-      <div className="border-t border-warm-gray-2" />
-
-      <div className="h-[60px] flex items-stretch gap-0">
-        <button className="flex-1 min-w-0 h-full flex items-center justify-between gap-2 px-3 hover:bg-warm-gray-2/40 transition-colors">
-          <div className="flex items-center gap-2 min-w-0">
-            <span className="w-7 h-7 rounded-full bg-[#827d73] text-white text-[11px] font-bold flex items-center justify-center shrink-0">
-              YG
-            </span>
-            <span className="text-[14px] font-medium text-warm-black truncate">yiran guo</span>
-          </div>
-          <ChevronDown className="w-3.5 h-3.5 text-warm-2 shrink-0" />
+      <div className="h-[60px] flex items-center gap-1 px-2">
+        <button
+          title="yiran guo"
+          className="flex-1 min-w-0 h-9 flex items-center px-1 transition-colors"
+        >
+          <span className="w-8 h-8 rounded-full bg-[#827d73] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
+            YG
+          </span>
         </button>
         <button
           onClick={onToggleCollapsed}
           title="Hide navigation"
-          className="w-9 flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/40 transition-opacity opacity-0 group-hover/navside:opacity-100 shrink-0"
+          className="w-7 h-7 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-opacity opacity-0 group-hover/navside:opacity-100 shrink-0"
         >
           <PanelLeftClose className="w-4 h-4" strokeWidth={1.8} />
         </button>
@@ -892,7 +918,7 @@ function NavSidebarCollapsed({
         <button
           onClick={onToggleOrgRail}
           title={`Toggle organizations (${workspace.name})`}
-          className="w-6 h-6 rounded-md overflow-hidden flex items-center justify-center text-[10px] font-bold hover:opacity-80 transition-opacity"
+          className="w-7 h-7 rounded-lg overflow-hidden flex items-center justify-center text-[11px] font-bold hover:opacity-80 transition-opacity"
           style={
             workspace.avatar
               ? undefined
@@ -926,13 +952,13 @@ function NavSidebarCollapsed({
                 <button
                   onClick={() => onSelect(it.id)}
                   title={it.label}
-                  className={`w-8 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                  className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
                     isActive
                       ? "bg-warm-gray-2 text-warm-black"
                       : "text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60"
                   }`}
                 >
-                  <it.icon className="w-4 h-4" strokeWidth={1.8} />
+                  <it.icon className="w-[18px] h-[18px]" strokeWidth={1.6} />
                 </button>
               </li>
             );
@@ -943,14 +969,13 @@ function NavSidebarCollapsed({
         <button
           onClick={onExpand}
           title="Show menu"
-          className="w-6 h-6 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-colors"
+          className="w-7 h-7 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-colors"
         >
           <PanelLeftOpen className="w-4 h-4" strokeWidth={1.8} />
         </button>
       </div>
-      <div className="border-t border-warm-gray-2 w-full" />
-      <div className="h-[60px] w-full flex items-center justify-center hover:bg-warm-gray-2/40 transition-colors">
-        <span className="w-7 h-7 rounded-full bg-[#827d73] text-white text-[11px] font-bold flex items-center justify-center shrink-0">
+      <div className="h-[60px] w-full flex items-center justify-center">
+        <span className="w-8 h-8 rounded-full bg-[#827d73] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
           YG
         </span>
       </div>
@@ -1080,6 +1105,12 @@ function ListColumn({
                 description: "Capture a reusable procedure",
                 icon: BookOpen,
               },
+              {
+                id: "new-agent",
+                label: "New agent",
+                description: "Specialized AI for recurring work",
+                icon: Box,
+              },
             ],
           },
           {
@@ -1116,9 +1147,9 @@ function ListColumn({
             ) : (
               <button
                 className="w-7 h-7 rounded-md hover:bg-warm-gray-2/60 flex items-center justify-center"
-                title="New folder"
+                title="Assets"
               >
-                <FolderPlus className="w-[18px] h-[18px]" strokeWidth={1.6} />
+                <Folder className="w-[18px] h-[18px]" strokeWidth={1.6} />
               </button>
             )}
             <DropdownTrigger sections={newMenuSections} align="right" width={240}>
@@ -1222,18 +1253,27 @@ function ListColumn({
                       <li key={item.id}>
                         <button
                           onClick={() => onSelect(item.id)}
-                          className={`w-full text-left rounded-lg px-3 py-2.5 transition-colors ${
-                            isSelected ? "bg-warm-base" : "hover:bg-warm-base/60"
-                          }`}
+                          className="group/flowrow w-full text-left rounded-lg px-3 py-2.5 transition-colors relative"
+                          style={{
+                            background: isSelected ? "var(--warm-base)" : undefined,
+                          }}
                         >
-                          <p className="text-[13px] truncate text-warm-black mb-1">
-                            {item.title}
-                          </p>
-                          <div className="flex items-center justify-between gap-2">
+                          <span
+                            aria-hidden
+                            className={`absolute inset-0 rounded-lg transition-colors ${
+                              isSelected ? "" : "group-hover/flowrow:bg-warm-base/60"
+                            }`}
+                          />
+                          <div className="relative">
+                            <div className="flex items-center justify-between gap-2 mb-1">
+                              <p className="text-[13px] truncate text-warm-black">
+                                {item.title}
+                              </p>
+                              {item.unread && (
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shrink-0" />
+                              )}
+                            </div>
                             <p className="text-[12px] text-warm-2 truncate">{item.preview}</p>
-                            {item.unread && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shrink-0" />
-                            )}
                           </div>
                         </button>
                       </li>
@@ -1343,9 +1383,13 @@ function ChatRow({
           </div>
           <div className="flex items-center justify-between gap-2">
             <p className="text-[12px] text-warm-2 truncate">{item.preview}</p>
-            {item.unread && (
+            {item.unreadCount ? (
+              <span className="shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-[#3b82f6] text-white text-[10px] font-medium flex items-center justify-center tabular-nums">
+                {item.unreadCount > 99 ? "99+" : item.unreadCount}
+              </span>
+            ) : item.unread ? (
               <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shrink-0" />
-            )}
+            ) : null}
           </div>
         </div>
       </button>
@@ -1603,6 +1647,8 @@ function ConversationView({
     messageId: string;
   } | null>(null);
 
+  const chatFades = useScrollFades<HTMLDivElement>([messages, chat?.id]);
+
   return (
     <div className="h-screen w-full flex bg-warm-bg-2">
       <div className="flex-1 min-w-0 flex flex-col">
@@ -1634,7 +1680,7 @@ function ConversationView({
               <button
                 onClick={onToggleMembersPanel}
                 title="View group members"
-                className={`mt-0.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] transition-colors ${
+                className={`mt-0.5 -ml-1.5 self-start inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] transition-colors ${
                   membersPanelOpen
                     ? "bg-warm-gray-2 text-warm-black"
                     : "text-warm-2 hover:bg-warm-base hover:text-warm-black"
@@ -1683,10 +1729,20 @@ function ConversationView({
       </div>
 
       <div className="relative flex-1 min-h-0">
-        {/* Top gradient fade overlay */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-warm-bg-2 to-transparent z-10" />
-        <div className="h-full overflow-y-auto px-8 py-6 scrollbar-thin scroll-smooth">
-          <div className="max-w-[680px] mx-auto space-y-6">
+        {/* Top gradient fade overlay — only when scroll is not at top */}
+        {chatFades.fades.top && (
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-warm-bg-2 to-transparent z-10" />
+        )}
+        {/* Bottom gradient fade overlay — only when there's more below */}
+        {chatFades.fades.bottom && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-warm-bg-2 to-transparent z-10" />
+        )}
+        <div
+          ref={chatFades.ref}
+          onScroll={chatFades.onScroll}
+          className="h-full overflow-y-auto px-8 py-6 scrollbar-thin scroll-smooth"
+        >
+          <div className="max-w-[768px] mx-auto space-y-6">
             {messages.map((m, idx) => (
               <Message
                 key={m.id}
@@ -2728,23 +2784,23 @@ function AgentPage() {
               <li key={a.id}>
                 <button
                   onClick={() => setSelectedId(a.id)}
-                  className={`w-full text-left rounded-lg px-2.5 py-2 flex items-center gap-3 transition-colors ${
+                  className={`w-full text-left rounded-lg px-3 py-2.5 flex gap-3 items-center transition-colors ${
                     isActive ? "bg-warm-base" : "hover:bg-warm-base/60"
                   }`}
                 >
-                  <span className="w-8 h-8 rounded-full bg-white border border-warm-gray-2 flex items-center justify-center shrink-0 text-warm-black">
-                    <Icon className="w-4 h-4" strokeWidth={1.8} />
+                  <span className="w-9 h-9 rounded-full bg-white border border-warm-gray-2 flex items-center justify-center shrink-0 text-warm-black">
+                    <Icon className="w-[18px] h-[18px]" strokeWidth={1.8} />
                   </span>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center justify-between gap-2 mb-1">
                       <p className="text-[13px] truncate text-warm-black">{a.name}</p>
                       {a.count != null && (
-                        <span className="shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-warm-black text-white text-[10px] font-medium flex items-center justify-center">
+                        <span className="shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-[#3b82f6] text-white text-[10px] font-medium flex items-center justify-center tabular-nums">
                           {a.count}
                         </span>
                       )}
                     </div>
-                    <p className="text-[12px] text-warm-2 truncate mt-0.5">{a.description}</p>
+                    <p className="text-[12px] text-warm-2 truncate">{a.description}</p>
                   </div>
                 </button>
               </li>
@@ -3501,7 +3557,7 @@ function LinkCard({ tool }: { tool: LinkTool }) {
         </p>
       </div>
       {!tool.linked && (
-        <button className="shrink-0 h-7 px-3 rounded-full text-[12px] font-medium bg-warm-black text-white hover:bg-warm-black/90 transition-colors">
+        <button className="shrink-0 h-7 px-3 rounded-lg border border-warm-gray-2 bg-white text-[12px] font-medium text-warm-black hover:bg-warm-base hover:border-warm-border transition-colors">
           Link
         </button>
       )}
@@ -3698,6 +3754,152 @@ function SendEmailActionCard({
   );
 }
 
+function WideTableActionCard({
+  title,
+  state,
+  columns,
+  rows,
+  footnote,
+}: {
+  title: string;
+  state: ActionState;
+  columns: string[];
+  rows: string[][];
+  footnote?: string;
+}) {
+  const theme = ACTION_STATE_THEME[state];
+  const Icon =
+    state === "proposed" ? LayoutGrid : state === "completed" ? CheckCircle2 : Clock;
+  return (
+    <div className="mb-4">
+      <div className="rounded-2xl border border-warm-gray-2 bg-white overflow-hidden">
+        {/* Header — same pattern as SendEmail card */}
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-warm-gray-2/70">
+          <div className="flex items-center gap-2">
+            <span
+              className="w-5 h-5 rounded flex items-center justify-center shrink-0"
+              style={{ background: theme.iconBg, color: theme.iconColor }}
+            >
+              <Icon className="w-3 h-3" strokeWidth={2.2} />
+            </span>
+            <span className="text-[13px] font-medium text-warm-black">{title}</span>
+            <span
+              className="text-[11px] font-medium tracking-[0.04em]"
+              style={{ color: theme.tagText }}
+            >
+              · {theme.tagLabel}
+            </span>
+          </div>
+          <div className="flex items-center gap-0.5 text-warm-2">
+            <IconBtn title="Copy">
+              <Copy className="w-3.5 h-3.5" strokeWidth={1.8} />
+            </IconBtn>
+            <IconBtn title="Download">
+              <Download className="w-3.5 h-3.5" strokeWidth={1.8} />
+            </IconBtn>
+            <IconBtn title="Expand">
+              <Maximize2 className="w-3.5 h-3.5" strokeWidth={1.8} />
+            </IconBtn>
+          </div>
+        </div>
+
+        {/* Scrollable horizontal table */}
+        <div className="overflow-x-auto scrollbar-thin">
+          <table className="w-full text-[12px] text-warm-black border-collapse">
+            <thead>
+              <tr className="bg-warm-bg-2/60">
+                {columns.map((c) => (
+                  <th
+                    key={c}
+                    className="text-left font-medium text-warm-2 tracking-[0.02em] uppercase text-[10.5px] px-3 py-2 border-b border-warm-gray-2/70 whitespace-nowrap"
+                  >
+                    {c}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, ri) => (
+                <tr
+                  key={ri}
+                  className={ri % 2 === 0 ? "" : "bg-warm-bg-2/40"}
+                >
+                  {row.map((cell, ci) => (
+                    <td
+                      key={ci}
+                      className="px-3 py-2 border-b border-warm-gray-2/40 whitespace-nowrap"
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Footer — Table-style */}
+        <div className="flex items-center justify-between px-4 py-2.5 border-t border-warm-gray-2/70 bg-warm-bg-2/40">
+          <span className="text-[12px] text-warm-2 truncate">
+            {footnote ?? `Showing ${rows.length} rows × ${columns.length} columns`}
+          </span>
+          <button className="flex items-center gap-1 text-[12px] text-[#3b82f6] hover:underline shrink-0 ml-3">
+            View in new window <ArrowRight className="w-3 h-3" strokeWidth={2} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function useScrollFades<T extends HTMLElement>(deps: React.DependencyList) {
+  const ref = useRef<T>(null);
+  const [fades, setFades] = useState({ top: false, bottom: false });
+
+  function recompute() {
+    const el = ref.current;
+    if (!el) return;
+    const canScrollUp = el.scrollTop > 1;
+    const canScrollDown = el.scrollTop + el.clientHeight < el.scrollHeight - 1;
+    setFades((prev) =>
+      prev.top === canScrollUp && prev.bottom === canScrollDown
+        ? prev
+        : { top: canScrollUp, bottom: canScrollDown },
+    );
+  }
+
+  useLayoutEffect(() => {
+    recompute();
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => recompute());
+    ro.observe(el);
+    return () => ro.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+
+  return { ref, fades, onScroll: recompute };
+}
+
+function MessageFeedback() {
+  return (
+    <div className="flex items-center gap-1 text-warm-2 -ml-1.5">
+      <IconBtn title="Helpful">
+        <ThumbsUp className="w-4 h-4" strokeWidth={1.8} />
+      </IconBtn>
+      <IconBtn title="Not helpful">
+        <ThumbsDown className="w-4 h-4" strokeWidth={1.8} />
+      </IconBtn>
+      <IconBtn title="Copy">
+        <Copy className="w-4 h-4" strokeWidth={1.8} />
+      </IconBtn>
+      <IconBtn title="Regenerate">
+        <RefreshCw className="w-4 h-4" strokeWidth={1.8} />
+      </IconBtn>
+    </div>
+  );
+}
+
 function FlowDetailView({
   detail,
   chatInput,
@@ -3712,6 +3914,7 @@ function FlowDetailView({
   onClose: () => void;
 }) {
   const [status, setStatus] = useState<"none" | "complete" | "progress">("none");
+  const flowFades = useScrollFades<HTMLDivElement>([detail.id]);
 
   return (
     <div className="h-screen w-full flex flex-col bg-warm-bg-2">
@@ -3752,67 +3955,25 @@ function FlowDetailView({
       </div>
 
       {/* Body */}
-      <div className="flex-1 overflow-y-auto px-6 py-4 scrollbar-thin">
+      <div className="relative flex-1 min-h-0">
+        {/* Top gradient fade — only when scrolled */}
+        {flowFades.fades.top && (
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-warm-bg-2 to-transparent z-10" />
+        )}
+        {/* Bottom gradient fade — only when there's more below */}
+        {flowFades.fades.bottom && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-warm-bg-2 to-transparent z-10" />
+        )}
+        <div
+          ref={flowFades.ref}
+          onScroll={flowFades.onScroll}
+          className="h-full overflow-y-auto px-6 py-4 scrollbar-thin"
+        >
         <div className="max-w-[820px] mx-auto">
           {/* User query bubble */}
           <div className="flex justify-end mb-5">
             <div className="bg-warm-base rounded-2xl px-4 py-3 text-[15px] leading-snug max-w-[85%]">
               {detail.query}
-            </div>
-          </div>
-
-          {/* Table widget */}
-          <div className="rounded-2xl border border-warm-gray-2 bg-white mb-6 overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-2.5 border-b border-warm-gray-2/70">
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded bg-warm-base border border-warm-gray-2 flex items-center justify-center text-[10px] font-bold">
-                  T
-                </span>
-                <span className="text-[13px] font-medium">Table</span>
-              </div>
-              <div className="flex items-center gap-0.5 text-warm-2">
-                <IconBtn title="Copy">
-                  <Copy className="w-3.5 h-3.5" strokeWidth={1.8} />
-                </IconBtn>
-                <IconBtn title="Download">
-                  <Download className="w-3.5 h-3.5" strokeWidth={1.8} />
-                </IconBtn>
-                <IconBtn title="Expand">
-                  <Maximize2 className="w-3.5 h-3.5" strokeWidth={1.8} />
-                </IconBtn>
-              </div>
-            </div>
-
-            <ul className="divide-y divide-warm-gray-2/70">
-              {detail.tableRows.map((row) => (
-                <li key={row.id} className="px-4 py-3 flex gap-3 hover:bg-warm-bg-2/60">
-                  <span
-                    className="w-8 h-8 rounded-full text-white text-[11px] font-semibold flex items-center justify-center shrink-0"
-                    style={{ background: row.authorColor }}
-                  >
-                    {row.authorInitials}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2 mb-1">
-                      <div className="flex items-center gap-2 min-w-0">
-                        <span className="text-[13px] font-medium">{row.authorName}</span>
-                        <span className="text-[12px] text-[#5b5fd6]">{row.tag}</span>
-                      </div>
-                      <span className="text-[11px] text-warm-2 shrink-0">{row.date}</span>
-                    </div>
-                    <p className="text-[13px] leading-snug text-warm-black/85">{row.text}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex items-center justify-between px-4 py-2.5 border-t border-warm-gray-2/70 bg-warm-bg-2/40">
-              <span className="text-[12px] text-warm-2">
-                Showing {detail.tableRows.length} of {detail.totalResults} results
-              </span>
-              <button className="flex items-center gap-1 text-[12px] text-[#3b82f6] hover:underline">
-                View in new window <ArrowRight className="w-3 h-3" strokeWidth={2} />
-              </button>
             </div>
           </div>
 
@@ -3825,9 +3986,12 @@ function FlowDetailView({
                 {scenario.map((step, i) => {
                   if (step.kind === "narration") {
                     return (
-                      <p key={i} className="text-[14px] text-warm-black/85">
-                        {step.text}
-                      </p>
+                      <div key={i}>
+                        <p className="text-[14px] text-warm-black/85 mb-2">
+                          {step.text}
+                        </p>
+                        <MessageFeedback />
+                      </div>
                     );
                   }
                   if (step.kind === "user") {
@@ -3864,6 +4028,18 @@ function FlowDetailView({
                       />
                     );
                   }
+                  if (step.kind === "wide-table-card") {
+                    return (
+                      <WideTableActionCard
+                        key={i}
+                        title={step.title}
+                        state={step.state}
+                        columns={step.columns}
+                        rows={step.rows}
+                        footnote={step.footnote}
+                      />
+                    );
+                  }
                   return null;
                 })}
               </div>
@@ -3877,21 +4053,11 @@ function FlowDetailView({
             ))}
           </div>
 
-          {/* Feedback actions */}
-          <div className="flex items-center gap-1 text-warm-2 mb-6">
-            <IconBtn title="Helpful">
-              <ThumbsUp className="w-4 h-4" strokeWidth={1.8} />
-            </IconBtn>
-            <IconBtn title="Not helpful">
-              <ThumbsDown className="w-4 h-4" strokeWidth={1.8} />
-            </IconBtn>
-            <IconBtn title="Copy">
-              <Copy className="w-4 h-4" strokeWidth={1.8} />
-            </IconBtn>
-            <IconBtn title="Regenerate">
-              <RefreshCw className="w-4 h-4" strokeWidth={1.8} />
-            </IconBtn>
+          {/* Feedback actions for the long-form response */}
+          <div className="mb-6">
+            <MessageFeedback />
           </div>
+        </div>
         </div>
       </div>
 

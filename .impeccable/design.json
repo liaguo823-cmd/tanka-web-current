@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-21T00:00:00Z",
+  "title": "Design System: Tanka",
+  "extensions": {
+    "colorMeta": {
+      "press-ink": {
+        "role": "primary",
+        "displayName": "Press Ink",
+        "canonical": "oklch(0.22 0.005 60)",
+        "tonalRamp": ["#0d0a08", "#15110d", "#1d1814", "#26201c", "#3a332d", "#544c43", "#736b61", "#a09a8e"]
+      },
+      "newsprint": {
+        "role": "neutral",
+        "displayName": "Newsprint",
+        "canonical": "oklch(0.55 0.008 70)",
+        "tonalRamp": ["#2f2a25", "#473f38", "#5e564c", "#736b61", "#827d73", "#a09a8e", "#bdb7ab", "#d8d3c8"]
+      },
+      "margin-rule": {
+        "role": "neutral",
+        "displayName": "Margin Rule",
+        "canonical": "oklch(0.78 0.008 80)",
+        "tonalRamp": ["#544c43", "#6e655a", "#8a8174", "#a39a8c", "#bdbbaf", "#d0cdc1", "#e0ddd2", "#edebe2"]
+      },
+      "stock-paper": {
+        "role": "neutral",
+        "displayName": "Stock Paper",
+        "canonical": "oklch(0.91 0.006 80)",
+        "tonalRamp": ["#6e655a", "#8a8174", "#a39a8c", "#bdbbaf", "#d0cdc1", "#e5e3db", "#eeece4", "#f5f3ed"]
+      },
+      "endpaper": {
+        "role": "neutral",
+        "displayName": "Endpaper",
+        "canonical": "oklch(0.94 0.004 80)",
+        "tonalRamp": ["#8a8174", "#a39a8c", "#bdbbaf", "#d0cdc1", "#e0ddd2", "#efefea", "#f5f3ed", "#f9f8f4"]
+      },
+      "bond-paper": {
+        "role": "neutral",
+        "displayName": "Bond Paper",
+        "canonical": "oklch(0.95 0.003 80)",
+        "tonalRamp": ["#a39a8c", "#bdbbaf", "#d0cdc1", "#e0ddd2", "#e9e6dd", "#f2f1ee", "#f6f5f1", "#fafaf6"]
+      },
+      "margin-white": {
+        "role": "neutral",
+        "displayName": "Margin White",
+        "canonical": "oklch(0.98 0.002 80)",
+        "tonalRamp": ["#bdbbaf", "#d0cdc1", "#e0ddd2", "#e9e6dd", "#f1efe8", "#f6f4ee", "#fafaf9", "#fdfcfa"]
+      },
+      "sheet-white": {
+        "role": "neutral",
+        "displayName": "Sheet White",
+        "canonical": "oklch(1 0 0)",
+        "tonalRamp": ["#d0cdc1", "#e0ddd2", "#e9e6dd", "#f1efe8", "#f6f4ee", "#fafaf9", "#fdfcfa", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Empty-state hero only. 'Your task today?' and equivalent first-run headlines. At most once per screen."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "List column h2 ('Flow', 'Chat'), section heads inside detail views. The signal that a new region begins."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Nav rows, chat author names, panel labels. The workhorse of UI chrome."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "List item titles, message body, the default reading text. Capped to 65-75ch in flowing content."
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "Secondary list line (preview, time), metadata, popover second-tier copy."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Group headers ('MAY', 'TODAY'), uppercase tab chrome. Always Margin Rule color, never Press Ink."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Inline code, technical chrome. Geist Mono."
+      }
+    },
+    "shadows": [
+      { "name": "ambient-rest", "value": "0 1px 1.5px rgba(38,32,28,0.02), 0 4px 6px rgba(38,32,28,0.02)", "purpose": "Cards at rest. So subtle the card mostly relies on its 1px border." },
+      { "name": "lift-hover", "value": "0 2px 12px rgba(38,32,28,0.06)", "purpose": "Hover lift on interactable tiles and link cards." },
+      { "name": "active-workspace", "value": "0 2px 6px rgba(38,32,28,0.18)", "purpose": "Active workspace tile in the rail. Paired with ring-2 of warm-black/25." },
+      { "name": "dropdown", "value": "0 4px 24px rgba(38,32,28,0.08), 0 1px 3px rgba(38,32,28,0.06)", "purpose": "Dropdown menus. Two-layer warmth that floats without darkening the page." },
+      { "name": "popover", "value": "0 8px 24px rgba(38,32,28,0.10)", "purpose": "Tooltips and richer popovers." },
+      { "name": "modal", "value": "0 24px 60px rgba(38,32,28,0.18)", "purpose": "Genuine modal dialogs only. The depth is allowed to feel architectural because it is rare." }
+    ],
+    "motion": [
+      { "name": "ease-default", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default Tailwind ease. State transitions and hover color shifts." },
+      { "name": "duration-fast", "value": "150ms", "purpose": "Hover color shifts, opacity reveals, the org-rail hover-expand affordance." },
+      { "name": "duration-default", "value": "200ms", "purpose": "Most state transitions. Default for transition-colors." }
+    ],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Workspace Tile (Active)",
+      "kind": "custom",
+      "refersTo": "workspace-tile",
+      "description": "The signature 10px squircle. The system's identifying form. Active state stacks ring + ambient shadow + 3px left tab.",
+      "html": "<div class=\"ds-ws-row\"><span class=\"ds-ws-active-tab\"></span><button class=\"ds-ws-tile ds-ws-tile-active\">T</button></div>",
+      "css": ".ds-ws-row { position: relative; display: flex; align-items: center; justify-content: center; width: 40px; padding: 4px 0; } .ds-ws-active-tab { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 24px; background: #26201c; border-radius: 0 999px 999px 0; } .ds-ws-tile { width: 32px; height: 32px; border-radius: 10px; background: #26201c; color: #ffffff; font-family: 'Geist Sans', Inter, 'PingFang SC', sans-serif; font-size: 11px; font-weight: 700; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 150ms cubic-bezier(0.4,0,0.2,1), transform 150ms cubic-bezier(0.4,0,0.2,1); } .ds-ws-tile-active { box-shadow: 0 0 0 2px rgba(38,32,28,0.25), 0 2px 6px rgba(38,32,28,0.18); } .ds-ws-tile:not(.ds-ws-tile-active) { opacity: 0.55; } .ds-ws-tile:not(.ds-ws-tile-active):hover { opacity: 1; }"
+    },
+    {
+      "name": "Nav Row (Active)",
+      "kind": "nav",
+      "refersTo": "nav-row-active",
+      "description": "Active nav row with icon and label. Resting state is transparent with newsprint icon; active is Stock Paper fill with Press Ink everywhere.",
+      "html": "<button class=\"ds-nav-row ds-nav-row-active\"><svg class=\"ds-nav-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/></svg><span class=\"ds-nav-label\">Flow</span></button>",
+      "css": ".ds-nav-row { display: inline-flex; align-items: center; gap: 10px; width: 156px; height: 36px; padding: 0 10px; border: none; border-radius: 8px; background: transparent; color: #26201c; font-family: 'Geist Sans', Inter, 'PingFang SC', sans-serif; font-size: 14px; font-weight: 500; text-align: left; cursor: pointer; transition: background-color 200ms cubic-bezier(0.4,0,0.2,1); } .ds-nav-row:hover { background: rgba(229,227,219,0.6); } .ds-nav-row-active { background: #e5e3db; } .ds-nav-icon { width: 18px; height: 18px; color: #56534e; flex-shrink: 0; } .ds-nav-row-active .ds-nav-icon { color: #26201c; } .ds-nav-label { flex: 1; }"
+    },
+    {
+      "name": "Filter Chip (Active)",
+      "kind": "chip",
+      "refersTo": "chip-filter-active",
+      "description": "Pill-shaped selector at the top of list columns. Active state is the second most-saturated use of Press Ink in the system, after the workspace tile.",
+      "html": "<div class=\"ds-chip-group\"><button class=\"ds-chip ds-chip-active\">All</button><button class=\"ds-chip\">Active</button><button class=\"ds-chip\">For you</button></div>",
+      "css": ".ds-chip-group { display: inline-flex; align-items: center; gap: 4px; } .ds-chip { padding: 5px 10px; border: none; border-radius: 999px; background: transparent; color: #827d73; font-family: 'Geist Sans', Inter, 'PingFang SC', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4,0,0.2,1), color 150ms cubic-bezier(0.4,0,0.2,1); } .ds-chip:hover { color: #26201c; background: rgba(229,227,219,0.6); } .ds-chip-active { background: #26201c; color: #fafaf9; } .ds-chip-active:hover { background: #26201c; color: #fafaf9; }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Press Ink fill, Sheet White text. Reserved for committing actions (send, save, confirm).",
+      "html": "<button class=\"ds-btn-primary\">Save</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 0 16px; border: none; border-radius: 8px; background: #26201c; color: #ffffff; font-family: 'Geist Sans', Inter, 'PingFang SC', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color 200ms cubic-bezier(0.4,0,0.2,1); } .ds-btn-primary:hover { background: #15110d; } .ds-btn-primary:focus-visible { outline: 2px solid rgba(38,32,28,0.25); outline-offset: 2px; }"
+    },
+    {
+      "name": "Send Button (Composer)",
+      "kind": "custom",
+      "refersTo": "send-button",
+      "description": "Circular Press Ink button with white arrow. The signature commit affordance at the bottom-right of the composer card.",
+      "html": "<button class=\"ds-send-btn\" aria-label=\"Send\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 19V5\"/><path d=\"m5 12 7-7 7 7\"/></svg></button>",
+      "css": ".ds-send-btn { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: none; border-radius: 999px; background: #26201c; color: #ffffff; cursor: pointer; transition: background-color 200ms cubic-bezier(0.4,0,0.2,1), transform 150ms cubic-bezier(0.4,0,0.2,1); } .ds-send-btn:hover { background: #15110d; transform: translateY(-1px); } .ds-send-btn:disabled { background: #e5e3db; color: #827d73; cursor: not-allowed; transform: none; } .ds-send-btn svg { width: 16px; height: 16px; }"
+    },
+    {
+      "name": "Composer Card",
+      "kind": "card",
+      "refersTo": "composer-card",
+      "description": "The signature surface. 24px radius, subtle four-stop vertical gradient, ambient shadow. Hosts the textarea + action bar + send button.",
+      "html": "<div class=\"ds-composer\"><textarea class=\"ds-composer-input\" placeholder=\"Start your task...\" rows=\"1\"></textarea><div class=\"ds-composer-actions\"><div class=\"ds-composer-tools\"><button class=\"ds-composer-tool\" aria-label=\"Add content\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/><path d=\"M12 5v14\"/></svg></button><button class=\"ds-composer-tool\" aria-label=\"AI suggestions\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v3M5 7l2 2M3 12h3M7 17l-2 2M12 21v-3M19 17l-2-2M21 12h-3M17 7l2-2\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/></svg></button></div><button class=\"ds-send-btn\" aria-label=\"Send\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 19V5\"/><path d=\"m5 12 7-7 7 7\"/></svg></button></div></div>",
+      "css": ".ds-composer { width: 100%; max-width: 740px; padding: 16px; border: 1px solid #e5e3db; border-radius: 24px; background-image: linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%); box-shadow: 0 1px 1.5px rgba(38,32,28,0.02), 0 4px 6px rgba(38,32,28,0.02); font-family: 'Geist Sans', Inter, 'PingFang SC', sans-serif; } .ds-composer-input { width: 100%; min-height: 28px; padding: 0; border: none; outline: none; background: transparent; color: #26201c; font-size: 16px; line-height: 24px; resize: none; font-family: inherit; } .ds-composer-input::placeholder { color: #827d73; } .ds-composer-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; } .ds-composer-tools { display: inline-flex; gap: 6px; } .ds-composer-tool { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e5e3db; border-radius: 999px; background: transparent; color: #827d73; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4,0,0.2,1), color 150ms cubic-bezier(0.4,0,0.2,1); } .ds-composer-tool:hover { background: rgba(229,227,219,0.4); color: #26201c; } .ds-composer-tool svg { width: 16px; height: 16px; } .ds-send-btn { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: none; border-radius: 999px; background: #26201c; color: #ffffff; cursor: pointer; transition: background-color 200ms cubic-bezier(0.4,0,0.2,1), transform 150ms cubic-bezier(0.4,0,0.2,1); } .ds-send-btn:hover { background: #15110d; transform: translateY(-1px); } .ds-send-btn svg { width: 16px; height: 16px; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Default content card. Sheet White over Margin White canvas, 16px radius, 1px Stock Paper border, ambient shadow.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Product roadmap</h3><p class=\"ds-card-body\">The team identified that users drop off when onboarding gets too long.</p><span class=\"ds-card-label\">MAY · 9:00 AM</span></article>",
+      "css": ".ds-card { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid #e5e3db; border-radius: 16px; background: #ffffff; box-shadow: 0 1px 1.5px rgba(38,32,28,0.02), 0 4px 6px rgba(38,32,28,0.02); font-family: 'Geist Sans', Inter, 'PingFang SC', sans-serif; color: #26201c; } .ds-card-title { margin: 0; font-size: 14px; font-weight: 500; line-height: 1.4; letter-spacing: -0.005em; } .ds-card-body { margin: 0; font-size: 13px; line-height: 1.5; color: #26201c; } .ds-card-label { font-size: 11px; font-weight: 500; line-height: 1.3; letter-spacing: 0.04em; text-transform: uppercase; color: #bdbbaf; }"
+    },
+    {
+      "name": "Search Container",
+      "kind": "input",
+      "refersTo": "search-container",
+      "description": "Container-with-transparent-input pattern. Repeats across list column, members panel, dropdown sub-search. The container is the visible search surface.",
+      "html": "<label class=\"ds-search\"><svg class=\"ds-search-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><input class=\"ds-search-input\" type=\"text\" placeholder=\"Search\"/></label>",
+      "css": ".ds-search { display: inline-flex; align-items: center; gap: 8px; width: 280px; height: 36px; padding: 0 12px; border: 1px solid #e5e3db; border-radius: 8px; background: transparent; transition: border-color 150ms cubic-bezier(0.4,0,0.2,1); } .ds-search:focus-within { border-color: #bdbbaf; } .ds-search-icon { width: 16px; height: 16px; color: #827d73; flex-shrink: 0; } .ds-search-input { flex: 1; min-width: 0; border: none; outline: none; background: transparent; font-family: 'Geist Sans', Inter, 'PingFang SC', sans-serif; font-size: 13px; color: #26201c; } .ds-search-input::placeholder { color: #827d73; }"
+    },
+    {
+      "name": "Section Label",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "11px uppercase tracking-wider in Margin Rule. Used for date group headers ('MAY', 'YESTERDAY'), table column heads, panel section dividers. Always Margin Rule color.",
+      "html": "<div class=\"ds-section-label\">MAY</div>",
+      "css": ".ds-section-label { padding: 12px 4px 10px; font-family: 'Geist Sans', Inter, 'PingFang SC', sans-serif; font-size: 11px; font-weight: 500; line-height: 1.3; letter-spacing: 0.06em; text-transform: uppercase; color: #bdbbaf; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Considered Workshop",
+    "overview": "Tanka's interface is a workshop that has been carefully tidied. The surfaces are warm paper. The brand mark is press ink. Components sit at Linear-grade density, but the room feels worked-in rather than sterile. A user should be able to look at any screen and read: 'this was made by people who care about their craft, for people who care about theirs.'\n\nThree voices hold the system together. Calm is the 60% baseline (dense layouts, near-invisible shadows). Sharp lives in the AI's voice (proactive copy, asking back). Crafted is the signature touch: one or two distinctive details per surface (the 10-pixel workspace squircle, the 3px active-tab, the soft vertical gradient inside the composer card) that mark this as Tanka and not generic product UI.\n\nThe system explicitly rejects four families from PRODUCT.md: typical SaaS, AI-startup cliché, enterprise admin, and playful-assistant cartoon. A screen that could be confused for any of those four is rejected and rebuilt.",
+    "keyCharacteristics": [
+      "Warm-neutral canvas, single ink. Every surface is a slightly different paper warmth. Press Ink (#26201c) is the only brand-bearing color.",
+      "Dense and quiet. Linear-grade information density with shadows that exist only as ambient warmth, not structural lift.",
+      "Bilingual EN + 中文 validated together. Type scale, density, and component height are tuned so Chinese and Latin glyphs land on the same rhythm.",
+      "Signature details over pattern repetition. Workspace tiles, the composer, and the section labels each carry one hand-tuned detail that fingerprints the system."
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "Press Ink is the only brand-bearing color in the UI. Every other surface lives on the warm-neutral ramp. No secondary brand accent. No tertiary. If a screen needs another color, the answer is hierarchy via Press Ink intensity (100% / 80% / 60% / 40% alpha) before adding a hue.", "section": "colors" },
+      { "name": "The Avatar Exception", "body": "Person and workspace avatars carry their own hues (#5b5fd6, #10a37f, #e89a8a, others). These are content, not palette: they identify a person, not the brand. They never escape an avatar circle, a workspace tile, or a chat author dot. They never appear on buttons, surfaces, borders, or focus rings.", "section": "colors" },
+      { "name": "The Warm-Tinted Shadow Rule", "body": "Shadows are always rgba(38, 32, 28, X) (Press Ink at low alpha), never pure black, never neutral gray. The warmth carries through even where it cannot be seen consciously.", "section": "colors" },
+      { "name": "The 11px Uppercase Rule", "body": "When a label is set in 11px uppercase with tracking-wider, its color is always Margin Rule (#bdbbaf). Never Press Ink. Never Newsprint. The uppercase plus tracked treatment carries authority on its own; full ink at that size would shout.", "section": "typography" },
+      { "name": "The Bilingual Density Rule", "body": "Type scale, leading, and component height are all validated against a Simplified Chinese block of the same role before shipping. A 13px line-height that reads beautifully in English may crowd 中文. When in doubt, give Chinese a touch more leading, not less.", "section": "typography" },
+      { "name": "The Ambient-Only Rule", "body": "Shadows at rest are so subtle they are easy to mistake for nothing. That is the point. Cards do not announce themselves. The page is calm. Shadow intensity only rises in response to state (hover, active, floating).", "section": "elevation" },
+      { "name": "The No-Pure-Black Rule", "body": "Every shadow alpha is on Press Ink (rgba(38,32,28, X)). The day a shadow becomes rgba(0,0,0, X) is the day the warm-paper feel breaks.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Press Ink (#26201c) as the single brand-bearing color. Hierarchy in copy is achieved via Press Ink at decreasing opacities (100% / 80% / 60% / 40%) before reaching for a second hue.",
+      "Do validate every type and layout decision in both English and 中文 before merging. Line-height that works in EN often needs a touch more leading in 中文; a component height that fits 14px Geist may crop a PingFang descender.",
+      "Do keep shadows as rgba(38, 32, 28, X). Warm-tinted depth, not neutral gray, not black.",
+      "Do lead with the 10px workspace squircle as the system's identifying form. New brand surfaces, mark elements, and avatar-adjacent UI all defer to this radius.",
+      "Do treat the 24px (rounded-3xl) radius as reserved for the composer card and direct descendants. The radius is a signature; do not borrow it for ordinary surfaces.",
+      "Do keep section labels at 11px uppercase tracking-wider in Margin Rule color. No exceptions, no Press-Ink variants.",
+      "Do match component voice deliberately. The current default is quietly tactile. A new component aiming for refined-restrained or editorial-crafted is welcome, but the direction must be a conscious choice, not a reflex."
+    ],
+    "donts": [
+      "Don't use pure white (#ffffff) as the canvas. The canvas is Margin White (#fafaf9); pure white is reserved for floating surfaces only.",
+      "Don't use pure black or neutral gray shadows. The day a shadow is rgba(0,0,0, X) is the day the warm-paper system breaks.",
+      "Don't introduce a secondary brand color. If a screen needs more than Press Ink can hold, the answer is hierarchy, not a new hue. Avatar hues are content, not palette.",
+      "Don't use glassmorphism, blurs, or backdrop filters as decoration. PRODUCT.md flags typical SaaS by name.",
+      "Don't use purple gradients, neon halos, or 'AI sparkle' iconography. PRODUCT.md flags AI-startup cliché by name.",
+      "Don't use SF Pro, deep navy, or serif accents. PRODUCT.md flags enterprise admin by name.",
+      "Don't use cartoon mascots, round-eye AI characters, bouncy easing curves, or emoji-as-personality. PRODUCT.md flags playful-assistant cartoon by name.",
+      "Don't use border-left or border-right greater than 1px as a colored stripe on cards or alerts. Use full borders, background tints, or leading icons instead.",
+      "Don't use background-clip: text gradients for headlines. The hero ('Your task today?') is solid Press Ink at 600 weight.",
+      "Don't use em dashes in UI copy or doc copy. Use commas, colons, semicolons, periods, or parentheses."
+    ]
+  }
+}
