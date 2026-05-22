@@ -58,6 +58,7 @@ import {
   Sparkles,
   ArrowRight,
   ArrowUp,
+  BotMessageSquare,
   ThumbsDown,
   ThumbsUp,
   TrendingUp,
@@ -311,6 +312,8 @@ export default function TankaGeminiPage() {
           "--warm-base": "#F2F1F5",
           "--warm-bg": "#F2F1F5",
           "--warm-bg-2": "#ffffff",
+          fontFamily:
+            "var(--font-inter), Inter, system-ui, -apple-system, sans-serif",
         } as React.CSSProperties
       }
       className="flex h-screen w-screen overflow-hidden bg-warm-bg-2 text-warm-black"
@@ -1228,7 +1231,7 @@ function ListColumn({
           <>
             {groupedChatItems.pinned.length > 0 && (
               <div>
-                <div className="text-[11px] uppercase tracking-wider text-warm-border font-medium px-1 pt-3 pb-2.5">
+                <div className="text-[12px] uppercase tracking-[0.02em] text-warm-border font-medium px-1 pt-3 pb-2.5">
                   Pinned
                 </div>
                 <ul className="space-y-1">
@@ -1245,7 +1248,7 @@ function ListColumn({
             )}
             {groupedChatItems.today.length > 0 && (
               <div className="mt-3">
-                <div className="text-[11px] uppercase tracking-wider text-warm-border font-medium px-1 pt-1 pb-2.5">
+                <div className="text-[12px] uppercase tracking-[0.02em] text-warm-border font-medium px-1 pt-1 pb-2.5">
                   Today
                 </div>
                 <ul className="space-y-1">
@@ -1268,7 +1271,7 @@ function ListColumn({
             {groupedFlowItems.length === 0 && <EmptyList />}
             {groupedFlowItems.map((group) => (
               <div key={group.month}>
-                <div className="text-[11px] uppercase tracking-wider text-warm-border font-medium px-1 pt-3 pb-2.5">
+                <div className="text-[12px] uppercase tracking-[0.02em] text-warm-border font-medium px-1 pt-3 pb-2.5">
                   {group.month}
                 </div>
                 <ul className="space-y-1">
@@ -1466,7 +1469,17 @@ function EmptyTaskView({
         }}
       />
       <div className="relative w-full max-w-[740px] -mt-12">
-        <h1 className="text-center text-[40px] leading-[44px] font-normal tracking-tight mb-7 text-[#1E1E21]">
+        <h1
+          className="text-center mb-7 text-[#1E1E21]"
+          style={{
+            fontFamily:
+              "Sohne, var(--font-inter), Inter, system-ui, sans-serif",
+            fontSize: "4rem",
+            lineHeight: 1.1,
+            fontWeight: 600,
+            letterSpacing: "-0.02em",
+          }}
+        >
           Your task today?
         </h1>
 
@@ -1500,11 +1513,23 @@ function EmptyTaskView({
 
           <div className="flex items-center justify-between mt-3">
             <div className="flex items-center gap-1">
-              <ComposerOutlineBtn title="Add content">
-                <Plus className="w-[18px] h-[18px]" strokeWidth={2} />
+              <ComposerOutlineBtn title="AI mode" active>
+                <BotMessageSquare className="w-[18px] h-[18px]" strokeWidth={1.8} />
               </ComposerOutlineBtn>
-              <ComposerOutlineBtn title="AI suggestions">
-                <Sparkles className="w-[18px] h-[18px]" strokeWidth={2} />
+              <ComposerOutlineBtn title="Add image">
+                <ImageIcon className="w-[18px] h-[18px]" strokeWidth={1.8} />
+              </ComposerOutlineBtn>
+              <ComposerOutlineBtn title="Add file">
+                <Folder className="w-[18px] h-[18px]" strokeWidth={1.8} />
+              </ComposerOutlineBtn>
+              <ComposerOutlineBtn title="Clip">
+                <Scissors className="w-[18px] h-[18px]" strokeWidth={1.8} />
+              </ComposerOutlineBtn>
+              <ComposerOutlineBtn title="Insert data">
+                <BarChart3 className="w-[18px] h-[18px]" strokeWidth={1.8} />
+              </ComposerOutlineBtn>
+              <ComposerOutlineBtn title="Voice">
+                <Mic className="w-[18px] h-[18px]" strokeWidth={1.8} />
               </ComposerOutlineBtn>
             </div>
             <SendBtn onClick={onSubmit} disabled={!value.trim()} />
@@ -2222,16 +2247,20 @@ function ComposerOutlineBtn({
   children,
   title,
   onClick,
+  active,
 }: {
   children: ReactNode;
   title: string;
   onClick?: () => void;
+  active?: boolean;
 }) {
   return (
     <button
       onClick={onClick}
       title={title}
-      className="w-9 h-9 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-colors"
+      className={`w-9 h-9 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-colors ${
+        active ? "ring-1 ring-warm-gray-2 text-warm-black" : ""
+      }`}
     >
       {children}
     </button>
