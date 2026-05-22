@@ -524,7 +524,7 @@ function WorkspaceRail({
               )}
               <button
                 onClick={() => onSelect(ws.id)}
-                className={`relative w-[32px] h-[32px] rounded-[10px] flex items-center justify-center text-[11px] font-bold overflow-visible transition-all ${
+                className={`relative w-[32px] h-[32px] rounded-2xl flex items-center justify-center text-[11px] font-bold overflow-visible transition-all ${
                   isActive
                     ? "ring-2 ring-warm-black/25 shadow-[0_2px_6px_rgba(38,32,28,0.18)]"
                     : "opacity-55 hover:opacity-100"
@@ -540,7 +540,7 @@ function WorkspaceRail({
                   <img
                     src={ws.avatar}
                     alt={ws.name}
-                    className="w-full h-full rounded-[10px] object-cover"
+                    className="w-full h-full rounded-2xl object-cover"
                   />
                 ) : (
                   ws.letter
@@ -558,7 +558,7 @@ function WorkspaceRail({
         <div className="w-4 border-t border-warm-gray-2 my-1" />
 
         <button
-          className="w-[32px] h-[32px] rounded-[10px] border-[1.5px] border-dashed border-warm-border flex items-center justify-center text-warm-2 hover:bg-warm-gray-2/60 hover:text-warm-black hover:border-warm-2 transition-colors"
+          className="w-[32px] h-[32px] rounded-2xl border-[1.5px] border-dashed border-warm-border flex items-center justify-center text-warm-2 hover:bg-warm-gray-2/60 hover:text-warm-black hover:border-warm-2 transition-colors"
           title="Add workspace"
         >
           <Plus className="w-3.5 h-3.5" />
@@ -704,20 +704,20 @@ function NavRow({
   const showBadge = (badgeCount ?? 0) > 0;
   return (
     <div
-      className={`group/nav relative w-[156px] mx-3 h-9 rounded-full flex items-center text-[14px] font-medium transition-colors ${
-        active ? "bg-[#d3e3fd] text-[#0b57d0] font-medium" : "text-warm-black hover:bg-warm-gray-2/60"
+      className={`group/nav relative w-[156px] mx-3 h-9 rounded-full flex items-center text-[14px] leading-5 font-medium transition-colors ${
+        active ? "bg-[#d3e3fd] text-[#0b57d0]" : "text-warm-black hover:bg-warm-gray-2/60"
       }`}
     >
       <button
         onClick={onClick}
-        className={`flex-1 flex items-center gap-2.5 h-full min-w-0 ${
-          indent ? "pl-7 pr-2" : showBadge || createMenu ? "pl-2.5 pr-8" : "px-2.5"
+        className={`flex-1 flex items-center gap-3 h-full min-w-0 ${
+          indent ? "pl-7 pr-2" : showBadge || createMenu ? "pl-3 pr-8" : "px-3"
         }`}
       >
         <Icon
           className="w-[18px] h-[18px] shrink-0"
           style={{ color: active ? "#0b57d0" : "#5f6368" }}
-          strokeWidth={1.6}
+          strokeWidth={2}
         />
         <span className="flex-1 text-left truncate">{label}</span>
       </button>
@@ -1199,7 +1199,7 @@ function ListColumn({
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search..."
-            className="bg-transparent text-[13px] outline-none flex-1 placeholder:text-warm-2"
+            className="bg-transparent text-[14px] outline-none flex-1 placeholder:text-warm-2"
           />
         </div>
       </div>
@@ -1291,7 +1291,7 @@ function ListColumn({
                           />
                           <div className="relative">
                             <div className="flex items-center justify-between gap-2 mb-1">
-                              <p className="text-[13px] truncate text-warm-black">
+                              <p className="text-[14px] truncate text-warm-black">
                                 {item.title}
                               </p>
                               {item.unread && (
@@ -1405,7 +1405,7 @@ function ChatRow({
         )}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2 mb-1">
-            <p className="text-[13px] truncate text-warm-black">{item.name}</p>
+            <p className="text-[14px] truncate text-warm-black">{item.name}</p>
             <span className="text-[11px] text-warm-2 shrink-0">{item.time}</span>
           </div>
           <div className="flex items-center justify-between gap-2">
@@ -1471,7 +1471,7 @@ function EmptyTaskView({
         </h1>
 
         <div
-          className="rounded-[28px] border border-warm-gray-2 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04),0_6px_18px_rgba(0,0,0,0.06)] px-5 py-4"
+          className="rounded-[32px] border border-warm-gray-2 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04),0_6px_18px_rgba(0,0,0,0.06)] px-5 py-4"
           style={{
             backgroundImage:
               "linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%)",
@@ -1564,7 +1564,7 @@ function MembersPanel({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={`Search ${groupName} members`}
-            className="bg-transparent text-[13px] outline-none flex-1 placeholder:text-warm-2"
+            className="bg-transparent text-[14px] outline-none flex-1 placeholder:text-warm-2"
           />
         </div>
       </div>
@@ -1601,7 +1601,7 @@ function MembersPanel({
                 </span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <p className="text-[13px] text-warm-black truncate">{m.name}</p>
+                    <p className="text-[14px] text-warm-black truncate">{m.name}</p>
                     {tag && (
                       <span
                         className={`shrink-0 text-[10px] leading-none px-1.5 py-[3px] rounded bg-warm-base ${
@@ -1818,11 +1818,11 @@ function ConversationView({
                 }}
                 rows={1}
                 placeholder="Start your task..."
-                className="w-full bg-transparent text-[15px] leading-6 outline-none resize-none placeholder:text-transparent"
+                className="w-full bg-transparent text-[16px] leading-6 outline-none resize-none placeholder:text-transparent"
               />
               {!chatInput && (
                 <div className="absolute left-0 top-0 flex items-center gap-2 pointer-events-none">
-                  <span className="text-warm-2 text-[15px]">Start your task...</span>
+                  <span className="text-warm-2 text-[16px]">Start your task...</span>
                   <span className="bg-warm-base px-1.5 py-0.5 rounded text-[10px] font-semibold text-warm-2">
                     TAB
                   </span>
@@ -2003,13 +2003,13 @@ function HighlightModal({
                     {style.emoji}
                   </span>
                   <div
-                    className="rounded-2xl px-4 py-2.5 text-[15px] text-warm-black w-full"
+                    className="rounded-2xl px-4 py-2.5 text-[16px] text-warm-black w-full"
                     style={{ background: style.bg }}
                   >
                     Hello~
                   </div>
                 </div>
-                <p className="text-[13px] text-warm-2 text-center mt-3">
+                <p className="text-[14px] text-warm-2 text-center mt-3">
                   {style.label}
                 </p>
               </button>
@@ -2020,7 +2020,7 @@ function HighlightModal({
           {current && (
             <button
               onClick={() => onApply(null)}
-              className="h-9 px-4 rounded-full text-[13px] text-warm-2 hover:text-warm-black hover:bg-warm-base"
+              className="h-9 px-4 rounded-full text-[14px] text-warm-2 hover:text-warm-black hover:bg-warm-base"
             >
               Remove
             </button>
@@ -2028,7 +2028,7 @@ function HighlightModal({
           <button
             onClick={() => selected && onApply(selected)}
             disabled={!selected}
-            className={`h-9 px-5 rounded-full text-[13px] font-medium transition ${
+            className={`h-9 px-5 rounded-full text-[14px] font-medium transition ${
               selected
                 ? "bg-warm-black text-white hover:bg-warm-black/90"
                 : "bg-warm-base text-warm-2 cursor-not-allowed"
@@ -2151,7 +2151,7 @@ function Message({
           {toneStyle ? (
             // Toned bubble: time + read marks live inside the bubble at the bottom
             <div
-              className="rounded-2xl px-4 py-3 text-[15px] leading-relaxed text-warm-black"
+              className="rounded-2xl px-4 py-3 text-[16px] leading-relaxed text-warm-black"
               style={{ background: toneStyle.bg }}
             >
               <span>{message.text}</span>
@@ -2168,7 +2168,7 @@ function Message({
             </div>
           ) : (
             // Default bubble: text only inside; time below
-            <div className="rounded-2xl px-4 py-3 text-[15px] leading-relaxed bg-warm-base text-warm-black">
+            <div className="rounded-2xl px-4 py-3 text-[16px] leading-relaxed bg-warm-base text-warm-black">
               {message.text}
             </div>
           )}
@@ -2194,9 +2194,9 @@ function Message({
       )}
       <div className="flex-1 min-w-0">
         {!sameAuthor && (
-          <p className="text-[13px] font-semibold mb-1.5 text-warm-black">{message.author}</p>
+          <p className="text-[14px] font-semibold mb-1.5 text-warm-black">{message.author}</p>
         )}
-        <div className="inline-block max-w-[85%] rounded-2xl bg-white border border-warm-gray-2 px-4 py-3 text-[15px] leading-relaxed text-warm-black">
+        <div className="inline-block max-w-[85%] rounded-2xl bg-white border border-warm-gray-2 px-4 py-3 text-[16px] leading-relaxed text-warm-black">
           {message.text}
         </div>
         {message.time && (
@@ -2366,7 +2366,7 @@ function DropdownPortal({
                   </span>
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] font-medium text-warm-black">{it.label}</p>
+                  <p className="text-[14px] font-medium text-warm-black">{it.label}</p>
                   {it.description && (
                     <p className="text-[10px] text-warm-2">{it.description}</p>
                   )}
@@ -2443,8 +2443,8 @@ function PlaceholderPage({
         <span className="w-12 h-12 rounded-2xl bg-warm-base flex items-center justify-center mb-3">
           <Sparkles className="w-5 h-5 text-warm-2" strokeWidth={1.8} />
         </span>
-        <p className="text-[15px] font-medium text-warm-black mb-1">{title}</p>
-        <p className="text-[13px] text-warm-2 max-w-[320px]">{subtitle}</p>
+        <p className="text-[16px] font-medium text-warm-black mb-1">{title}</p>
+        <p className="text-[14px] text-warm-2 max-w-[320px]">{subtitle}</p>
       </div>
     </div>
   );
@@ -2587,7 +2587,7 @@ function FollowUpsPage() {
                     onChange={(e) => setQuery(e.target.value)}
                     onBlur={() => !query && setSearchOpen(false)}
                     placeholder="Search..."
-                    className="bg-transparent text-[13px] outline-none flex-1 placeholder:text-warm-2"
+                    className="bg-transparent text-[14px] outline-none flex-1 placeholder:text-warm-2"
                   />
                 </div>
               ) : (
@@ -2599,13 +2599,13 @@ function FollowUpsPage() {
                   <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
                 </button>
               )}
-              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-full bg-warm-black text-white text-[13px] font-medium hover:bg-warm-black/90">
+              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-full bg-warm-black text-white text-[14px] font-medium hover:bg-warm-black/90">
                 <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New Follow-up
               </button>
             </div>
           </div>
-          <p className="text-[13px] text-warm-2 mb-5">
+          <p className="text-[14px] text-warm-2 mb-5">
             Track action items captured from chats, meetings, and docs.
           </p>
 
@@ -2629,7 +2629,7 @@ function FollowUpsPage() {
           </div>
 
           <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-3 text-[13px]">
+            <div className="flex items-center gap-3 text-[14px]">
               {scopes.map((s, i) => (
                 <span key={s.id} className="flex items-center gap-3">
                   <button
@@ -2646,7 +2646,7 @@ function FollowUpsPage() {
                 </span>
               ))}
             </div>
-            <button className="flex items-center gap-1.5 text-[13px] text-warm-2 hover:text-warm-black">
+            <button className="flex items-center gap-1.5 text-[14px] text-warm-2 hover:text-warm-black">
               <ListTodo className="w-3.5 h-3.5" strokeWidth={1.8} />
               Select
             </button>
@@ -2667,7 +2667,7 @@ function FollowUpsPage() {
             </div>
           ))}
           {grouped.length === 0 && (
-            <div className="text-center text-warm-2 text-[13px] py-20">
+            <div className="text-center text-warm-2 text-[14px] py-20">
               Nothing to follow up on.
             </div>
           )}
@@ -2785,7 +2785,7 @@ function AgentPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search..."
-              className="bg-transparent text-[13px] outline-none flex-1 placeholder:text-warm-2"
+              className="bg-transparent text-[14px] outline-none flex-1 placeholder:text-warm-2"
             />
           </div>
         </div>
@@ -2806,7 +2806,7 @@ function AgentPage() {
                   </span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <p className="text-[13px] truncate text-warm-black">{a.name}</p>
+                      <p className="text-[14px] truncate text-warm-black">{a.name}</p>
                       {a.count != null && (
                         <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-warm-black text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
                           {a.count}
@@ -2830,7 +2830,7 @@ function AgentPage() {
         <p className="text-[18px] font-semibold text-warm-black mb-1">
           {selected.name}
         </p>
-        <p className="text-[13px] text-warm-2 max-w-[360px]">
+        <p className="text-[14px] text-warm-2 max-w-[360px]">
           {selected.description}
         </p>
         <p className="text-[12px] text-warm-2 mt-6">
@@ -2948,7 +2948,7 @@ function SopsPage() {
                     onChange={(e) => setQuery(e.target.value)}
                     onBlur={() => !query && setSearchOpen(false)}
                     placeholder="Search SOPs..."
-                    className="bg-transparent text-[13px] outline-none flex-1 placeholder:text-warm-2"
+                    className="bg-transparent text-[14px] outline-none flex-1 placeholder:text-warm-2"
                   />
                 </div>
               ) : (
@@ -2960,13 +2960,13 @@ function SopsPage() {
                   <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
                 </button>
               )}
-              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-full bg-warm-black text-white text-[13px] font-medium hover:bg-warm-black/90">
+              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-full bg-warm-black text-white text-[14px] font-medium hover:bg-warm-black/90">
                 <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New SOP
               </button>
             </div>
           </div>
-          <p className="text-[13px] text-warm-2 mb-5">
+          <p className="text-[14px] text-warm-2 mb-5">
             Pre-built workflows to automate recurring processes.
           </p>
 
@@ -2999,7 +2999,7 @@ function SopsPage() {
               ))}
             </div>
           ) : (
-            <div className="text-center text-warm-2 text-[13px] py-20">
+            <div className="text-center text-warm-2 text-[14px] py-20">
               No SOPs here yet.
             </div>
           )}
@@ -3023,8 +3023,8 @@ function SopCardView({ card }: { card: SopCard }) {
         <Icon className="w-[18px] h-[18px]" strokeWidth={1.8} />
       </span>
       <div className="flex-1">
-        <p className="text-[15px] font-semibold text-warm-black">{card.title}</p>
-        <p className="text-[13px] text-warm-black/70 mt-1 line-clamp-2">{card.description}</p>
+        <p className="text-[16px] font-semibold text-warm-black">{card.title}</p>
+        <p className="text-[14px] text-warm-black/70 mt-1 line-clamp-2">{card.description}</p>
       </div>
       <div className="border-t border-warm-black/10 pt-2.5 mt-1.5">
         <p className="text-[11.5px] text-warm-black/55">Created by {card.author}</p>
@@ -3115,19 +3115,19 @@ function CalendarPage() {
       <div className="shrink-0 max-w-[1080px] mx-auto w-full px-10">
         <div className="flex items-start justify-between mb-1">
           <h1 className="text-[28px] font-bold tracking-tight">Calendar</h1>
-          <button className="h-8 px-3 mt-1 inline-flex items-center gap-1.5 rounded-full border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base shrink-0">
+          <button className="h-8 px-3 mt-1 inline-flex items-center gap-1.5 rounded-full border border-warm-gray-2 bg-white text-[14px] font-medium text-warm-black hover:bg-warm-base shrink-0">
             <Plus className="w-3.5 h-3.5" strokeWidth={2} />
             New event
           </button>
         </div>
-        <p className="text-[13px] text-warm-2 mb-5">
+        <p className="text-[14px] text-warm-2 mb-5">
           Schedule recurring and one-time tasks for your agents.
         </p>
 
         {/* Toolbar — Today / prev / next / date range + view toggle */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <button className="h-8 px-3 rounded-full border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base">
+            <button className="h-8 px-3 rounded-full border border-warm-gray-2 bg-white text-[14px] font-medium text-warm-black hover:bg-warm-base">
               Today
             </button>
             <div className="flex items-center">
@@ -3144,7 +3144,7 @@ function CalendarPage() {
                 <ChevronRight className="w-4 h-4" strokeWidth={1.8} />
               </button>
             </div>
-            <button className="inline-flex items-center gap-1 text-[15px] font-medium text-warm-black hover:bg-warm-base rounded-full px-2 h-8">
+            <button className="inline-flex items-center gap-1 text-[16px] font-medium text-warm-black hover:bg-warm-base rounded-full px-2 h-8">
               May 10 – 16, 2026
               <ChevronDown className="w-3.5 h-3.5 text-warm-2" strokeWidth={1.8} />
             </button>
@@ -3349,7 +3349,7 @@ function LinkPage() {
                   onChange={(e) => setQuery(e.target.value)}
                   onBlur={() => !query && setSearchOpen(false)}
                   placeholder="Search tools..."
-                  className="bg-transparent text-[13px] outline-none flex-1 placeholder:text-warm-2"
+                  className="bg-transparent text-[14px] outline-none flex-1 placeholder:text-warm-2"
                 />
               </div>
             ) : (
@@ -3362,7 +3362,7 @@ function LinkPage() {
               </button>
             )}
           </div>
-          <p className="text-[13px] text-warm-2 mb-5">
+          <p className="text-[14px] text-warm-2 mb-5">
             Connect tools and accounts to surface the right data when you need it.
           </p>
 
@@ -3414,7 +3414,7 @@ function LinkPage() {
               ))}
             </div>
           ) : (
-            <div className="text-center text-warm-2 text-[13px] py-20">
+            <div className="text-center text-warm-2 text-[14px] py-20">
               Nothing here yet.
             </div>
           )}
@@ -3459,7 +3459,7 @@ function LinkCard({ tool }: { tool: LinkTool }) {
   return (
     <div className="group/link text-left rounded-2xl border border-warm-gray-2 bg-white px-4 py-3 flex items-center gap-3 transition-all hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)]">
       <span
-        className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-[15px] font-bold"
+        className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-[16px] font-bold"
         style={{ background: tool.letterBg, color: tool.letterColor }}
       >
         {imgFailed ? (
@@ -3477,7 +3477,7 @@ function LinkCard({ tool }: { tool: LinkTool }) {
         )}
       </span>
       <div className="flex-1 min-w-0">
-        <p className="text-[15px] font-semibold text-warm-black truncate">{tool.name}</p>
+        <p className="text-[16px] font-semibold text-warm-black truncate">{tool.name}</p>
         <p className="text-[12px] text-warm-2 mt-0.5 flex items-center gap-1">
           {tool.linked ? (
             <>
@@ -3573,7 +3573,7 @@ function SendEmailActionCard({
             >
               <Icon className="w-3 h-3" strokeWidth={2.2} />
             </span>
-            <span className="text-[13px] font-medium text-warm-black">Send Email</span>
+            <span className="text-[14px] font-medium text-warm-black">Send Email</span>
             <span
               className="text-[11px] font-medium tracking-[0.04em]"
               style={{ color: theme.tagText }}
@@ -3627,13 +3627,13 @@ function SendEmailActionCard({
 
           {/* Subject */}
           <p className="text-[11px] text-warm-2 mb-1">Subject</p>
-          <p className="text-[13px] font-medium text-warm-black mb-3 leading-snug">
+          <p className="text-[14px] font-medium text-warm-black mb-3 leading-snug">
             {subject}
           </p>
 
           {/* Body */}
           <p className="text-[11px] text-warm-2 mb-1">Body</p>
-          <p className="text-[13px] text-warm-black/85 leading-snug whitespace-pre-line mb-3">
+          <p className="text-[14px] text-warm-black/85 leading-snug whitespace-pre-line mb-3">
             {body}
           </p>
 
@@ -3651,7 +3651,7 @@ function SendEmailActionCard({
           {state === "proposed" && (
             <button
               onClick={onConfirm}
-              className="w-full text-[13px] font-medium text-warm-black hover:text-warm-black/80 transition"
+              className="w-full text-[14px] font-medium text-warm-black hover:text-warm-black/80 transition"
             >
               Confirm
             </button>
@@ -3659,7 +3659,7 @@ function SendEmailActionCard({
           {state === "completed" && (
             <button
               onClick={onConfirm}
-              className="w-full flex items-center justify-center gap-1 text-[13px] font-medium text-warm-black hover:text-warm-black/70 transition-colors"
+              className="w-full flex items-center justify-center gap-1 text-[14px] font-medium text-warm-black hover:text-warm-black/70 transition-colors"
             >
               View Detail <ArrowRight className="w-3 h-3" strokeWidth={2} />
             </button>
@@ -3667,7 +3667,7 @@ function SendEmailActionCard({
           {state === "expired" && (
             <button
               disabled
-              className="w-full text-[13px] font-medium text-warm-2 cursor-not-allowed"
+              className="w-full text-[14px] font-medium text-warm-2 cursor-not-allowed"
             >
               Expired
             </button>
@@ -3715,7 +3715,7 @@ function WideTableActionCard({
             >
               <Icon className="w-3 h-3" strokeWidth={2.2} />
             </span>
-            <span className="text-[13px] font-medium text-warm-black">{title}</span>
+            <span className="text-[14px] font-medium text-warm-black">{title}</span>
             <span
               className="text-[11px] font-medium tracking-[0.04em]"
               style={{ color: theme.tagText }}
@@ -3857,7 +3857,7 @@ function FlowDetailView({
         <div className="flex items-center gap-2 text-warm-2">
           <button
             onClick={() => setStatus(status === "complete" ? "none" : "complete")}
-            className={`flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[13px] font-medium hover:bg-warm-base ${
+            className={`flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[14px] font-medium hover:bg-warm-base ${
               status === "complete" ? "text-[#047857]" : ""
             }`}
           >
@@ -3866,14 +3866,14 @@ function FlowDetailView({
           </button>
           <button
             onClick={() => setStatus(status === "progress" ? "none" : "progress")}
-            className={`flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[13px] font-medium hover:bg-warm-base ${
+            className={`flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[14px] font-medium hover:bg-warm-base ${
               status === "progress" ? "text-[#d97706]" : ""
             }`}
           >
             <Circle className="w-4 h-4" strokeWidth={1.8} strokeDasharray="3 2" />
             Progress
           </button>
-          <button className="flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[13px] font-medium hover:bg-warm-base">
+          <button className="flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[14px] font-medium hover:bg-warm-base">
             <Bookmark className="w-4 h-4" strokeWidth={1.8} />
             Save as SOP
           </button>
@@ -3905,7 +3905,7 @@ function FlowDetailView({
         <div className="max-w-[820px] mx-auto">
           {/* User query bubble */}
           <div className="flex justify-end mb-5">
-            <div className="bg-warm-base rounded-2xl px-4 py-3 text-[15px] leading-snug max-w-[85%]">
+            <div className="bg-warm-base rounded-2xl px-4 py-3 text-[16px] leading-snug max-w-[85%]">
               {detail.query}
             </div>
           </div>
@@ -3930,7 +3930,7 @@ function FlowDetailView({
                   if (step.kind === "user") {
                     return (
                       <div key={i} className="flex justify-end">
-                        <div className="bg-warm-base rounded-2xl px-4 py-3 text-[15px] leading-snug max-w-[85%] text-warm-black">
+                        <div className="bg-warm-base rounded-2xl px-4 py-3 text-[16px] leading-snug max-w-[85%] text-warm-black">
                           {step.text}
                         </div>
                       </div>
@@ -3980,7 +3980,7 @@ function FlowDetailView({
           })()}
 
           {/* Long-form response */}
-          <div className="space-y-4 text-[15px] leading-relaxed text-warm-black/90 mb-3">
+          <div className="space-y-4 text-[16px] leading-relaxed text-warm-black/90 mb-3">
             {detail.response.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -4016,11 +4016,11 @@ function FlowDetailView({
                 }}
                 rows={1}
                 placeholder="Start your task..."
-                className="w-full bg-transparent text-[15px] leading-6 outline-none resize-none placeholder:text-transparent"
+                className="w-full bg-transparent text-[16px] leading-6 outline-none resize-none placeholder:text-transparent"
               />
               {!chatInput && (
                 <div className="absolute left-0 top-0 flex items-center gap-2 pointer-events-none">
-                  <span className="text-warm-2 text-[15px]">Start your task...</span>
+                  <span className="text-warm-2 text-[16px]">Start your task...</span>
                   <span className="bg-warm-base px-1.5 py-0.5 rounded text-[10px] font-semibold text-warm-2">
                     TAB
                   </span>
