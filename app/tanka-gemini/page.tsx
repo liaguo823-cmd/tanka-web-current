@@ -262,7 +262,7 @@ export default function TankaGeminiPage() {
         id: `a-${Date.now() + 1}`,
         author: "Tanka",
         authorInitials: "T",
-        authorColor: "#1f1f1f",
+        authorColor: "#1c1c21",
         text: "Got it — I'll start working on that. Want me to pull in any specific data sources?",
         time: now,
       },
@@ -288,7 +288,7 @@ export default function TankaGeminiPage() {
           id: `a-${Date.now()}`,
           author: "Tanka",
           authorInitials: "T",
-          authorColor: "#1f1f1f",
+          authorColor: "#1c1c21",
           text: "Thanks — pulling that together now.",
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         },
@@ -304,12 +304,12 @@ export default function TankaGeminiPage() {
     <div
       style={
         {
-          "--warm-black": "#1f1f1f",
-          "--warm-color-2": "#5f6368",
-          "--warm-gray-2": "#e8eaed",
-          "--warm-gray-border": "#dadce0",
-          "--warm-base": "#f0f4f9",
-          "--warm-bg": "#f0f4f9",
+          "--warm-black": "#1c1c21",
+          "--warm-color-2": "#605E6A",
+          "--warm-gray-2": "#EAE8ED",
+          "--warm-gray-border": "#DDDBE2",
+          "--warm-base": "#F3F0F8",
+          "--warm-bg": "#F3F0F8",
           "--warm-bg-2": "#ffffff",
         } as React.CSSProperties
       }
@@ -716,7 +716,7 @@ function NavRow({
       >
         <Icon
           className="w-[18px] h-[18px] shrink-0"
-          style={{ color: active ? "#635BFF" : "#5f6368" }}
+          style={{ color: active ? "#635BFF" : "#605E6A" }}
           strokeWidth={2}
         />
         <span className="flex-1 text-left truncate">{label}</span>
@@ -894,7 +894,7 @@ function NavSidebar({
           title="yiran guo"
           className="flex-1 min-w-0 h-9 flex items-center px-1 transition-colors"
         >
-          <span className="w-8 h-8 rounded-full bg-[#5f6368] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
+          <span className="w-8 h-8 rounded-full bg-[#605E6A] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
             YG
           </span>
         </button>
@@ -1005,7 +1005,7 @@ function NavSidebarCollapsed({
         </button>
       </div>
       <div className="h-[60px] w-full flex items-center justify-center">
-        <span className="w-8 h-8 rounded-full bg-[#5f6368] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
+        <span className="w-8 h-8 rounded-full bg-[#605E6A] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
           YG
         </span>
       </div>
@@ -1466,7 +1466,7 @@ function EmptyTaskView({
         }}
       />
       <div className="relative w-full max-w-[740px] -mt-12">
-        <h1 className="text-center text-[40px] leading-[44px] font-normal tracking-tight mb-7 text-[#1f1f1f]">
+        <h1 className="text-center text-[40px] leading-[44px] font-normal tracking-tight mb-7 text-[#1c1c21]">
           Your task today?
         </h1>
 
@@ -2185,7 +2185,7 @@ function Message({
       {!sameAuthor ? (
         <span
           className="w-8 h-8 rounded-full text-white text-[11px] font-semibold flex items-center justify-center shrink-0 mt-1"
-          style={{ background: message.authorColor ?? "#5f6368" }}
+          style={{ background: message.authorColor ?? "#605E6A" }}
         >
           {message.authorInitials}
         </span>
@@ -2744,15 +2744,15 @@ type AgentSpec = {
 };
 
 const AGENTS: AgentSpec[] = [
-  { id: "email", name: "Email Agent", description: "Triage inboxes, classify, draft replies, and follow up.", icon: Mail, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 2, status: "READY" },
-  { id: "schedule", name: "Schedule Agent", description: "Manage meetings, surface conflicts, propose times.", icon: CalendarDays, iconBg: "#f0f4f9", iconColor: "#1f1f1f", status: "READY" },
-  { id: "knowledge", name: "Knowledge Agent", description: "Search across docs, summarize, answer questions.", icon: BookOpen, iconBg: "#f0f4f9", iconColor: "#1f1f1f", status: "READY" },
-  { id: "message", name: "Message Agent", description: "Handle Slack/Teams messages, summarize threads.", icon: MessageSquare, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 1, status: "READY" },
-  { id: "project", name: "Project Agent", description: "Track tasks, surface blockers, auto-update.", icon: Briefcase, iconBg: "#f0f4f9", iconColor: "#1f1f1f", status: "READY" },
-  { id: "sales", name: "Sales Agent", description: "Manage pipeline, update records, draft outreach.", icon: TrendingUp, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 2, status: "READY" },
-  { id: "data", name: "Data Agent", description: "Query warehouses, render charts, explain trends.", icon: BarChart3, iconBg: "#f0f4f9", iconColor: "#1f1f1f", status: "READY" },
-  { id: "finance", name: "Finance Agent", description: "Track spend, generate reports, flag anomalies.", icon: Coins, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 1, status: "READY" },
-  { id: "hr", name: "HR Agent", description: "Recruiting funnel, employee data, policies.", icon: Users, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 1, status: "READY" },
+  { id: "email", name: "Email Agent", description: "Triage inboxes, classify, draft replies, and follow up.", icon: Mail, iconBg: "#F3F0F8", iconColor: "#1c1c21", count: 2, status: "READY" },
+  { id: "schedule", name: "Schedule Agent", description: "Manage meetings, surface conflicts, propose times.", icon: CalendarDays, iconBg: "#F3F0F8", iconColor: "#1c1c21", status: "READY" },
+  { id: "knowledge", name: "Knowledge Agent", description: "Search across docs, summarize, answer questions.", icon: BookOpen, iconBg: "#F3F0F8", iconColor: "#1c1c21", status: "READY" },
+  { id: "message", name: "Message Agent", description: "Handle Slack/Teams messages, summarize threads.", icon: MessageSquare, iconBg: "#F3F0F8", iconColor: "#1c1c21", count: 1, status: "READY" },
+  { id: "project", name: "Project Agent", description: "Track tasks, surface blockers, auto-update.", icon: Briefcase, iconBg: "#F3F0F8", iconColor: "#1c1c21", status: "READY" },
+  { id: "sales", name: "Sales Agent", description: "Manage pipeline, update records, draft outreach.", icon: TrendingUp, iconBg: "#F3F0F8", iconColor: "#1c1c21", count: 2, status: "READY" },
+  { id: "data", name: "Data Agent", description: "Query warehouses, render charts, explain trends.", icon: BarChart3, iconBg: "#F3F0F8", iconColor: "#1c1c21", status: "READY" },
+  { id: "finance", name: "Finance Agent", description: "Track spend, generate reports, flag anomalies.", icon: Coins, iconBg: "#F3F0F8", iconColor: "#1c1c21", count: 1, status: "READY" },
+  { id: "hr", name: "HR Agent", description: "Recruiting funnel, employee data, policies.", icon: Users, iconBg: "#F3F0F8", iconColor: "#1c1c21", count: 1, status: "READY" },
 ];
 
 function AgentPage() {
@@ -2900,14 +2900,14 @@ type SopCard = {
 };
 
 const SOP_CARDS: SopCard[] = [
-  { id: "s1", title: "Customer Interview Synthesis", description: "Turns raw transcripts into themed insight report with...", icon: Users, bg: "#f1dfd9", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Amanda", scope: "featured" },
-  { id: "s2", title: "Weekly Exec Digest", description: "Compiles key wins, risks, decisions across all active flow...", icon: ClipboardList, bg: "#f1e1c8", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Chen", scope: "featured" },
-  { id: "s3", title: "Bug Triage Router", description: "Auto-categorizes incoming bugs by severity and owner, drafts...", icon: Sparkles, bg: "#dde3cc", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Hua", scope: "featured" },
-  { id: "s4", title: "Release Comms Pack", description: "Generates changelog, customer email, and internal Slack post...", icon: Rocket, bg: "#e0d8ce", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Junjie", scope: "featured" },
-  { id: "s5", title: "1:1 Meeting Notes", description: "From requirements gathering to priority assessment, ensuring clear", icon: Users, bg: "#e8eaed", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Koko", scope: "featured" },
-  { id: "s6", title: "Retro Action Items", description: "From requirements gathering to priority assessment, ensuring clear", icon: ClipboardList, bg: "#ecd3cb", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Hua", scope: "featured" },
-  { id: "s7", title: "Onboarding Buddy Brief", description: "Generates day-1 schedule, intro list, and welcome doc.", icon: Users, bg: "#d4cfc4", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Mei", scope: "featured" },
-  { id: "s8", title: "Quarterly OKR Rollup", description: "Aggregates progress across teams into a single OKR digest.", icon: ClipboardList, bg: "#ede3c4", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Priya", scope: "featured" },
+  { id: "s1", title: "Customer Interview Synthesis", description: "Turns raw transcripts into themed insight report with...", icon: Users, bg: "#f1dfd9", iconBg: "#ffffff", iconColor: "#1c1c21", author: "Amanda", scope: "featured" },
+  { id: "s2", title: "Weekly Exec Digest", description: "Compiles key wins, risks, decisions across all active flow...", icon: ClipboardList, bg: "#f1e1c8", iconBg: "#ffffff", iconColor: "#1c1c21", author: "Chen", scope: "featured" },
+  { id: "s3", title: "Bug Triage Router", description: "Auto-categorizes incoming bugs by severity and owner, drafts...", icon: Sparkles, bg: "#dde3cc", iconBg: "#ffffff", iconColor: "#1c1c21", author: "Hua", scope: "featured" },
+  { id: "s4", title: "Release Comms Pack", description: "Generates changelog, customer email, and internal Slack post...", icon: Rocket, bg: "#e0d8ce", iconBg: "#ffffff", iconColor: "#1c1c21", author: "Junjie", scope: "featured" },
+  { id: "s5", title: "1:1 Meeting Notes", description: "From requirements gathering to priority assessment, ensuring clear", icon: Users, bg: "#EAE8ED", iconBg: "#ffffff", iconColor: "#1c1c21", author: "Koko", scope: "featured" },
+  { id: "s6", title: "Retro Action Items", description: "From requirements gathering to priority assessment, ensuring clear", icon: ClipboardList, bg: "#ecd3cb", iconBg: "#ffffff", iconColor: "#1c1c21", author: "Hua", scope: "featured" },
+  { id: "s7", title: "Onboarding Buddy Brief", description: "Generates day-1 schedule, intro list, and welcome doc.", icon: Users, bg: "#d4cfc4", iconBg: "#ffffff", iconColor: "#1c1c21", author: "Mei", scope: "featured" },
+  { id: "s8", title: "Quarterly OKR Rollup", description: "Aggregates progress across teams into a single OKR digest.", icon: ClipboardList, bg: "#ede3c4", iconBg: "#ffffff", iconColor: "#1c1c21", author: "Priya", scope: "featured" },
 ];
 
 function SopsPage() {
@@ -3054,8 +3054,8 @@ const CAL_EVENT_STYLES: Record<
 > = {
   orange: { bg: "#e3b08b", fg: "#3d2614" },
   olive: { bg: "#c3cf99", fg: "#3a3f1f" },
-  blue: { bg: "#d4cfc4", fg: "#1f1f1f" },
-  purple: { bg: "#dadce0", fg: "#1f1f1f" },
+  blue: { bg: "#d4cfc4", fg: "#1c1c21" },
+  purple: { bg: "#DDDBE2", fg: "#1c1c21" },
 };
 
 const CAL_EVENTS: CalEvent[] = [
@@ -3511,24 +3511,24 @@ const ACTION_STATE_THEME: Record<
   { border: string; iconBg: string; iconColor: string; tagText: string; tagLabel: string }
 > = {
   proposed: {
-    border: "#e8eaed",
-    iconBg: "#1f1f1f",
+    border: "#EAE8ED",
+    iconBg: "#1c1c21",
     iconColor: "#ffffff",
-    tagText: "#dadce0",
+    tagText: "#DDDBE2",
     tagLabel: "PROPOSED ACTION",
   },
   completed: {
-    border: "#e8eaed",
-    iconBg: "#f0f4f9",
-    iconColor: "#1f1f1f",
-    tagText: "#dadce0",
+    border: "#EAE8ED",
+    iconBg: "#F3F0F8",
+    iconColor: "#1c1c21",
+    tagText: "#DDDBE2",
     tagLabel: "COMPLETED",
   },
   expired: {
-    border: "#e8eaed",
-    iconBg: "#f0f4f9",
-    iconColor: "#dadce0",
-    tagText: "#dadce0",
+    border: "#EAE8ED",
+    iconBg: "#F3F0F8",
+    iconColor: "#DDDBE2",
+    tagText: "#DDDBE2",
     tagLabel: "EXPIRED",
   },
 };
@@ -3610,7 +3610,7 @@ function SendEmailActionCard({
                 ) : (
                   <span
                     className="w-5 h-5 rounded-full text-white text-[9px] font-semibold flex items-center justify-center"
-                    style={{ background: r.color ?? "#5f6368" }}
+                    style={{ background: r.color ?? "#605E6A" }}
                   >
                     {r.name.slice(0, 1)}
                   </span>
