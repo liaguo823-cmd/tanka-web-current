@@ -504,7 +504,7 @@ function WorkspaceRail({
       <div className="h-[60px] w-full flex items-center justify-center shrink-0">
         <button
           onClick={onCollapse}
-          className="w-7 h-7 flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 rounded-md transition-colors"
+          className="w-7 h-7 flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 rounded-full transition-colors"
           title="Hide organizations"
         >
           <ChevronsLeft className="w-4 h-4" strokeWidth={2} />
@@ -566,7 +566,7 @@ function WorkspaceRail({
       </div>
 
       <button
-        className="w-[35px] h-[35px] rounded-lg flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/50"
+        className="w-[35px] h-[35px] rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/50"
         title="Settings"
       >
         <Settings className="w-4 h-4" strokeWidth={1.8} />
@@ -807,7 +807,7 @@ function NavSidebar({
         {!orgRailOpen && (
           <button
             onClick={onToggleOrgRail}
-            className="overflow-hidden h-7 w-0 opacity-0 group-hover/orghdr:w-7 group-hover/orghdr:opacity-100 group-hover/orghdr:mr-1 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-all duration-150 shrink-0"
+            className="overflow-hidden h-7 w-0 opacity-0 group-hover/orghdr:w-7 group-hover/orghdr:opacity-100 group-hover/orghdr:mr-1 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-all duration-150 shrink-0"
             title="Show organizations"
           >
             <ChevronsRight className="w-4 h-4 shrink-0" strokeWidth={2} />
@@ -818,11 +818,11 @@ function NavSidebar({
             <img
               src={workspace.avatar}
               alt={workspace.name}
-              className="w-7 h-7 rounded-lg object-cover shrink-0"
+              className="w-7 h-7 rounded-full object-cover shrink-0"
             />
           ) : (
             <span
-              className="w-7 h-7 rounded-lg flex items-center justify-center text-[11px] font-bold shrink-0"
+              className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0"
               style={{
                 background: workspace.color,
                 color: workspace.textColor ?? "#fff",
@@ -901,7 +901,7 @@ function NavSidebar({
         <button
           onClick={onToggleCollapsed}
           title="Hide navigation"
-          className="w-7 h-7 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-opacity opacity-0 group-hover/navside:opacity-100 shrink-0"
+          className="w-7 h-7 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-opacity opacity-0 group-hover/navside:opacity-100 shrink-0"
         >
           <PanelLeftClose className="w-4 h-4" strokeWidth={1.8} />
         </button>
@@ -948,7 +948,7 @@ function NavSidebarCollapsed({
         <button
           onClick={onToggleOrgRail}
           title={`Toggle organizations (${workspace.name})`}
-          className="w-7 h-7 rounded-lg overflow-hidden flex items-center justify-center text-[11px] font-bold hover:opacity-80 transition-opacity"
+          className="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center text-[11px] font-bold hover:opacity-80 transition-opacity"
           style={
             workspace.avatar
               ? undefined
@@ -982,7 +982,7 @@ function NavSidebarCollapsed({
                 <button
                   onClick={() => onSelect(it.id)}
                   title={it.label}
-                  className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                  className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
                     isActive
                       ? "bg-[#d3e3fd] text-[#0b57d0] font-medium"
                       : "text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60"
@@ -999,7 +999,7 @@ function NavSidebarCollapsed({
         <button
           onClick={onExpand}
           title="Show menu"
-          className="w-7 h-7 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-colors"
+          className="w-7 h-7 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-colors"
         >
           <PanelLeftOpen className="w-4 h-4" strokeWidth={1.8} />
         </button>
@@ -1059,7 +1059,7 @@ function ListColumn({
           <button
             onClick={onToggleCollapsed}
             title={`Show ${activeNav === "chat" ? "Chat" : "Flow"} list`}
-            className="w-7 h-7 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-colors"
+            className="w-7 h-7 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-colors"
           >
             <ChevronsRight className="w-4 h-4" strokeWidth={2} />
           </button>
@@ -1157,13 +1157,13 @@ function ListColumn({
             {activeNav === "chat" ? (
               <>
                 <button
-                  className="w-7 h-7 rounded-md hover:bg-warm-gray-2/60 flex items-center justify-center"
+                  className="w-7 h-7 rounded-full hover:bg-warm-gray-2/60 flex items-center justify-center"
                   title="Filter"
                 >
                   <Atom className="w-[18px] h-[18px]" strokeWidth={1.6} />
                 </button>
                 <button
-                  className="w-7 h-7 rounded-md hover:bg-warm-gray-2/60 flex items-center justify-center"
+                  className="w-7 h-7 rounded-full hover:bg-warm-gray-2/60 flex items-center justify-center"
                   title="Members"
                 >
                   <Users className="w-[18px] h-[18px]" strokeWidth={1.6} />
@@ -1171,7 +1171,7 @@ function ListColumn({
               </>
             ) : (
               <button
-                className="w-7 h-7 rounded-md hover:bg-warm-gray-2/60 flex items-center justify-center"
+                className="w-7 h-7 rounded-full hover:bg-warm-gray-2/60 flex items-center justify-center"
                 title="Assets"
               >
                 <Folder className="w-[18px] h-[18px]" strokeWidth={1.6} />
@@ -1181,7 +1181,7 @@ function ListColumn({
               {({ open, toggle }) => (
                 <button
                   onClick={toggle}
-                  className={`w-7 h-7 rounded-md flex items-center justify-center ${
+                  className={`w-7 h-7 rounded-full flex items-center justify-center ${
                     open ? "bg-[#d3e3fd] text-[#0b57d0] font-medium" : "hover:bg-warm-gray-2/60"
                   }`}
                   title="New"
@@ -1193,7 +1193,7 @@ function ListColumn({
           </div>
         </div>
 
-        <div className="h-9 mb-3 rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2">
+        <div className="h-9 mb-3 rounded-full border border-warm-gray-2 px-3 flex items-center gap-2">
           <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
           <input
             value={search}
@@ -1278,14 +1278,14 @@ function ListColumn({
                       <li key={item.id}>
                         <button
                           onClick={() => onSelect(item.id)}
-                          className="group/flowrow w-full text-left rounded-lg px-3 py-2.5 transition-colors relative"
+                          className="group/flowrow w-full text-left rounded-full px-3 py-2.5 transition-colors relative"
                           style={{
                             background: isSelected ? "var(--warm-base)" : undefined,
                           }}
                         >
                           <span
                             aria-hidden
-                            className={`absolute inset-0 rounded-lg transition-colors ${
+                            className={`absolute inset-0 rounded-full transition-colors ${
                               isSelected ? "" : "group-hover/flowrow:bg-warm-base/60"
                             }`}
                           />
@@ -1383,7 +1383,7 @@ function ChatRow({
     <li>
       <button
         onClick={onClick}
-        className={`w-full text-left rounded-lg px-3 py-2.5 flex gap-3 items-center transition-colors ${
+        className={`w-full text-left rounded-full px-3 py-2.5 flex gap-3 items-center transition-colors ${
           selected ? "bg-warm-base" : "hover:bg-warm-base/60"
         }`}
       >
@@ -1491,7 +1491,7 @@ function EmptyTaskView({
             {!value && (
               <div className="absolute left-0 top-0 flex items-center gap-2 pointer-events-none">
                 <span className="text-warm-2 text-[16px]">Start your task...</span>
-                <span className="bg-warm-gray-2/70 px-2 py-0.5 rounded-md text-[10px] font-semibold text-warm-2">
+                <span className="bg-warm-gray-2/70 px-2 py-0.5 rounded-full text-[10px] font-semibold text-warm-2">
                   TAB
                 </span>
               </div>
@@ -1548,7 +1548,7 @@ function MembersPanel({
       <div className="h-[60px] pl-[10px] pr-4 flex items-center gap-2 text-warm-black">
         <button
           onClick={onClose}
-          className="w-7 h-7 rounded-md flex items-center justify-center hover:bg-warm-gray-2/60 text-warm-2 hover:text-warm-black"
+          className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-warm-gray-2/60 text-warm-2 hover:text-warm-black"
           title="Hide members"
         >
           <PanelLeftClose className="w-4 h-4" strokeWidth={1.8} />
@@ -1558,7 +1558,7 @@ function MembersPanel({
       </div>
 
       <div className="px-4 pb-3">
-        <div className="h-9 px-3 flex items-center gap-2 rounded-lg bg-white border border-warm-gray-2">
+        <div className="h-9 px-3 flex items-center gap-2 rounded-full bg-white border border-warm-gray-2">
           <Search className="w-3.5 h-3.5 text-warm-2" strokeWidth={2} />
           <input
             value={query}
@@ -1575,7 +1575,7 @@ function MembersPanel({
             m.id === ownerId ? "Owner" : m.id === adminId ? "Admin" : null;
           return (
             <li key={m.id}>
-              <button className="w-full text-left rounded-lg px-2 py-2 flex items-center gap-2.5 hover:bg-warm-gray-2/40 transition-colors">
+              <button className="w-full text-left rounded-full px-2 py-2 flex items-center gap-2.5 hover:bg-warm-gray-2/40 transition-colors">
                 <span className="relative shrink-0">
                   {m.avatarUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -1929,7 +1929,7 @@ function MessageActionMenu({
       <div
         role="menu"
         style={{ top, left }}
-        className="fixed z-[101] w-[200px] rounded-xl bg-white border border-warm-gray-2 shadow-[0_8px_24px_rgba(38,32,28,0.10)] py-1.5"
+        className="fixed z-[101] w-[200px] rounded-2xl bg-white border border-warm-gray-2 shadow-[0_8px_24px_rgba(38,32,28,0.10)] py-1.5"
       >
         {items.map((it) => (
           <button
@@ -1976,7 +1976,7 @@ function HighlightModal({
           <button
             onClick={onClose}
             title="Close"
-            className="w-8 h-8 rounded-md text-warm-2 hover:text-warm-black hover:bg-warm-base flex items-center justify-center"
+            className="w-8 h-8 rounded-full text-warm-2 hover:text-warm-black hover:bg-warm-base flex items-center justify-center"
           >
             <span className="text-[20px] leading-none">×</span>
           </button>
@@ -1989,7 +1989,7 @@ function HighlightModal({
               <button
                 key={t}
                 onClick={() => setSelected(t)}
-                className={`text-left rounded-xl p-2 transition-colors ${
+                className={`text-left rounded-2xl p-2 transition-colors ${
                   isSelected
                     ? "bg-warm-base"
                     : "hover:bg-warm-base/60"
@@ -2003,7 +2003,7 @@ function HighlightModal({
                     {style.emoji}
                   </span>
                   <div
-                    className="rounded-xl px-4 py-2.5 text-[15px] text-warm-black w-full"
+                    className="rounded-2xl px-4 py-2.5 text-[15px] text-warm-black w-full"
                     style={{ background: style.bg }}
                   >
                     Hello~
@@ -2062,7 +2062,7 @@ function AIAssistantPanel({ onCollapse }: { onCollapse: () => void }) {
       <div className="h-[60px] pl-[10px] pr-4 flex items-center gap-2 text-warm-black">
         <button
           onClick={onCollapse}
-          className="w-7 h-7 rounded-md flex items-center justify-center hover:bg-warm-gray-2/60 text-warm-2 hover:text-warm-black"
+          className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-warm-gray-2/60 text-warm-2 hover:text-warm-black"
           title="Hide AI Assistant"
         >
           <PanelLeftClose className="w-4 h-4" strokeWidth={1.8} />
@@ -2143,7 +2143,7 @@ function Message({
             <button
               onClick={(e) => onOpenMenu(message.id, e.currentTarget.getBoundingClientRect())}
               title="More"
-              className="opacity-0 group-hover/msg:opacity-100 transition-opacity absolute -left-9 top-1/2 -translate-y-1/2 w-7 h-7 rounded-md bg-white border border-warm-gray-2 shadow-sm flex items-center justify-center text-warm-2 hover:text-warm-black"
+              className="opacity-0 group-hover/msg:opacity-100 transition-opacity absolute -left-9 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white border border-warm-gray-2 shadow-sm flex items-center justify-center text-warm-2 hover:text-warm-black"
             >
               <MoreVertical className="w-3.5 h-3.5" strokeWidth={1.8} />
             </button>
@@ -2211,7 +2211,7 @@ function IconBtn({ children, title }: { children: ReactNode; title: string }) {
   return (
     <button
       title={title}
-      className="w-8 h-8 rounded-md flex items-center justify-center hover:bg-warm-base text-warm-2 hover:text-warm-black"
+      className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-warm-base text-warm-2 hover:text-warm-black"
     >
       {children}
     </button>
@@ -2340,7 +2340,7 @@ function DropdownPortal({
     <div
       ref={ref}
       style={{ width, top: coords.top, left: coords.left }}
-      className="fixed z-[9999] bg-white rounded-xl border border-warm-gray-2 shadow-[0_4px_24px_rgba(38,32,28,0.08),0_1px_3px_rgba(38,32,28,0.06)] py-1.5"
+      className="fixed z-[9999] bg-white rounded-2xl border border-warm-gray-2 shadow-[0_4px_24px_rgba(38,32,28,0.08),0_1px_3px_rgba(38,32,28,0.06)] py-1.5"
     >
       {sections.map((sec, i) => (
         <div key={i} className={i > 0 ? "border-t border-warm-gray-2/60 mt-1 pt-1" : ""}>
@@ -2361,7 +2361,7 @@ function DropdownPortal({
                 className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-warm-base text-left transition-colors"
               >
                 {Icon && (
-                  <span className="w-6 h-6 rounded-md bg-warm-base flex items-center justify-center shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-warm-base flex items-center justify-center shrink-0">
                     <Icon className="w-3.5 h-3.5 text-warm-2" strokeWidth={1.8} />
                   </span>
                 )}
@@ -2579,7 +2579,7 @@ function FollowUpsPage() {
             <h1 className="text-[28px] font-bold tracking-tight">Follow-ups</h1>
             <div className="flex items-center gap-2 mt-1">
               {searchOpen ? (
-                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white">
+                <div className="h-9 w-[240px] rounded-full border border-warm-gray-2 px-3 flex items-center gap-2 bg-white">
                   <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
                   <input
                     autoFocus
@@ -2593,7 +2593,7 @@ function FollowUpsPage() {
               ) : (
                 <button
                   onClick={() => setSearchOpen(true)}
-                  className="w-8 h-8 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
                   title="Search"
                 >
                   <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
@@ -2679,7 +2679,7 @@ function FollowUpsPage() {
 
 function FollowUpRow({ item }: { item: FollowUpItem }) {
   return (
-    <div className="relative rounded-xl border border-warm-gray-2 bg-white px-4 py-3 flex items-start gap-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
+    <div className="relative rounded-2xl border border-warm-gray-2 bg-white px-4 py-3 flex items-start gap-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
       <div className="flex-1 min-w-0">
         <p className="text-[14px] text-warm-black leading-relaxed truncate">
           {item.title}
@@ -2708,13 +2708,13 @@ function FollowUpRow({ item }: { item: FollowUpItem }) {
       <div className="flex items-start gap-1 shrink-0 text-warm-2">
         <button
           title="Quick view"
-          className="w-7 h-7 rounded-md bg-warm-gray-2/40 hover:bg-warm-gray-2 flex items-center justify-center"
+          className="w-7 h-7 rounded-full bg-warm-gray-2/40 hover:bg-warm-gray-2 flex items-center justify-center"
         >
           <LayoutGrid className="w-3.5 h-3.5" strokeWidth={1.8} />
         </button>
         <button
           title="More"
-          className="w-7 h-7 rounded-md hover:bg-warm-base flex items-center justify-center"
+          className="w-7 h-7 rounded-full hover:bg-warm-base flex items-center justify-center"
         >
           <MoreVertical className="w-3.5 h-3.5" strokeWidth={1.8} />
         </button>
@@ -2773,13 +2773,13 @@ function AgentPage() {
             <div className="flex items-center gap-1 text-warm-2">
               <button
                 title="New agent"
-                className="w-7 h-7 rounded-md hover:bg-warm-gray-2/60 flex items-center justify-center"
+                className="w-7 h-7 rounded-full hover:bg-warm-gray-2/60 flex items-center justify-center"
               >
                 <Plus className="w-[18px] h-[18px]" strokeWidth={1.6} />
               </button>
             </div>
           </div>
-          <div className="h-9 mb-3 rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2">
+          <div className="h-9 mb-3 rounded-full border border-warm-gray-2 px-3 flex items-center gap-2">
             <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
             <input
               value={query}
@@ -2797,7 +2797,7 @@ function AgentPage() {
               <li key={a.id}>
                 <button
                   onClick={() => setSelectedId(a.id)}
-                  className={`w-full text-left rounded-lg px-3 py-2.5 flex gap-3 items-center transition-colors ${
+                  className={`w-full text-left rounded-full px-3 py-2.5 flex gap-3 items-center transition-colors ${
                     isActive ? "bg-warm-base" : "hover:bg-warm-base/60"
                   }`}
                 >
@@ -2843,7 +2843,7 @@ function AgentPage() {
 
 function StatTile({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-xl border border-warm-gray-2 bg-white px-4 py-3">
+    <div className="rounded-2xl border border-warm-gray-2 bg-white px-4 py-3">
       <p className="text-[28px] font-bold tracking-tight text-warm-black leading-none">
         {value}
       </p>
@@ -2868,7 +2868,7 @@ function AgentTaskRow({
   badgeFg: string;
 }) {
   return (
-    <div className="rounded-xl border border-warm-gray-2 bg-white px-4 py-3 flex items-center gap-3">
+    <div className="rounded-2xl border border-warm-gray-2 bg-white px-4 py-3 flex items-center gap-3">
       <span className="w-2 h-2 rounded-full shrink-0" style={{ background: color }} />
       <p className="flex-1 text-[14px] text-warm-black truncate">{title}</p>
       <span
@@ -2940,7 +2940,7 @@ function SopsPage() {
             </div>
             <div className="flex items-center gap-2 mt-1">
               {searchOpen ? (
-                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white">
+                <div className="h-9 w-[240px] rounded-full border border-warm-gray-2 px-3 flex items-center gap-2 bg-white">
                   <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
                   <input
                     autoFocus
@@ -2954,7 +2954,7 @@ function SopsPage() {
               ) : (
                 <button
                   onClick={() => setSearchOpen(true)}
-                  className="w-8 h-8 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
                   title="Search"
                 >
                   <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
@@ -3017,7 +3017,7 @@ function SopCardView({ card }: { card: SopCard }) {
       style={{ background: card.bg }}
     >
       <span
-        className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+        className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
         style={{ background: card.iconBg, color: card.iconColor }}
       >
         <Icon className="w-[18px] h-[18px]" strokeWidth={1.8} />
@@ -3115,7 +3115,7 @@ function CalendarPage() {
       <div className="shrink-0 max-w-[1080px] mx-auto w-full px-10">
         <div className="flex items-start justify-between mb-1">
           <h1 className="text-[28px] font-bold tracking-tight">Calendar</h1>
-          <button className="h-8 px-3 mt-1 inline-flex items-center gap-1.5 rounded-lg border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base shrink-0">
+          <button className="h-8 px-3 mt-1 inline-flex items-center gap-1.5 rounded-full border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base shrink-0">
             <Plus className="w-3.5 h-3.5" strokeWidth={2} />
             New event
           </button>
@@ -3127,36 +3127,36 @@ function CalendarPage() {
         {/* Toolbar — Today / prev / next / date range + view toggle */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <button className="h-8 px-3 rounded-lg border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base">
+            <button className="h-8 px-3 rounded-full border border-warm-gray-2 bg-white text-[13px] font-medium text-warm-black hover:bg-warm-base">
               Today
             </button>
             <div className="flex items-center">
               <button
-                className="w-8 h-8 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
                 title="Previous"
               >
                 <ChevronLeft className="w-4 h-4" strokeWidth={1.8} />
               </button>
               <button
-                className="w-8 h-8 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
                 title="Next"
               >
                 <ChevronRight className="w-4 h-4" strokeWidth={1.8} />
               </button>
             </div>
-            <button className="inline-flex items-center gap-1 text-[15px] font-medium text-warm-black hover:bg-warm-base rounded-md px-2 h-8">
+            <button className="inline-flex items-center gap-1 text-[15px] font-medium text-warm-black hover:bg-warm-base rounded-full px-2 h-8">
               May 10 – 16, 2026
               <ChevronDown className="w-3.5 h-3.5 text-warm-2" strokeWidth={1.8} />
             </button>
           </div>
-          <div className="inline-flex items-center p-[3px] rounded-lg bg-warm-base shrink-0">
+          <div className="inline-flex items-center p-[3px] rounded-full bg-warm-base shrink-0">
             {(["day", "week", "month"] as CalendarView[]).map((v) => {
               const label = v === "day" ? "Day" : v === "week" ? "Week" : "Month";
               return (
                 <button
                   key={v}
                   onClick={() => setView(v)}
-                  className={`h-7 px-3 rounded-md text-[12px] font-medium transition-colors ${
+                  className={`h-7 px-3 rounded-full text-[12px] font-medium transition-colors ${
                     view === v
                       ? "bg-warm-black text-white"
                       : "text-warm-2 hover:text-warm-black"
@@ -3172,7 +3172,7 @@ function CalendarPage() {
 
       {/* Calendar grid */}
       <div className="flex-1 min-h-0 mt-3 max-w-[1080px] mx-auto w-full px-10 pb-6">
-        <div className="h-full rounded-lg border border-warm-gray-2 bg-white overflow-hidden flex flex-col">
+        <div className="h-full rounded-2xl border border-warm-gray-2 bg-white overflow-hidden flex flex-col">
           {/* Day header row */}
           <div className="grid border-b border-warm-gray-2 shrink-0"
             style={{
@@ -3190,7 +3190,7 @@ function CalendarPage() {
                   }`}
                 >
                   <span
-                    className={`inline-flex items-center gap-1.5 h-7 px-2.5 rounded-md ${
+                    className={`inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full ${
                       isToday
                         ? "bg-warm-black text-white font-medium"
                         : "text-warm-2"
@@ -3262,7 +3262,7 @@ function CalendarPage() {
                     return (
                       <button
                         key={e.id}
-                        className="absolute left-1.5 right-1.5 rounded-md px-2 py-1 text-[11.5px] font-medium text-left truncate hover:brightness-95 transition"
+                        className="absolute left-1.5 right-1.5 rounded-full px-2 py-1 text-[11.5px] font-medium text-left truncate hover:brightness-95 transition"
                         style={{
                           top,
                           height,
@@ -3341,7 +3341,7 @@ function LinkPage() {
           <div className="flex items-start justify-between mb-1">
             <h1 className="text-[28px] font-bold tracking-tight">Link</h1>
             {searchOpen ? (
-              <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white mt-2">
+              <div className="h-9 w-[240px] rounded-full border border-warm-gray-2 px-3 flex items-center gap-2 bg-white mt-2">
                 <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
                 <input
                   autoFocus
@@ -3355,7 +3355,7 @@ function LinkPage() {
             ) : (
               <button
                 onClick={() => setSearchOpen(true)}
-                className="w-8 h-8 rounded-md flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base mt-2"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base mt-2"
                 title="Search"
               >
                 <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
@@ -3457,9 +3457,9 @@ function TabButton({
 function LinkCard({ tool }: { tool: LinkTool }) {
   const [imgFailed, setImgFailed] = useState(false);
   return (
-    <div className="group/link text-left rounded-xl border border-warm-gray-2 bg-white px-4 py-3 flex items-center gap-3 transition-all hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)]">
+    <div className="group/link text-left rounded-2xl border border-warm-gray-2 bg-white px-4 py-3 flex items-center gap-3 transition-all hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)]">
       <span
-        className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-[15px] font-bold"
+        className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-[15px] font-bold"
         style={{ background: tool.letterBg, color: tool.letterColor }}
       >
         {imgFailed ? (
@@ -3490,7 +3490,7 @@ function LinkCard({ tool }: { tool: LinkTool }) {
         </p>
       </div>
       {!tool.linked && (
-        <button className="shrink-0 h-7 px-3 rounded-lg border border-warm-gray-2 bg-white text-[12px] font-medium text-warm-black hover:bg-warm-base hover:border-warm-border transition-colors">
+        <button className="shrink-0 h-7 px-3 rounded-full border border-warm-gray-2 bg-white text-[12px] font-medium text-warm-black hover:bg-warm-base hover:border-warm-border transition-colors">
           Link
         </button>
       )}
@@ -3857,7 +3857,7 @@ function FlowDetailView({
         <div className="flex items-center gap-2 text-warm-2">
           <button
             onClick={() => setStatus(status === "complete" ? "none" : "complete")}
-            className={`flex items-center gap-1.5 px-2.5 h-8 rounded-md text-[13px] font-medium hover:bg-warm-base ${
+            className={`flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[13px] font-medium hover:bg-warm-base ${
               status === "complete" ? "text-[#047857]" : ""
             }`}
           >
@@ -3866,20 +3866,20 @@ function FlowDetailView({
           </button>
           <button
             onClick={() => setStatus(status === "progress" ? "none" : "progress")}
-            className={`flex items-center gap-1.5 px-2.5 h-8 rounded-md text-[13px] font-medium hover:bg-warm-base ${
+            className={`flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[13px] font-medium hover:bg-warm-base ${
               status === "progress" ? "text-[#d97706]" : ""
             }`}
           >
             <Circle className="w-4 h-4" strokeWidth={1.8} strokeDasharray="3 2" />
             Progress
           </button>
-          <button className="flex items-center gap-1.5 px-2.5 h-8 rounded-md text-[13px] font-medium hover:bg-warm-base">
+          <button className="flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[13px] font-medium hover:bg-warm-base">
             <Bookmark className="w-4 h-4" strokeWidth={1.8} />
             Save as SOP
           </button>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-md flex items-center justify-center hover:bg-warm-base"
+            className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-warm-base"
             title="More"
           >
             <MoreVertical className="w-4 h-4" strokeWidth={1.8} />
