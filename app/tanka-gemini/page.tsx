@@ -1471,7 +1471,7 @@ function EmptyTaskView({
         </h1>
 
         <div
-          className="rounded-3xl border border-warm-gray-2 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),0_8px_24px_rgba(0,0,0,0.06)] p-4"
+          className="rounded-[28px] border border-warm-gray-2 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04),0_6px_18px_rgba(0,0,0,0.06)] px-5 py-4"
           style={{
             backgroundImage:
               "linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%)",
@@ -1491,7 +1491,7 @@ function EmptyTaskView({
             {!value && (
               <div className="absolute left-0 top-0 flex items-center gap-2 pointer-events-none">
                 <span className="text-warm-2 text-[16px]">Start your task...</span>
-                <span className="bg-warm-base px-1.5 py-0.5 rounded text-[10px] font-semibold text-warm-2">
+                <span className="bg-warm-gray-2/70 px-2 py-0.5 rounded-md text-[10px] font-semibold text-warm-2">
                   TAB
                 </span>
               </div>
@@ -1499,12 +1499,12 @@ function EmptyTaskView({
           </div>
 
           <div className="flex items-center justify-between mt-3">
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1">
               <ComposerOutlineBtn title="Add content">
-                <Plus className="w-4 h-4" strokeWidth={1.8} />
+                <Plus className="w-[18px] h-[18px]" strokeWidth={2} />
               </ComposerOutlineBtn>
               <ComposerOutlineBtn title="AI suggestions">
-                <Sparkles className="w-4 h-4" strokeWidth={1.8} />
+                <Sparkles className="w-[18px] h-[18px]" strokeWidth={2} />
               </ComposerOutlineBtn>
             </div>
             <SendBtn onClick={onSubmit} disabled={!value.trim()} />
@@ -2231,7 +2231,7 @@ function ComposerOutlineBtn({
     <button
       onClick={onClick}
       title={title}
-      className="w-[30px] h-[30px] rounded-lg border border-warm-gray-2 flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-base"
+      className="w-9 h-9 rounded-full flex items-center justify-center text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60 transition-colors"
     >
       {children}
     </button>
@@ -2250,13 +2250,13 @@ function SendBtn({
       onClick={onClick}
       disabled={disabled}
       title="Send"
-      className={`w-[30px] h-[30px] rounded-full border flex items-center justify-center transition-colors ${
+      className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
         disabled
-          ? "bg-warm-border border-warm-border text-white cursor-not-allowed"
-          : "bg-[#0b57d0] border-[#0b57d0] text-white hover:bg-[#0a4fbf]"
+          ? "bg-warm-gray-2 text-warm-2 cursor-not-allowed"
+          : "bg-[#0b57d0] text-white hover:bg-[#0a4fbf]"
       }`}
     >
-      <ArrowUp className="w-3.5 h-3.5" strokeWidth={2.2} />
+      <ArrowUp className="w-4 h-4" strokeWidth={2.2} />
     </button>
   );
 }
