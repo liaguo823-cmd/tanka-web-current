@@ -517,7 +517,7 @@ function WorkspaceRail({
                   ws.letter
                 )}
                 {ws.badge ? (
-                  <span className="absolute -top-1 -right-1 z-10 bg-[#dc3545] text-white text-[9px] font-bold leading-none rounded-full min-w-[14px] h-[14px] px-[3px] flex items-center justify-center ring-2 ring-warm-bg">
+                  <span className="absolute -top-1 -right-1 z-10 bg-warm-black text-white text-[9px] font-bold leading-none rounded-full min-w-[14px] h-[14px] px-[3px] flex items-center justify-center ring-2 ring-warm-bg">
                     {ws.badge}
                   </span>
                 ) : null}
@@ -1114,11 +1114,6 @@ function ListColumn({
               },
             ],
           },
-          {
-            items: [
-              { id: "new-folder", label: "New folder", icon: FolderPlus },
-            ],
-          },
         ];
 
   return (
@@ -1571,10 +1566,8 @@ function MembersPanel({
                     <p className="text-[13px] text-warm-black truncate">{m.name}</p>
                     {tag && (
                       <span
-                        className={`shrink-0 text-[10px] leading-none px-1.5 py-[3px] rounded ${
-                          tag === "Owner"
-                            ? "bg-[#fdf5e0] text-[#a26b00]"
-                            : "bg-[#eaf2fc] text-[#1a6fd3]"
+                        className={`shrink-0 text-[10px] leading-none px-1.5 py-[3px] rounded bg-warm-base ${
+                          tag === "Owner" ? "text-warm-black" : "text-warm-2"
                         }`}
                       >
                         {tag}
@@ -2015,28 +2008,11 @@ function HighlightModal({
 function SiriOrb() {
   return (
     <span
-      className="block w-6 h-6 rounded-full relative overflow-hidden"
-      style={{
-        background:
-          "conic-gradient(from 200deg at 50% 50%, #5ac8fa 0deg, #34c759 80deg, #ffcc00 160deg, #ff6b6b 230deg, #af52de 290deg, #5ac8fa 360deg)",
-        boxShadow:
-          "inset 0 0 8px rgba(255,255,255,0.5), 0 1px 3px rgba(38,32,28,0.08)",
-      }}
+      className="block w-6 h-6 rounded-full bg-warm-black text-white flex items-center justify-center"
+      style={{ boxShadow: "0 1px 3px rgba(38,32,28,0.18)" }}
+      aria-hidden
     >
-      <span
-        className="absolute inset-0 rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle at 32% 28%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 18%, rgba(255,255,255,0) 45%)",
-        }}
-      />
-      <span
-        className="absolute inset-0 rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle at 70% 78%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 35%)",
-        }}
-      />
+      <TankaLogo className="w-[11px] h-[10px]" />
     </span>
   );
 }
@@ -2087,9 +2063,9 @@ const MESSAGE_TONE_STYLES: Record<
   { bg: string; emoji: string; label: string }
 > = {
   idea: { bg: "#fbe9c8", emoji: "💡", label: "Idea" },
-  announce: { bg: "#d8e7f8", emoji: "📣", label: "Announcement" },
+  announce: { bg: "#e3dcce", emoji: "📣", label: "Announcement" },
   urgent: { bg: "#fbdcd2", emoji: "❗️", label: "Important" },
-  celebrate: { bg: "#d6ecd5", emoji: "🎉", label: "Celebration" },
+  celebrate: { bg: "#dde3cc", emoji: "🎉", label: "Celebration" },
 };
 const TONE_ORDER: Array<NonNullable<ChatMessage["tone"]>> = [
   "idea",
@@ -2665,12 +2641,8 @@ function FollowUpsPage() {
 
 function FollowUpRow({ item }: { item: FollowUpItem }) {
   return (
-    <div className="relative rounded-xl border border-warm-gray-2 bg-white px-4 py-3 flex items-start gap-3 hover:border-warm-border transition">
-      <span
-        className="absolute left-0 top-2 bottom-2 w-1 rounded-r"
-        style={{ background: item.accent }}
-      />
-      <div className="flex-1 min-w-0 pl-2">
+    <div className="relative rounded-xl border border-warm-gray-2 bg-white px-4 py-3 flex items-start gap-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
+      <div className="flex-1 min-w-0">
         <p className="text-[14px] text-warm-black leading-relaxed truncate">
           {item.title}
         </p>
@@ -2709,7 +2681,7 @@ function FollowUpRow({ item }: { item: FollowUpItem }) {
           <MoreVertical className="w-3.5 h-3.5" strokeWidth={1.8} />
         </button>
         {item.unread && (
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-red-500" />
+          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-warm-black" />
         )}
       </div>
     </div>
@@ -2734,15 +2706,15 @@ type AgentSpec = {
 };
 
 const AGENTS: AgentSpec[] = [
-  { id: "email", name: "Email Agent", description: "Triage inboxes, classify, draft replies, and follow up.", icon: Mail, iconBg: "#eef2ff", iconColor: "#4f46e5", count: 2, status: "READY" },
-  { id: "schedule", name: "Schedule Agent", description: "Manage meetings, surface conflicts, propose times.", icon: CalendarDays, iconBg: "#fef3c7", iconColor: "#d97706", status: "READY" },
-  { id: "knowledge", name: "Knowledge Agent", description: "Search across docs, summarize, answer questions.", icon: BookOpen, iconBg: "#dcfce7", iconColor: "#15803d", status: "READY" },
-  { id: "message", name: "Message Agent", description: "Handle Slack/Teams messages, summarize threads.", icon: MessageSquare, iconBg: "#dbeafe", iconColor: "#1d4ed8", count: 1, status: "READY" },
-  { id: "project", name: "Project Agent", description: "Track tasks, surface blockers, auto-update.", icon: Briefcase, iconBg: "#f3e8ff", iconColor: "#7e22ce", status: "READY" },
-  { id: "sales", name: "Sales Agent", description: "Manage pipeline, update records, draft outreach.", icon: TrendingUp, iconBg: "#fce7f3", iconColor: "#be185d", count: 2, status: "READY" },
-  { id: "data", name: "Data Agent", description: "Query warehouses, render charts, explain trends.", icon: BarChart3, iconBg: "#e0f2fe", iconColor: "#0369a1", status: "READY" },
-  { id: "finance", name: "Finance Agent", description: "Track spend, generate reports, flag anomalies.", icon: Coins, iconBg: "#ecfccb", iconColor: "#4d7c0f", count: 1, status: "READY" },
-  { id: "hr", name: "HR Agent", description: "Recruiting funnel, employee data, policies.", icon: Users, iconBg: "#fff7ed", iconColor: "#c2410c", count: 1, status: "READY" },
+  { id: "email", name: "Email Agent", description: "Triage inboxes, classify, draft replies, and follow up.", icon: Mail, iconBg: "#efefea", iconColor: "#26201c", count: 2, status: "READY" },
+  { id: "schedule", name: "Schedule Agent", description: "Manage meetings, surface conflicts, propose times.", icon: CalendarDays, iconBg: "#efefea", iconColor: "#26201c", status: "READY" },
+  { id: "knowledge", name: "Knowledge Agent", description: "Search across docs, summarize, answer questions.", icon: BookOpen, iconBg: "#efefea", iconColor: "#26201c", status: "READY" },
+  { id: "message", name: "Message Agent", description: "Handle Slack/Teams messages, summarize threads.", icon: MessageSquare, iconBg: "#efefea", iconColor: "#26201c", count: 1, status: "READY" },
+  { id: "project", name: "Project Agent", description: "Track tasks, surface blockers, auto-update.", icon: Briefcase, iconBg: "#efefea", iconColor: "#26201c", status: "READY" },
+  { id: "sales", name: "Sales Agent", description: "Manage pipeline, update records, draft outreach.", icon: TrendingUp, iconBg: "#efefea", iconColor: "#26201c", count: 2, status: "READY" },
+  { id: "data", name: "Data Agent", description: "Query warehouses, render charts, explain trends.", icon: BarChart3, iconBg: "#efefea", iconColor: "#26201c", status: "READY" },
+  { id: "finance", name: "Finance Agent", description: "Track spend, generate reports, flag anomalies.", icon: Coins, iconBg: "#efefea", iconColor: "#26201c", count: 1, status: "READY" },
+  { id: "hr", name: "HR Agent", description: "Recruiting funnel, employee data, policies.", icon: Users, iconBg: "#efefea", iconColor: "#26201c", count: 1, status: "READY" },
 ];
 
 function AgentPage() {
@@ -2890,14 +2862,14 @@ type SopCard = {
 };
 
 const SOP_CARDS: SopCard[] = [
-  { id: "s1", title: "Customer Interview Synthesis", description: "Turns raw transcripts into themed insight report with...", icon: Users, bg: "#fce7eb", iconBg: "#ffffff", iconColor: "#26201c", author: "Amanda", scope: "featured" },
-  { id: "s2", title: "Weekly Exec Digest", description: "Compiles key wins, risks, decisions across all active flow...", icon: ClipboardList, bg: "#fde7c8", iconBg: "#ffffff", iconColor: "#26201c", author: "Chen", scope: "featured" },
-  { id: "s3", title: "Bug Triage Router", description: "Auto-categorizes incoming bugs by severity and owner, drafts...", icon: Sparkles, bg: "#d8efd1", iconBg: "#ffffff", iconColor: "#26201c", author: "Hua", scope: "featured" },
-  { id: "s4", title: "Release Comms Pack", description: "Generates changelog, customer email, and internal Slack post...", icon: Rocket, bg: "#e0dcef", iconBg: "#ffffff", iconColor: "#26201c", author: "Junjie", scope: "featured" },
-  { id: "s5", title: "1:1 Meeting Notes", description: "From requirements gathering to priority assessment, ensuring clear", icon: Users, bg: "#e5e7eb", iconBg: "#ffffff", iconColor: "#26201c", author: "Koko", scope: "featured" },
-  { id: "s6", title: "Retro Action Items", description: "From requirements gathering to priority assessment, ensuring clear", icon: ClipboardList, bg: "#fbd5dd", iconBg: "#ffffff", iconColor: "#26201c", author: "Hua", scope: "featured" },
-  { id: "s7", title: "Onboarding Buddy Brief", description: "Generates day-1 schedule, intro list, and welcome doc.", icon: Users, bg: "#dbeafe", iconBg: "#ffffff", iconColor: "#26201c", author: "Mei", scope: "featured" },
-  { id: "s8", title: "Quarterly OKR Rollup", description: "Aggregates progress across teams into a single OKR digest.", icon: ClipboardList, bg: "#fef3c7", iconBg: "#ffffff", iconColor: "#26201c", author: "Priya", scope: "featured" },
+  { id: "s1", title: "Customer Interview Synthesis", description: "Turns raw transcripts into themed insight report with...", icon: Users, bg: "#f1dfd9", iconBg: "#ffffff", iconColor: "#26201c", author: "Amanda", scope: "featured" },
+  { id: "s2", title: "Weekly Exec Digest", description: "Compiles key wins, risks, decisions across all active flow...", icon: ClipboardList, bg: "#f1e1c8", iconBg: "#ffffff", iconColor: "#26201c", author: "Chen", scope: "featured" },
+  { id: "s3", title: "Bug Triage Router", description: "Auto-categorizes incoming bugs by severity and owner, drafts...", icon: Sparkles, bg: "#dde3cc", iconBg: "#ffffff", iconColor: "#26201c", author: "Hua", scope: "featured" },
+  { id: "s4", title: "Release Comms Pack", description: "Generates changelog, customer email, and internal Slack post...", icon: Rocket, bg: "#e0d8ce", iconBg: "#ffffff", iconColor: "#26201c", author: "Junjie", scope: "featured" },
+  { id: "s5", title: "1:1 Meeting Notes", description: "From requirements gathering to priority assessment, ensuring clear", icon: Users, bg: "#e5e3db", iconBg: "#ffffff", iconColor: "#26201c", author: "Koko", scope: "featured" },
+  { id: "s6", title: "Retro Action Items", description: "From requirements gathering to priority assessment, ensuring clear", icon: ClipboardList, bg: "#ecd3cb", iconBg: "#ffffff", iconColor: "#26201c", author: "Hua", scope: "featured" },
+  { id: "s7", title: "Onboarding Buddy Brief", description: "Generates day-1 schedule, intro list, and welcome doc.", icon: Users, bg: "#d4cfc4", iconBg: "#ffffff", iconColor: "#26201c", author: "Mei", scope: "featured" },
+  { id: "s8", title: "Quarterly OKR Rollup", description: "Aggregates progress across teams into a single OKR digest.", icon: ClipboardList, bg: "#ede3c4", iconBg: "#ffffff", iconColor: "#26201c", author: "Priya", scope: "featured" },
 ];
 
 function SopsPage() {
@@ -3044,8 +3016,8 @@ const CAL_EVENT_STYLES: Record<
 > = {
   orange: { bg: "#e3b08b", fg: "#3d2614" },
   olive: { bg: "#c3cf99", fg: "#3a3f1f" },
-  blue: { bg: "#a8c4e0", fg: "#1f2f4a" },
-  purple: { bg: "#c7b9e3", fg: "#36254e" },
+  blue: { bg: "#d4cfc4", fg: "#26201c" },
+  purple: { bg: "#bdbbaf", fg: "#26201c" },
 };
 
 const CAL_EVENTS: CalEvent[] = [
@@ -3501,24 +3473,24 @@ const ACTION_STATE_THEME: Record<
   { border: string; iconBg: string; iconColor: string; tagText: string; tagLabel: string }
 > = {
   proposed: {
-    border: "#d8e3f4",
-    iconBg: "#dbeafe",
-    iconColor: "#2563eb",
-    tagText: "#6b7280",
+    border: "#e5e3db",
+    iconBg: "#26201c",
+    iconColor: "#ffffff",
+    tagText: "#bdbbaf",
     tagLabel: "PROPOSED ACTION",
   },
   completed: {
-    border: "#cfe7c8",
-    iconBg: "#d4f0d2",
-    iconColor: "#15803d",
-    tagText: "#6b7280",
+    border: "#e5e3db",
+    iconBg: "#efefea",
+    iconColor: "#26201c",
+    tagText: "#bdbbaf",
     tagLabel: "COMPLETED",
   },
   expired: {
     border: "#e5e3db",
-    iconBg: "#e5e3db",
-    iconColor: "#827d73",
-    tagText: "#a1a1aa",
+    iconBg: "#efefea",
+    iconColor: "#bdbbaf",
+    tagText: "#bdbbaf",
     tagLabel: "EXPIRED",
   },
 };
@@ -3649,7 +3621,7 @@ function SendEmailActionCard({
           {state === "completed" && (
             <button
               onClick={onConfirm}
-              className="w-full flex items-center justify-center gap-1 text-[13px] font-medium text-[#3b82f6] hover:underline"
+              className="w-full flex items-center justify-center gap-1 text-[13px] font-medium text-warm-black hover:text-warm-black/70 transition-colors"
             >
               View Detail <ArrowRight className="w-3 h-3" strokeWidth={2} />
             </button>
@@ -3766,7 +3738,7 @@ function WideTableActionCard({
           <span className="text-[12px] text-warm-2 truncate">
             {footnote ?? `Showing ${rows.length} rows × ${columns.length} columns`}
           </span>
-          <button className="flex items-center gap-1 text-[12px] text-[#3b82f6] hover:underline shrink-0 ml-3">
+          <button className="flex items-center gap-1 text-[12px] text-warm-black hover:text-warm-black/70 transition-colors shrink-0 ml-3">
             View in new window <ArrowRight className="w-3 h-3" strokeWidth={2} />
           </button>
         </div>
