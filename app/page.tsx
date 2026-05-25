@@ -115,48 +115,52 @@ import {
   Calendar as PhCalendar,
 } from "@phosphor-icons/react/dist/ssr";
 
-type NavIconComponent = React.ComponentType<{ className?: string }>;
+type NavIconComponent = React.ComponentType<{ className?: string; active?: boolean }>;
+
+const NAV_ACTIVE_FILL = "#6366F1";
 
 const FillIcon =
-  (PhIcon: React.ComponentType<{ weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone"; size?: number | string; className?: string }>): NavIconComponent =>
-  ({ className }) => <PhIcon weight="fill" size={20} className={className} />;
+  (PhIcon: React.ComponentType<{ weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone"; size?: number | string; className?: string; color?: string }>): NavIconComponent =>
+  ({ className, active }) => (
+    <PhIcon
+      weight="fill"
+      size={20}
+      className={className}
+      color={active ? NAV_ACTIVE_FILL : "currentColor"}
+    />
+  );
 
 // Custom "Warp Rise" — Flow nav icon
-function FlowIcon({ className }: { className?: string }) {
+function FlowIcon({ className, active }: { className?: string; active?: boolean }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+    <svg className={className} viewBox="0 0 24 24" fill={active ? NAV_ACTIVE_FILL : "currentColor"} xmlns="http://www.w3.org/2000/svg" aria-hidden>
       <path fillRule="evenodd" clipRule="evenodd" d="M13.4657 3.49481c1.6717-1.55705 4.0379-2.4245 6.4931-2.4245h3.2422c0.4142 0 0.75 0.33579 0.75 0.75v4.71093l-3.4386 0c-2.2132 0-4.3442 0.8387-5.9637 2.34717L9.02448 14.0238c-1.3419 1.2499-3.10759 1.9448-4.9414 1.9448H0.0498047v-4.7109c0-0.4142 0.3357863-0.75 0.7500003-0.75H2.6367c2.11785 0 4.10606-0.75101 5.47079-2.02216l5.35821-4.99073ZM0.0498047 17.4686v4.7109c0 0.4142 0.3357863 0.75 0.7500003 0.75H4.6367c2.45519 0 4.82146-0.8675 6.4932-2.4245l5.3581-4.9907c1.3648-1.2712 3.353-2.0222 5.4708-2.0222h1.2422c0.4142 0 0.75-0.3358 0.75-0.75V8.03124l-3.4386 0c-1.8338 0-3.5995 0.69492-4.9414 1.9448l-5.5242 5.14536c-1.61949 1.5085-3.7505 2.3472-5.96372 2.3472H0.0498047Z" />
     </svg>
   );
 }
 
-// Custom robot — Agent nav icon (v2: two-tone body with face cutouts)
-function AgentRobotIcon({ className }: { className?: string }) {
+// Custom robot — Agent nav icon (v3: rounded body with face cutouts, no antenna)
+function AgentRobotIcon({ className, active }: { className?: string; active?: boolean }) {
   return (
-    <svg className={className} viewBox="47 47 327 350" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+    <svg className={className} viewBox="18 19 141 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
       {/* Body */}
       <path
-        d="M277.524 99.1082C286.574 99.2145 295.628 99.219 304.682 99.1204C325.596 99.0969 340.437 100.343 356.338 116.185C371.36 131.152 373.636 145.952 373.681 165.939L373.704 287.164L373.695 321.91C373.654 345.494 374.129 362.014 356.03 380.004C348.216 387.792 338.338 393.185 327.56 395.547C319.325 397.321 309.347 396.972 300.823 396.972L270.597 396.954L164.426 396.959H140.578C119.817 396.941 103.937 395.389 88.3278 379.764C75.9371 367.362 71.1331 353.235 71.101 335.91C71.0245 295.182 71.0652 254.441 71.062 213.708L71.0607 176.87C71.0602 166.716 70.5077 153.401 72.7462 143.657C77.5144 122.902 95.4612 105.208 116.212 100.567C124.55 98.7027 135.466 99.1489 144.19 99.1724L170.655 99.1783L277.524 99.1082Z"
-        fill="currentColor"
+        d="M110.796 29C114.424 29.0426 118.054 29.0445 121.683 29.0049C130.068 28.9955 136.018 29.4952 142.392 35.846C148.415 41.8464 149.327 47.7798 149.345 55.7925L149.354 104.392L149.351 118.322C149.334 127.776 149.525 134.399 142.269 141.612C139.136 144.733 135.176 146.896 130.855 147.843C127.554 148.554 123.554 148.414 120.136 148.414L108.019 148.407L65.4545 148.409H55.8939C47.5708 148.401 41.2043 147.779 34.9467 141.515C29.9793 136.543 28.0534 130.88 28.0405 123.934C28.0098 107.606 28.0261 91.2729 28.0249 74.9433L28.0243 60.1747C28.0241 56.1039 27.8027 50.7659 28.7 46.8596C30.6116 38.5391 37.8065 31.4453 46.1257 29.5848C49.4682 28.8375 53.8445 29.0163 57.3419 29.0258L67.9518 29.0281L110.796 29Z"
+        fill={active ? NAV_ACTIVE_FILL : "currentColor"}
       />
-      {/* Inner face / details — drawn on top with the surrounding bg color so it reads as cutouts */}
+      {/* Inner face / details — drawn on top with bg color for cutout effect */}
       <path
-        d="M312.927 195.033C319.208 194.995 339.456 193.235 343.501 197.34C344.687 198.54 345.289 200.13 345.533 201.773C346.402 207.605 345.596 223.369 345.429 230.067C343.642 232.617 343.578 232.69 340.954 234.595L340.452 234.617C331.524 234.929 322.045 234.875 313.131 234.558C305.968 234.301 305.977 229.013 305.882 223.717C270.638 224.913 284.625 255.594 253.367 263.237C253.286 270.128 255.028 282.621 250.453 287.644C247.059 291.372 236.937 290.336 231.969 290.345L204.882 290.336C193.966 290.254 191.157 287.901 191.14 276.336C191.135 272.73 191.192 268.938 191.239 265.314C173.217 267.295 172.334 273.784 161.807 286.589C155.497 294.263 147.971 297.349 138.264 298.182C138.333 301.417 138.326 304.648 138.243 307.883C134.529 313.458 131.171 312.526 124.937 312.421C101.959 312.602 97.5831 316.838 98.7935 290.775C99.0311 285.662 97.8623 278.947 100.988 274.562C106.236 271.114 120.561 272.92 127.165 272.535C140.198 271.78 138.399 279.422 138.401 288.838C163.949 285.775 156.245 258.395 191.212 256.11C191.267 249.947 189.947 235.463 193.625 230.901C195.469 229.211 200.101 228.031 202.374 228.034C216.884 228.053 231.544 227.486 246.001 228.379C247.299 228.602 249.376 229.696 250.259 230.602C254.86 235.332 253.304 247.327 253.571 253.798C276.783 245.422 263.987 216.57 306.027 214.295C305.85 206.676 303.47 196.765 312.927 195.033Z"
+        d="M124.989 67.4573C127.507 67.4419 135.624 66.7364 137.246 68.3819C137.721 68.863 137.963 69.5006 138.061 70.1595C138.409 72.4972 138.086 78.8173 138.019 81.5022C137.302 82.5248 137.277 82.5538 136.225 83.3175L136.024 83.3266C132.445 83.4517 128.644 83.43 125.071 83.303C122.199 83.1996 122.203 81.0798 122.165 78.9565C108.035 79.4363 113.642 91.7363 101.111 94.8001C101.079 97.5629 101.777 102.571 99.943 104.585C98.5825 106.08 94.5246 105.664 92.5328 105.668L81.6735 105.664C77.2974 105.632 76.1713 104.688 76.1644 100.052C76.1622 98.6059 76.1852 97.0858 76.2041 95.6328C68.9789 96.4273 68.6252 99.0286 64.4047 104.162C61.8751 107.239 58.8579 108.476 54.9663 108.81C54.994 110.107 54.9911 111.402 54.9578 112.699C53.469 114.934 52.1228 114.56 49.6235 114.518C40.4116 114.591 38.6573 116.289 39.1426 105.84C39.2378 103.79 38.7692 101.098 40.0225 99.3406C42.1262 97.9583 47.8692 98.6821 50.5166 98.5279C55.7418 98.225 55.0205 101.289 55.0213 105.064C65.2635 103.836 62.1748 92.8592 76.1934 91.9431C76.2152 89.4724 75.6862 83.6658 77.1604 81.8369C77.8998 81.159 79.757 80.6861 80.6682 80.6872C86.485 80.6948 92.3623 80.4677 98.1581 80.8258C98.6787 80.9152 99.5113 81.3535 99.865 81.7168C101.71 83.6132 101.086 88.4221 101.193 91.0161C110.499 87.6584 105.369 76.0914 122.223 75.1795C122.152 72.1247 121.198 68.1515 124.989 67.4573Z"
         fill="var(--color-warm-bg)"
-      />
-      {/* Antenna */}
-      <path
-        d="M184.221 47.4529C185.453 47.4068 186.685 47.3692 187.917 47.3403C202.602 47.0145 218.063 47.2077 232.665 47.2914C252.112 47.4032 278.126 42.6489 283.7 67.6924C285.049 73.7435 284.465 82.3795 284.397 88.8333C276.813 88.7016 269.225 88.6966 261.642 88.8188C261.795 82.7094 262.764 78.238 259.031 73.4204C257.081 71.9467 256.031 71.1707 253.483 71.1797C233.072 71.2603 212.593 70.8738 192.196 71.2888C185.602 71.4231 182.803 75.2453 182.894 81.4818C182.929 83.9044 182.937 86.3777 182.987 88.8089C175.438 88.5795 167.593 88.7663 160.017 88.8496C159.987 78.0773 158.672 65.9323 165.617 57.2501C170.73 50.8574 176.473 48.4203 184.221 47.4529Z"
-        fill="currentColor"
       />
     </svg>
   );
 }
 
 // Custom SOP nav icon — play frame with side bar
-function SopIcon({ className }: { className?: string }) {
+function SopIcon({ className, active }: { className?: string; active?: boolean }) {
   return (
-    <svg className={className} viewBox="33 33 378 378" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+    <svg className={className} viewBox="33 33 378 378" fill={active ? NAV_ACTIVE_FILL : "currentColor"} xmlns="http://www.w3.org/2000/svg" aria-hidden>
       <path d="M387.128 69H152.061C138.422 69 127.366 80.0562 127.366 93.6948V157.087C127.366 170.725 138.422 181.781 152.061 181.781H387.128C400.767 181.781 411.823 170.725 411.823 157.087V93.6948C411.823 80.0562 400.767 69 387.128 69Z" />
       <path d="M117.141 227.479L52.1506 292.47C50.5828 294.039 48.5849 295.108 46.4095 295.542C44.2342 295.976 41.9791 295.755 39.9293 294.907C37.8795 294.059 36.1271 292.623 34.8937 290.779C33.6603 288.935 33.0013 286.767 33 284.549V157.228C32.9979 155.029 33.6425 152.877 34.8536 151.041C36.0647 149.205 37.7889 147.766 39.8116 146.902C41.8344 146.038 44.0666 145.789 46.2302 146.184C48.3939 146.579 50.3936 147.601 51.9808 149.124L116.971 211.455C118.048 212.488 118.908 213.725 119.501 215.095C120.094 216.465 120.408 217.939 120.423 219.431C120.439 220.924 120.157 222.404 119.593 223.786C119.03 225.168 118.196 226.424 117.141 227.479Z" />
       <path d="M411.823 286.19V349.978C411.823 353.258 411.177 356.506 409.922 359.536C408.667 362.567 406.827 365.32 404.507 367.64C402.188 369.959 399.434 371.799 396.404 373.054C393.374 374.309 390.126 374.955 386.845 374.955H152.287C149.007 374.955 145.759 374.309 142.729 373.054C139.698 371.799 136.945 369.959 134.625 367.64C132.306 365.32 130.466 362.567 129.211 359.536C127.956 356.506 127.31 353.258 127.31 349.978V286.19C127.31 282.91 127.956 279.662 129.211 276.631C130.466 273.601 132.306 270.847 134.625 268.528C136.945 266.209 139.698 264.369 142.729 263.113C145.759 261.858 149.007 261.212 152.287 261.212H386.845C390.126 261.212 393.374 261.858 396.404 263.113C399.434 264.369 402.188 266.209 404.507 268.528C406.827 270.847 408.667 273.601 409.922 276.631C411.177 279.662 411.823 282.91 411.823 286.19Z" />
@@ -165,9 +169,9 @@ function SopIcon({ className }: { className?: string }) {
 }
 
 // Custom Chat nav icon — double speech bubble
-function ChatBubbleIcon({ className }: { className?: string }) {
+function ChatBubbleIcon({ className, active }: { className?: string; active?: boolean }) {
   return (
-    <svg className={className} viewBox="47 47 350 350" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+    <svg className={className} viewBox="47 47 350 350" fill={active ? NAV_ACTIVE_FILL : "currentColor"} xmlns="http://www.w3.org/2000/svg" aria-hidden>
       <path d="M137.398 187.875C137.398 187.816 137.386 187.757 137.362 187.702C137.339 187.647 137.305 187.596 137.261 187.554C137.218 187.512 137.167 187.479 137.11 187.456C137.054 187.433 136.993 187.421 136.932 187.421C108.312 187.469 93.5769 187.493 92.7258 187.493C81.9993 187.445 72.5375 179.854 68.779 170.483C67.562 167.446 66.9694 160.736 67.0012 150.353C67.1285 114.539 67.1405 91.5599 67.037 81.4151C66.9575 74.0037 67.3672 68.9871 68.266 66.3653C72.108 55.2124 81.4266 47.036 93.4417 47.048C219.877 47.1356 305.283 47.1197 349.661 47.0001C361.712 46.9643 371.854 54.1724 375.66 65.409C376.535 67.983 376.968 72.4617 376.96 78.845C376.921 123.05 376.924 149.767 376.972 158.995C377.02 168.211 374.371 175.575 367.367 181.504C362.682 185.481 356.406 187.477 348.539 187.493C293.105 187.549 247.343 187.501 211.254 187.35C208.733 187.334 206.585 188.079 204.811 189.585C182.833 208.289 160.831 226.793 138.806 245.098C138.472 245.377 138.213 245.525 138.03 245.541C137.656 245.564 137.469 245.393 137.469 245.027C137.43 221.94 137.406 202.889 137.398 187.875Z" />
       <path d="M115.634 214.879C115.765 214.879 115.891 214.932 115.985 215.026C116.078 215.119 116.132 215.247 116.136 215.381C116.239 227.51 116.211 243.489 116.052 263.316C115.957 274.421 125.275 280.673 135.357 276.094C136.081 275.768 138.686 273.712 143.172 269.926C171.291 246.234 192.836 228.204 207.806 215.835C208.586 215.193 209.563 214.839 210.574 214.831C260.782 214.768 305.943 214.756 346.057 214.795C352.803 214.803 357.508 215.337 360.172 216.397C370.195 220.402 376.936 230.228 376.936 241.189C376.944 282.223 376.964 304.895 376.996 309.206C377.052 315.781 376.539 320.594 375.457 323.647C371.925 333.664 362.642 340.848 351.749 340.932C339.746 341.019 326.334 341.051 311.515 341.027C311.316 341.027 311.125 341.107 310.984 341.248C310.843 341.389 310.764 341.581 310.764 341.78C310.621 355.408 310.636 370.884 310.811 388.209C310.847 391.723 310.036 395.226 306.552 396.469C303.823 397.441 301.493 397.079 299.56 395.381C275.991 374.693 255.787 356.798 238.947 341.697C238.44 341.242 237.786 340.991 237.11 340.992C195.238 341.023 147.452 341.035 93.7519 341.027C89.5281 341.027 85.8213 340.254 82.6316 338.708C72.2908 333.696 67.1047 325.193 67.0729 313.199C67.0729 313 67.0729 291.216 67.0729 247.848C67.0649 240.524 67.5341 235.535 68.4807 232.882C72.0244 222.864 81.6294 215.035 92.5468 214.903C101.965 214.791 109.661 214.784 115.634 214.879Z" />
     </svg>
@@ -175,18 +179,35 @@ function ChatBubbleIcon({ className }: { className?: string }) {
 }
 
 // Custom Link nav icon — gear/cog with sparkle in center
-function LinkSparkleIcon({ className }: { className?: string }) {
+function LinkSparkleIcon({ className, active }: { className?: string; active?: boolean }) {
   return (
-    <svg className={className} viewBox="44 44 356 356" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+    <svg className={className} viewBox="44 44 356 356" fill={active ? NAV_ACTIVE_FILL : "currentColor"} xmlns="http://www.w3.org/2000/svg" aria-hidden>
       <path d="M344.379 221.543C344.379 236.021 344.396 246.067 344.429 251.679C344.429 251.786 344.451 251.892 344.492 251.99C344.533 252.089 344.594 252.179 344.67 252.254C344.747 252.33 344.837 252.39 344.937 252.431C345.037 252.472 345.144 252.493 345.252 252.493C368.294 252.411 379.848 252.369 379.914 252.369C384.41 252.18 387.754 252.702 389.948 253.935C397.177 257.978 399.396 266.988 394.672 273.89C391.207 278.944 386.67 279.708 380.326 279.683C377.16 279.667 365.464 279.667 345.239 279.683C345.035 279.683 344.839 279.763 344.693 279.906C344.546 280.048 344.461 280.243 344.454 280.447C344.321 285.328 344.309 290.357 344.417 295.534C344.566 302.773 344.334 307.815 343.719 310.658C339.531 329.948 323.652 343.58 303.385 343.592C293.705 343.6 286.164 343.543 280.763 343.42C280.649 343.418 280.537 343.439 280.432 343.481C280.327 343.523 280.231 343.586 280.151 343.665C280.071 343.744 280.008 343.839 279.965 343.943C279.922 344.047 279.901 344.158 279.903 344.27C280.011 353.432 279.986 366.325 279.828 382.948C279.666 400.623 253.703 400.944 252.931 383.552C252.756 379.682 252.752 366.871 252.918 345.12C252.92 344.919 252.881 344.719 252.805 344.532C252.729 344.345 252.616 344.175 252.474 344.032C252.331 343.888 252.162 343.775 251.975 343.697C251.788 343.62 251.588 343.58 251.385 343.58H193.851C193.726 343.58 193.601 343.605 193.486 343.653C193.37 343.702 193.265 343.773 193.177 343.862C193.089 343.951 193.019 344.058 192.972 344.174C192.925 344.291 192.902 344.416 192.904 344.541C193.053 358.387 193.045 371.181 192.879 382.924C192.679 397.702 173.049 401.967 166.854 388.076C166.114 386.416 165.757 383.552 165.782 379.485C165.89 361.316 165.882 349.677 165.757 344.566C165.751 344.3 165.638 344.047 165.445 343.863C165.251 343.678 164.992 343.576 164.723 343.58C158.457 343.596 150.061 343.576 139.533 343.518C120.986 343.42 105.045 328.542 101.343 310.966C100.662 307.737 100.375 302.671 100.483 295.768C100.574 290.337 100.578 285.23 100.495 280.447C100.492 280.26 100.413 280.081 100.276 279.95C100.138 279.818 99.9529 279.745 99.76 279.745C81.8367 279.646 70.5651 279.63 65.9451 279.696C61.1755 279.761 57.9099 279.449 56.1483 278.759C41.179 272.867 46.0774 252.184 62.2806 252.369C72.7754 252.484 85.0774 252.464 99.1867 252.308C99.5285 252.305 99.8559 252.171 100.1 251.934C100.344 251.697 100.486 251.376 100.495 251.038C100.562 248.82 100.595 238.984 100.595 221.531C100.595 204.077 100.562 194.241 100.495 192.023C100.486 191.685 100.344 191.364 100.1 191.127C99.8559 190.89 99.5285 190.756 99.1867 190.753C85.0774 190.597 72.7754 190.576 62.2806 190.692C46.0774 190.876 41.179 170.194 56.1483 164.302C57.9099 163.612 61.1755 163.3 65.9451 163.365C70.5651 163.431 81.8367 163.415 99.76 163.316C99.9529 163.316 100.138 163.242 100.276 163.111C100.413 162.98 100.492 162.801 100.495 162.613C100.578 157.831 100.574 152.724 100.483 147.293C100.375 140.39 100.662 135.324 101.343 132.095C105.045 114.518 120.999 99.6413 139.545 99.555C150.073 99.4975 158.47 99.477 164.735 99.4935C165.004 99.4968 165.263 99.395 165.457 99.2104C165.651 99.0259 165.763 98.7733 165.77 98.5073C165.894 93.3963 165.903 81.7567 165.795 63.5885C165.77 59.521 166.127 56.6574 166.866 54.9975C173.061 41.1064 192.692 45.3711 192.891 60.1497C193.058 71.892 193.066 84.6861 192.916 98.532C192.915 98.6577 192.938 98.7824 192.985 98.899C193.032 99.0156 193.101 99.1218 193.189 99.2112C193.277 99.3006 193.382 99.3716 193.498 99.42C193.614 99.4685 193.738 99.4935 193.864 99.4935H251.398C251.6 99.4935 251.8 99.4535 251.987 99.376C252.174 99.2984 252.344 99.1847 252.486 99.0415C252.629 98.8982 252.741 98.7282 252.818 98.5413C252.894 98.3545 252.932 98.1545 252.931 97.9527C252.764 76.2019 252.769 63.3913 252.943 59.5211C253.716 42.1295 279.679 42.4499 279.841 60.125C279.998 76.7483 280.023 89.641 279.915 98.8031C279.914 98.9153 279.935 99.0266 279.977 99.1306C280.02 99.2345 280.083 99.329 280.163 99.4083C280.244 99.4876 280.339 99.5502 280.444 99.5923C280.549 99.6345 280.662 99.6554 280.775 99.6537C286.176 99.5304 293.717 99.4729 303.398 99.4811C323.664 99.4935 339.531 113.126 343.719 132.415C344.334 135.259 344.566 140.3 344.417 147.539C344.309 152.716 344.321 157.745 344.454 162.626C344.461 162.831 344.546 163.025 344.693 163.168C344.839 163.31 345.035 163.39 345.239 163.39C365.464 163.415 377.16 163.419 380.326 163.402C386.67 163.378 391.207 164.142 394.672 169.195C399.396 176.098 397.177 185.108 389.948 189.151C387.754 190.383 384.41 190.905 379.914 190.716C379.848 190.716 368.294 190.671 345.252 190.58C345.034 190.58 344.824 190.666 344.67 190.819C344.516 190.971 344.429 191.178 344.429 191.394C344.396 197.015 344.379 207.064 344.379 221.543ZM222.643 292.12C225.31 292.12 227.462 290.92 229.099 288.521C229.275 288.26 229.421 287.979 229.536 287.683C231.63 282.341 233.532 277.74 235.244 273.878C245.141 251.593 262.204 238.01 285.25 229.9C289.475 228.408 293.165 225.598 292.292 221.432C291.652 218.359 290.356 216.432 288.403 215.651C284.556 214.106 280.53 212.434 276.326 210.634C256.566 202.171 242.644 188.004 234.559 168.135C232.889 164.043 231.422 160.391 230.159 157.178C228.701 153.48 226.719 150.645 222.606 150.645C218.493 150.645 216.511 153.492 215.065 157.178C213.794 160.391 212.327 164.043 210.665 168.135C202.588 188.013 188.67 202.187 168.911 210.659C164.706 212.459 160.68 214.135 156.833 215.688C154.88 216.469 153.588 218.396 152.957 221.469C152.084 225.635 155.773 228.445 159.999 229.924C183.045 238.035 200.12 251.605 210.029 273.878C211.741 277.74 213.644 282.341 215.738 287.683C215.856 287.979 216.007 288.261 216.187 288.521C217.824 290.92 219.976 292.12 222.643 292.12Z" />
     </svg>
   );
 }
 
-// Custom Follow-ups nav icon — lightning bolt pair
-function FollowupsBoltIcon({ className }: { className?: string }) {
+// Custom Vote nav icon — bold check breaking out of a filled disc
+function VoteCheckIcon({ className, active }: { className?: string; active?: boolean }) {
   return (
-    <svg className={className} viewBox="20 20 220 220" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+    <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <circle cx="48" cy="56" r="40" fill={active ? NAV_ACTIVE_FILL : "currentColor"} />
+      <path
+        d="M26 56 L44 73 L90 14"
+        stroke="var(--color-warm-bg)"
+        strokeWidth="11"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+// Custom Follow-ups nav icon — lightning bolt pair
+function FollowupsBoltIcon({ className, active }: { className?: string; active?: boolean }) {
+  return (
+    <svg className={className} viewBox="20 20 220 220" fill={active ? NAV_ACTIVE_FILL : "currentColor"} xmlns="http://www.w3.org/2000/svg" aria-hidden>
       <path d="M131.79,69.65l-43.63,96A4,4,0,0,1,84.52,168H28.23a8.2,8.2,0,0,1-6.58-3.13,8,8,0,0,1,.43-10.25L57.19,116,22.08,77.38a8,8,0,0,1-.43-10.26A8.22,8.22,0,0,1,28.23,64h99.92A4,4,0,0,1,131.79,69.65ZM237.56,42.24A8.3,8.3,0,0,0,231.77,40H168a8,8,0,0,0-7.28,4.69l-42.57,93.65a4,4,0,0,0,3.64,5.66h57.79l-34.86,76.69a8,8,0,1,0,14.56,6.62l80-176A8,8,0,0,0,237.56,42.24Z" />
     </svg>
   );
@@ -201,7 +222,7 @@ const iconMap: Record<string, NavIconComponent> = {
   BookOpenText: FillIcon(PhBookOpen),
   ClipboardList: SopIcon,
   Flag: FollowupsBoltIcon,
-  Check: FillIcon(PhCheckCircle),
+  Check: VoteCheckIcon,
   Calendar: FillIcon(PhCalendar),
 };
 
@@ -411,6 +432,16 @@ export default function Home() {
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-warm-bg-2 text-warm-black">
+      {/* Global SVG defs — referenced by url() from nav icons when active */}
+      <svg width="0" height="0" className="absolute pointer-events-none" aria-hidden>
+        <defs>
+          <linearGradient id="nav-active-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#52d676" />
+            <stop offset="50%" stopColor="#4ec2dd" />
+            <stop offset="100%" stopColor="#4d8df7" />
+          </linearGradient>
+        </defs>
+      </svg>
       {orgRailOpen && (
         <WorkspaceRail
           active={activeWorkspace}
@@ -632,7 +663,7 @@ function WorkspaceRail({
                   ws.letter
                 )}
                 {ws.badge ? (
-                  <span className="absolute -top-1 -right-1 z-10 bg-warm-black text-white text-[9px] font-bold leading-none rounded-full min-w-[14px] h-[14px] px-[3px] flex items-center justify-center ring-2 ring-warm-bg">
+                  <span className="absolute -top-1 -right-1 z-10 bg-[#6366F1] text-white text-[9px] font-bold leading-none rounded-full min-w-[14px] h-[14px] px-[3px] flex items-center justify-center ring-2 ring-warm-bg">
                     {ws.badge}
                   </span>
                 ) : null}
@@ -788,7 +819,7 @@ function NavRow({
         }`}
       >
         <span className="relative w-5 h-5 shrink-0 flex items-center justify-center text-warm-black">
-          <Icon className="w-5 h-5" />
+          <Icon className="w-5 h-5" active={active} />
           {showBadge && (
             <span className="absolute -top-0.5 -right-0.5 w-[7px] h-[7px] rounded-full bg-[#dc2626] ring-2 ring-warm-bg" />
           )}
@@ -1252,7 +1283,7 @@ function NavSidebarCollapsed({
                           : "hover:bg-warm-gray-2/60"
                       }`}
                     >
-                      <it.icon className="w-5 h-5" />
+                      <it.icon className="w-5 h-5" active={isActive} />
                     </button>
                   </li>
                 );
@@ -1675,7 +1706,7 @@ function ChatRow({
           <div className="flex items-center justify-between gap-2">
             <p className="text-[12px] text-warm-2 truncate">{item.preview}</p>
             {item.unreadCount ? (
-              <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-warm-black text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
+              <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-[#6366F1] text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
                 {item.unreadCount > 99 ? "99+" : item.unreadCount}
               </span>
             ) : item.unread ? (
@@ -1944,7 +1975,7 @@ function FlowHomeFeed({
                 onClick={() => setTab(t.id)}
                 className={`shrink-0 px-3.5 py-1.5 rounded-full text-[13px] font-medium transition-colors ${
                   isActive
-                    ? "bg-warm-black text-white"
+                    ? "bg-[#6366F1] text-white"
                     : "text-warm-2 hover:bg-warm-base"
                 }`}
               >
@@ -2885,7 +2916,7 @@ function SendBtn({
       className={`w-[30px] h-[30px] rounded-lg border flex items-center justify-center transition-colors ${
         disabled
           ? "bg-warm-border border-warm-border text-white cursor-not-allowed"
-          : "bg-warm-black border-warm-black text-white hover:bg-warm-black/85"
+          : "bg-[#6366F1] border-[#6366F1] text-white hover:bg-[#6366F1]/85"
       }`}
     >
       <ArrowUp className="w-3.5 h-3.5" strokeWidth={2.2} />
@@ -3224,7 +3255,7 @@ function FollowUpsPage() {
                   <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
                 </button>
               )}
-              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-warm-black text-white text-[13px] font-medium hover:bg-warm-black/90">
+              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#6366F1] text-white text-[13px] font-medium hover:bg-[#6366F1]/90">
                 <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New Follow-up
               </button>
@@ -3538,7 +3569,7 @@ function VotesPage() {
                 <Download className="w-3.5 h-3.5" strokeWidth={1.8} />
                 Export
               </button>
-              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-warm-black text-white text-[13px] font-medium hover:bg-warm-black/90">
+              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#6366F1] text-white text-[13px] font-medium hover:bg-[#6366F1]/90">
                 <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New Vote
               </button>
@@ -3560,7 +3591,7 @@ function VotesPage() {
                 {t.label}{" "}
                 <span className={tab === t.id ? "text-warm-2 font-normal" : ""}>({t.count})</span>
                 {tab === t.id && (
-                  <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-warm-black" />
+                  <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#6366F1]" />
                 )}
               </button>
             ))}
@@ -3920,7 +3951,7 @@ function MemosPage() {
                     <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
                   </button>
                 )}
-                <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-warm-black text-white text-[13px] font-medium hover:bg-warm-black/90">
+                <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#6366F1] text-white text-[13px] font-medium hover:bg-[#6366F1]/90">
                   <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                   New Memo
                 </button>
@@ -3943,7 +3974,7 @@ function MemosPage() {
                     {t.label}{" "}
                     <span className={tab === t.id ? "text-warm-2 font-normal" : ""}>({t.count})</span>
                     {tab === t.id && (
-                      <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-warm-black" />
+                      <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#6366F1]" />
                     )}
                   </button>
                 ))}
@@ -4114,7 +4145,7 @@ function AgentPage() {
                     <div className="flex items-center justify-between gap-2 mb-1">
                       <p className="text-[13px] truncate text-warm-black">{a.name}</p>
                       {a.count != null && (
-                        <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-warm-black text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
+                        <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-[#6366F1] text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
                           {a.count}
                         </span>
                       )}
@@ -4363,7 +4394,7 @@ function SopsPage() {
                   <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
                 </button>
               )}
-              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-warm-black text-white text-[13px] font-medium hover:bg-warm-black/90">
+              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#6366F1] text-white text-[13px] font-medium hover:bg-[#6366F1]/90">
                 <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New SOP
               </button>
@@ -4385,7 +4416,7 @@ function SopsPage() {
                 {t.label}{" "}
                 <span className={tab === t.id ? "text-warm-2 font-normal" : ""}>({t.count})</span>
                 {tab === t.id && (
-                  <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-warm-black" />
+                  <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#6366F1]" />
                 )}
               </button>
             ))}
@@ -4874,7 +4905,7 @@ function TabButton({
         {label} <span className={active ? "text-warm-black" : "text-warm-2"}>({count})</span>
       </span>
       {active && (
-        <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-warm-black rounded-full" />
+        <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[#6366F1] rounded-full" />
       )}
     </button>
   );
