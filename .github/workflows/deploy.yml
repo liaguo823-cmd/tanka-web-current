@@ -57,7 +57,11 @@ jobs:
           NODE_ENV: production
 
       - name: Merge builds (old at root, new at /v2)
-        run: mv v2-out out/v2
+        run: |
+          # Old build may include its own /v2/ route (the gemini demo);
+          # remove it so the new build doesn't get nested inside.
+          rm -rf out/v2
+          mv v2-out out/v2
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
