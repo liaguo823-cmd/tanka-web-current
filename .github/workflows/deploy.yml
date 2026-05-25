@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -30,10 +32,32 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (static export)
+      # Build the CURRENT commit as the "v2" build, served at /v2/
+      - name: Build new version at /v2
         run: npm run build
         env:
           NODE_ENV: production
+          SUB_PATH: /v2
+
+      - name: Stash new build
+        run: mv out v2-out
+
+      # Rewind to the parent commit (= the previously deployed "old"
+      # version) and build it for the root URL.
+      - name: Checkout previous commit source
+        run: |
+          git checkout HEAD~1 -- app .github next.config.ts package.json package-lock.json public || true
+
+      - name: Reinstall dependencies for old version (if package-lock changed)
+        run: npm ci
+
+      - name: Build old version at root
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Merge builds (old at root, new at /v2)
+        run: mv v2-out out/v2
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
