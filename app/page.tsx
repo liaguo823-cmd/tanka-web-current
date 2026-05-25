@@ -4613,7 +4613,7 @@ function CalendarPage() {
                   onClick={() => setView(v)}
                   className={`h-7 px-3 rounded-md text-[12px] font-medium transition-colors ${
                     view === v
-                      ? "bg-warm-black text-white"
+                      ? "bg-[#6366F1] text-white"
                       : "text-warm-2 hover:text-warm-black"
                   }`}
                 >
@@ -4647,7 +4647,7 @@ function CalendarPage() {
                   <span
                     className={`inline-flex items-center gap-1.5 h-7 px-2.5 rounded-md ${
                       isToday
-                        ? "bg-warm-black text-white font-medium"
+                        ? "bg-[#6366F1] text-white font-medium"
                         : "text-warm-2"
                     }`}
                   >
