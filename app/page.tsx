@@ -117,7 +117,7 @@ import {
 
 type NavIconComponent = React.ComponentType<{ className?: string; active?: boolean }>;
 
-const NAV_ACTIVE_FILL = "#6366F1";
+const NAV_ACTIVE_FILL = "#0891B2";
 
 const FillIcon =
   (PhIcon: React.ComponentType<{ weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone"; size?: number | string; className?: string; color?: string }>): NavIconComponent =>
@@ -559,6 +559,7 @@ export default function Home() {
             onChange={setTaskInput}
             onSubmit={handleTaskSubmit}
             suggestion={suggestedTasks[suggestionIdx]}
+            onAllSops={() => handleNavSelect("sop")}
           />
         )}
       </main>
@@ -663,7 +664,7 @@ function WorkspaceRail({
                   ws.letter
                 )}
                 {ws.badge ? (
-                  <span className="absolute -top-1 -right-1 z-10 bg-[#6366F1] text-white text-[9px] font-bold leading-none rounded-full min-w-[14px] h-[14px] px-[3px] flex items-center justify-center ring-2 ring-warm-bg">
+                  <span className="absolute -top-1 -right-1 z-10 bg-[#0891B2] text-white text-[9px] font-bold leading-none rounded-full min-w-[14px] h-[14px] px-[3px] flex items-center justify-center ring-2 ring-warm-bg">
                     {ws.badge}
                   </span>
                 ) : null}
@@ -1488,7 +1489,7 @@ function ListColumn({
           </div>
         </div>
 
-        <div className="h-9 mb-3 rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2">
+        <div className="h-9 mb-3 rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 transition-all focus-within:border-[#0891B2] focus-within:ring-2 focus-within:ring-teal-tint/60">
           <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
           <input
             value={search}
@@ -1573,17 +1574,13 @@ function ListColumn({
                       <li key={item.id}>
                         <button
                           onClick={() => onSelect(item.id)}
-                          className="group/flowrow w-full text-left rounded-lg px-3 py-2.5 transition-colors relative"
+                          className={`w-full text-left rounded-lg px-3 py-2.5 transition-colors relative ${
+                            isSelected ? "" : "hover:bg-warm-base/60"
+                          }`}
                           style={{
-                            background: isSelected ? "var(--warm-base)" : undefined,
+                            background: isSelected ? "#EAEFEE" : undefined,
                           }}
                         >
-                          <span
-                            aria-hidden
-                            className={`absolute inset-0 rounded-lg transition-colors ${
-                              isSelected ? "" : "group-hover/flowrow:bg-warm-base/60"
-                            }`}
-                          />
                           <div className="relative">
                             <div className="flex items-center justify-between gap-2 mb-1">
                               <p className="text-[13px] truncate text-warm-black">
@@ -1679,7 +1676,7 @@ function ChatRow({
       <button
         onClick={onClick}
         className={`w-full text-left rounded-lg px-3 py-2.5 flex gap-3 items-center transition-colors ${
-          selected ? "bg-warm-base" : "hover:bg-warm-base/60"
+          selected ? "bg-[#EAEFEE]" : "hover:bg-warm-base/60"
         }`}
       >
         {item.isGroup ? (
@@ -1706,7 +1703,7 @@ function ChatRow({
           <div className="flex items-center justify-between gap-2">
             <p className="text-[12px] text-warm-2 truncate">{item.preview}</p>
             {item.unreadCount ? (
-              <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-[#6366F1] text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
+              <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-[#0891B2] text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
                 {item.unreadCount > 99 ? "99+" : item.unreadCount}
               </span>
             ) : item.unread ? (
@@ -1928,7 +1925,7 @@ function FlowHomeFeed({
 
         {/* Composer */}
         <div
-          className="mt-3 rounded-2xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-4"
+          className="mt-3 rounded-2xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-4 transition-all focus-within:border-[#0891B2] focus-within:ring-4 focus-within:ring-teal-tint/60"
           style={{
             backgroundImage:
               "linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%)",
@@ -1975,7 +1972,7 @@ function FlowHomeFeed({
                 onClick={() => setTab(t.id)}
                 className={`shrink-0 px-3.5 py-1.5 rounded-full text-[13px] font-medium transition-colors ${
                   isActive
-                    ? "bg-[#6366F1] text-white"
+                    ? "bg-[#0891B2] text-white"
                     : "text-warm-2 hover:bg-warm-base"
                 }`}
               >
@@ -1989,7 +1986,7 @@ function FlowHomeFeed({
         <ul className="mt-4 space-y-2.5">
           {homeFlows.map((f) => (
             <li key={f.id}>
-              <button className="w-full text-left rounded-xl border border-warm-gray-2 bg-white px-4 py-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
+              <button className="w-full text-left rounded-xl border border-warm-gray-2 bg-white px-4 py-3 hover:border-[#0891B2] hover:bg-[#EBEEEE] hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
                 <div className="flex items-baseline justify-between gap-3 mb-1">
                   <p className="text-[14px] font-medium text-warm-black truncate">{f.title}</p>
                   <span className="text-[12px] text-warm-2 shrink-0">{f.date}</span>
@@ -2016,7 +2013,7 @@ function FlowHomeFeed({
 function SopMiniCard({ card }: { card: SopCard }) {
   const Icon = card.icon;
   return (
-    <button className="text-left rounded-xl border border-warm-gray-2 bg-white p-3 flex items-start gap-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
+    <button className="text-left rounded-xl border border-warm-gray-2 bg-white p-3 flex items-start gap-3 hover:border-[#0891B2] hover:bg-[#EBEEEE] hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
       <span className="w-9 h-9 rounded-lg bg-warm-base flex items-center justify-center shrink-0 text-warm-black">
         <Icon className="w-[18px] h-[18px]" strokeWidth={1.8} />
       </span>
@@ -2033,11 +2030,13 @@ function EmptyTaskView({
   onChange,
   onSubmit,
   suggestion,
+  onAllSops,
 }: {
   value: string;
   onChange: (s: string) => void;
   onSubmit: () => void;
   suggestion: string;
+  onAllSops?: () => void;
 }) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -2059,7 +2058,7 @@ function EmptyTaskView({
         </h1>
 
         <div
-          className="rounded-3xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-4"
+          className="rounded-3xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-4 transition-all focus-within:border-[#0891B2] focus-within:ring-4 focus-within:ring-teal-tint/60"
           style={{
             backgroundImage:
               "linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%)",
@@ -2101,7 +2100,10 @@ function EmptyTaskView({
 
         {/* All SOPs section */}
         <div className="mt-8">
-          <button className="flex items-center gap-1 text-[14px] font-semibold text-warm-black hover:text-warm-black/80 mb-3">
+          <button
+            onClick={onAllSops}
+            className="flex items-center gap-1 text-[14px] font-semibold text-warm-black hover:text-warm-black/80 mb-3"
+          >
             All SOPs
             <ChevronRight className="w-4 h-4" strokeWidth={2} />
           </button>
@@ -2387,7 +2389,7 @@ function ConversationView({
           onScroll={chatFades.onScroll}
           className="h-full overflow-y-auto px-8 py-6 scrollbar-thin scroll-smooth"
         >
-          <div className="max-w-[768px] mx-auto space-y-6">
+          <div className="max-w-[768px] mx-auto px-3 space-y-6">
             {messages.map((m, idx) => (
               <Message
                 key={m.id}
@@ -2411,7 +2413,7 @@ function ConversationView({
       <div className="px-8 pb-6 pt-2">
         <div className="max-w-[768px] mx-auto">
           <div
-            className="rounded-2xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-3"
+            className="rounded-2xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-3 transition-all focus-within:border-[#0891B2] focus-within:ring-4 focus-within:ring-teal-tint/60"
             style={{
               backgroundImage:
                 "linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%)",
@@ -2681,7 +2683,7 @@ function AIAssistantPanel({ onCollapse }: { onCollapse: () => void }) {
       <div className="flex-1 overflow-y-auto px-4 py-3 scrollbar-thin" />
       <div className="px-4 pb-6 pt-2">
         <div
-          className="rounded-2xl border border-warm-gray-2 bg-white p-3"
+          className="rounded-2xl border border-warm-gray-2 bg-white p-3 transition-all focus-within:border-[#0891B2] focus-within:ring-4 focus-within:ring-teal-tint/60"
           style={{
             backgroundImage:
               "linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%)",
@@ -2836,9 +2838,17 @@ function ChatComposerAiBtn({ onClick }: { onClick?: () => void }) {
       type="button"
       onClick={onClick}
       title="Tanka AI"
-      className="w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center hover:brightness-95 hover:shadow-[0_1px_4px_rgba(38,32,28,0.06)] transition-all"
+      className="group/ai relative w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center transition-all"
     >
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Default state */}
+      <svg
+        width="30"
+        height="30"
+        viewBox="0 0 30 30"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="absolute inset-0 transition-opacity group-hover/ai:opacity-0"
+      >
         <mask id="ai-btn-mask" fill="white">
           <path d="M0 8.00001C0 3.58173 3.58172 0 8 0H21.6C26.0183 0 29.6 3.58172 29.6 8V21.6C29.6 26.0183 26.0183 29.6 21.6 29.6H8C3.58172 29.6 0 26.0183 0 21.6V8.00001Z" />
         </mask>
@@ -2873,6 +2883,54 @@ function ChatComposerAiBtn({ onClick }: { onClick?: () => void }) {
             <stop offset="1" stopColor="#E4E4E7" />
           </linearGradient>
           <clipPath id="ai-btn-clip">
+            <rect width="16" height="16" fill="white" transform="translate(6.7998 6.7998)" />
+          </clipPath>
+        </defs>
+      </svg>
+
+      {/* Hover state — cyan border + cyan-tinted icon gradient */}
+      <svg
+        width="30"
+        height="30"
+        viewBox="0 0 30 30"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="absolute inset-0 opacity-0 transition-opacity group-hover/ai:opacity-100"
+      >
+        <mask id="ai-btn-mask-hover" fill="white">
+          <path d="M0 8.00001C0 3.58173 3.58172 0 8 0H21.6C26.0183 0 29.6 3.58172 29.6 8V21.6C29.6 26.0183 26.0183 29.6 21.6 29.6H8C3.58172 29.6 0 26.0183 0 21.6V8.00001Z" />
+        </mask>
+        <path
+          d="M0 8.00001C0 3.58173 3.58172 0 8 0H21.6C26.0183 0 29.6 3.58172 29.6 8V21.6C29.6 26.0183 26.0183 29.6 21.6 29.6H8C3.58172 29.6 0 26.0183 0 21.6V8.00001Z"
+          fill="url(#ai-btn-bg-hover)"
+        />
+        <path
+          d="M8 0V1H21.6V0V-1H8V0ZM29.6 8H28.6V21.6H29.6H30.6V8H29.6ZM21.6 29.6V28.6H8V29.6V30.6H21.6V29.6ZM0 21.6H1V8.00001H0H-1V21.6H0ZM8 29.6V28.6C4.13401 28.6 1 25.466 1 21.6H0H-1C-1 26.5706 3.02944 30.6 8 30.6V29.6ZM29.6 21.6H28.6C28.6 25.466 25.466 28.6 21.6 28.6V29.6V30.6C26.5706 30.6 30.6 26.5706 30.6 21.6H29.6ZM21.6 0V1C25.466 1 28.6 4.13401 28.6 8H29.6H30.6C30.6 3.02944 26.5706 -1 21.6 -1V0ZM8 0V-1C3.02944 -1 -1 3.02945 -1 8.00001H0H1C1 4.13401 4.13401 1 8 1V0Z"
+          fill="#0891B2"
+          mask="url(#ai-btn-mask-hover)"
+        />
+        <g clipPath="url(#ai-btn-clip-hover)">
+          <path
+            d="M8.22949 11.3707C8.22949 9.87804 9.43954 8.668 10.9322 8.668H14.716C15.0145 8.668 15.2565 8.91001 15.2565 9.20854C15.2565 9.50707 15.0145 9.74908 14.716 9.74908H10.9322C10.0366 9.74908 9.31058 10.4751 9.31058 11.3707V20.031L11.9901 18.0562H19.5809C20.4765 18.0562 21.2025 17.3302 21.2025 16.4346V14.614C21.2025 14.3154 21.4445 14.0734 21.743 14.0734C22.0416 14.0734 22.2836 14.3154 22.2836 14.614V16.4346C22.2836 17.9273 21.0735 19.1373 19.5809 19.1373H12.3458L8.22949 22.1699V11.3707Z"
+            fill="url(#ai-btn-icon-hover)"
+          />
+          <path
+            d="M19.8994 7.58691C19.8994 8.20462 20.2213 8.87147 20.7362 9.39111C21.2506 9.91033 21.9169 10.2413 22.5538 10.2414V10.8784C21.9169 10.8785 21.2506 11.2095 20.7362 11.7287C20.2213 12.2483 19.8994 12.9152 19.8994 13.5329H19.2623C19.2623 12.9152 18.9404 12.2483 18.4256 11.7287C17.9111 11.2095 17.2448 10.8784 16.6079 10.8784V10.2414C17.2448 10.2414 17.9111 9.91033 18.4256 9.39111C18.9404 8.87147 19.2623 8.20463 19.2623 7.58691H19.8994Z"
+            fill="url(#ai-btn-icon-hover)"
+          />
+        </g>
+        <defs>
+          <linearGradient id="ai-btn-bg-hover" x1="14.8" y1="0" x2="14.8" y2="29.6" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#FCFCFA" />
+            <stop offset="0.333333" stopColor="#FAF9F7" />
+            <stop offset="0.666667" stopColor="#F7F7F3" />
+            <stop offset="1" stopColor="#F5F4F0" />
+          </linearGradient>
+          <linearGradient id="ai-btn-icon-hover" x1="15.3917" y1="7.58691" x2="15.3917" y2="22.1699" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#279FBB" />
+            <stop offset="1" stopColor="#E4E4E7" />
+          </linearGradient>
+          <clipPath id="ai-btn-clip-hover">
             <rect width="16" height="16" fill="white" transform="translate(6.7998 6.7998)" />
           </clipPath>
         </defs>
@@ -2916,7 +2974,7 @@ function SendBtn({
       className={`w-[30px] h-[30px] rounded-lg border flex items-center justify-center transition-colors ${
         disabled
           ? "bg-warm-border border-warm-border text-white cursor-not-allowed"
-          : "bg-[#6366F1] border-[#6366F1] text-white hover:bg-[#6366F1]/85"
+          : "bg-[#0891B2] border-[#0891B2] text-white hover:bg-[#0891B2]/85"
       }`}
     >
       <ArrowUp className="w-3.5 h-3.5" strokeWidth={2.2} />
@@ -3235,7 +3293,7 @@ function FollowUpsPage() {
             <h1 className="text-[28px] font-bold tracking-tight">Follow-ups</h1>
             <div className="flex items-center gap-2 mt-1">
               {searchOpen ? (
-                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white">
+                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white transition-all focus-within:border-[#0891B2] focus-within:ring-2 focus-within:ring-teal-tint/60">
                   <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
                   <input
                     autoFocus
@@ -3255,7 +3313,7 @@ function FollowUpsPage() {
                   <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
                 </button>
               )}
-              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#6366F1] text-white text-[13px] font-medium hover:bg-[#6366F1]/90">
+              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#0891B2] text-white text-[13px] font-medium hover:bg-[#0891B2]/90">
                 <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New Follow-up
               </button>
@@ -3325,7 +3383,7 @@ function FollowUpsPage() {
 
 function FollowUpRow({ item }: { item: FollowUpItem }) {
   return (
-    <div className="relative rounded-xl border border-warm-gray-2 bg-white pl-5 pr-4 py-3 flex items-start gap-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
+    <div className="relative rounded-xl border border-warm-gray-2 bg-white pl-5 pr-4 py-3 flex items-start gap-3 hover:border-[#0891B2] hover:bg-[#EBEEEE] hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
       <span
         aria-hidden
         className="absolute left-2 top-1/2 -translate-y-1/2 w-[3px] h-[60%] rounded-full"
@@ -3545,7 +3603,7 @@ function VotesPage() {
             <h1 className="text-[28px] font-bold tracking-tight">Votes</h1>
             <div className="flex items-center gap-2 mt-1">
               {searchOpen ? (
-                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white">
+                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white transition-all focus-within:border-[#0891B2] focus-within:ring-2 focus-within:ring-teal-tint/60">
                   <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
                   <input
                     autoFocus
@@ -3569,7 +3627,7 @@ function VotesPage() {
                 <Download className="w-3.5 h-3.5" strokeWidth={1.8} />
                 Export
               </button>
-              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#6366F1] text-white text-[13px] font-medium hover:bg-[#6366F1]/90">
+              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#0891B2] text-white text-[13px] font-medium hover:bg-[#0891B2]/90">
                 <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New Vote
               </button>
@@ -3591,7 +3649,7 @@ function VotesPage() {
                 {t.label}{" "}
                 <span className={tab === t.id ? "text-warm-2 font-normal" : ""}>({t.count})</span>
                 {tab === t.id && (
-                  <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#6366F1]" />
+                  <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#0891B2]" />
                 )}
               </button>
             ))}
@@ -3670,7 +3728,7 @@ function VoteCardView({ vote }: { vote: VoteCard }) {
       : STATUS.idle;
 
   return (
-    <div className="rounded-xl border border-warm-gray-2 bg-white p-4 flex flex-col gap-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
+    <div className="rounded-xl border border-warm-gray-2 bg-white p-4 flex flex-col gap-3 hover:border-[#0891B2] hover:bg-[#EBEEEE] hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 min-w-0">
@@ -3808,9 +3866,9 @@ const MEMO_ITEMS: MemoItem[] = [
     body: "testtesttesttesttesttesttest",
     date: "05/09/2026",
     tags: [
-      { label: "Organizational Structure", tint: "#dde5d3", label_color: "#3a6a4e" },
-      { label: "Policy & Guidance", tint: "#dde5d3", label_color: "#3a6a4e" },
-      { label: "Company Profile", tint: "#dde5d3", label_color: "#3a6a4e" },
+      { label: "Organizational Structure", tint: "#d3e5e2", label_color: "#2c6a6c" },
+      { label: "Policy & Guidance", tint: "#d3e5e2", label_color: "#2c6a6c" },
+      { label: "Company Profile", tint: "#d3e5e2", label_color: "#2c6a6c" },
     ],
   },
   {
@@ -3931,7 +3989,7 @@ function MemosPage() {
               <h1 className="text-[28px] font-bold tracking-tight leading-none">Memos</h1>
               <div className="flex items-center gap-2">
                 {searchOpen ? (
-                  <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white">
+                  <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white transition-all focus-within:border-[#0891B2] focus-within:ring-2 focus-within:ring-teal-tint/60">
                     <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
                     <input
                       autoFocus
@@ -3951,7 +4009,7 @@ function MemosPage() {
                     <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
                   </button>
                 )}
-                <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#6366F1] text-white text-[13px] font-medium hover:bg-[#6366F1]/90">
+                <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#0891B2] text-white text-[13px] font-medium hover:bg-[#0891B2]/90">
                   <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                   New Memo
                 </button>
@@ -3974,7 +4032,7 @@ function MemosPage() {
                     {t.label}{" "}
                     <span className={tab === t.id ? "text-warm-2 font-normal" : ""}>({t.count})</span>
                     {tab === t.id && (
-                      <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#6366F1]" />
+                      <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#0891B2]" />
                     )}
                   </button>
                 ))}
@@ -4046,7 +4104,7 @@ function MemoNavRow({
       onClick={onClick}
       className={`group/mr w-full h-9 px-2 rounded-lg flex items-center gap-2 text-[14px] transition-colors ${
         active
-          ? "bg-warm-base text-warm-black font-medium"
+          ? "bg-[#EAEFEE] text-warm-black font-medium"
           : "text-warm-black hover:bg-warm-base/60"
       }`}
     >
@@ -4116,7 +4174,7 @@ function AgentPage() {
               </button>
             </div>
           </div>
-          <div className="h-9 mb-3 rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2">
+          <div className="h-9 mb-3 rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 transition-all focus-within:border-[#0891B2] focus-within:ring-2 focus-within:ring-teal-tint/60">
             <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
             <input
               value={query}
@@ -4135,7 +4193,7 @@ function AgentPage() {
                 <button
                   onClick={() => setSelectedId(a.id)}
                   className={`w-full text-left rounded-lg px-3 py-2.5 flex gap-3 items-center transition-colors ${
-                    isActive ? "bg-warm-base" : "hover:bg-warm-base/60"
+                    isActive ? "bg-[#EAEFEE]" : "hover:bg-warm-base/60"
                   }`}
                 >
                   <span className="w-9 h-9 rounded-full bg-warm-gray-2 flex items-center justify-center shrink-0 text-warm-black">
@@ -4145,7 +4203,7 @@ function AgentPage() {
                     <div className="flex items-center justify-between gap-2 mb-1">
                       <p className="text-[13px] truncate text-warm-black">{a.name}</p>
                       {a.count != null && (
-                        <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-[#6366F1] text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
+                        <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-[#0891B2] text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none">
                           {a.count}
                         </span>
                       )}
@@ -4374,7 +4432,7 @@ function SopsPage() {
             </div>
             <div className="flex items-center gap-2 mt-1">
               {searchOpen ? (
-                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white">
+                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white transition-all focus-within:border-[#0891B2] focus-within:ring-2 focus-within:ring-teal-tint/60">
                   <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
                   <input
                     autoFocus
@@ -4394,7 +4452,7 @@ function SopsPage() {
                   <Search className="w-[18px] h-[18px]" strokeWidth={1.8} />
                 </button>
               )}
-              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#6366F1] text-white text-[13px] font-medium hover:bg-[#6366F1]/90">
+              <button className="h-9 px-4 inline-flex items-center gap-1.5 rounded-lg bg-[#0891B2] text-white text-[13px] font-medium hover:bg-[#0891B2]/90">
                 <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New SOP
               </button>
@@ -4416,7 +4474,7 @@ function SopsPage() {
                 {t.label}{" "}
                 <span className={tab === t.id ? "text-warm-2 font-normal" : ""}>({t.count})</span>
                 {tab === t.id && (
-                  <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#6366F1]" />
+                  <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#0891B2]" />
                 )}
               </button>
             ))}
@@ -4468,8 +4526,7 @@ function SopCardView({ card }: { card: SopCard }) {
   const Icon = card.icon;
   return (
     <button
-      className="text-left rounded-2xl p-4 flex flex-col gap-3 transition-all border border-warm-gray-2 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)]"
-      style={{ background: card.bg }}
+      className="text-left rounded-2xl p-4 flex flex-col gap-3 transition-all border border-warm-gray-2 bg-white hover:border-[#0891B2] hover:bg-[#EBEEEE] hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)]"
     >
       <span
         className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
@@ -4613,7 +4670,7 @@ function CalendarPage() {
                   onClick={() => setView(v)}
                   className={`h-7 px-3 rounded-md text-[12px] font-medium transition-colors ${
                     view === v
-                      ? "bg-[#6366F1] text-white"
+                      ? "bg-[#0891B2] text-white"
                       : "text-warm-2 hover:text-warm-black"
                   }`}
                 >
@@ -4640,21 +4697,29 @@ function CalendarPage() {
               return (
                 <div
                   key={d.label}
-                  className={`h-12 flex items-center justify-center text-[12px] ${
+                  className={`relative h-16 flex flex-col items-center justify-center gap-1.5 ${
                     i < 6 ? "border-r border-warm-gray-2" : ""
                   }`}
                 >
+                  {isToday && (
+                    <span
+                      aria-hidden
+                      className="absolute top-0 left-0 right-0 h-[3px] bg-[#0891B2]"
+                    />
+                  )}
                   <span
-                    className={`inline-flex items-center gap-1.5 h-7 px-2.5 rounded-md ${
-                      isToday
-                        ? "bg-[#6366F1] text-white font-medium"
-                        : "text-warm-2"
+                    className={`text-[13px] font-medium leading-none tabular-nums ${
+                      isToday ? "text-[#26201c]" : "text-warm-black"
                     }`}
                   >
-                    <span>{d.label}</span>
-                    <span className={isToday ? "" : "text-warm-black"}>
-                      {d.date}
-                    </span>
+                    {d.date}
+                  </span>
+                  <span
+                    className={`text-[10px] font-normal leading-none ${
+                      isToday ? "text-[#26201c]" : "text-warm-2"
+                    }`}
+                  >
+                    {d.label}
                   </span>
                 </div>
               );
@@ -4797,7 +4862,7 @@ function LinkPage() {
             <h1 className="text-[28px] font-bold tracking-tight">Link</h1>
             <div className="h-9 mt-2 flex items-center">
               {searchOpen ? (
-                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white">
+                <div className="h-9 w-[240px] rounded-lg border border-warm-gray-2 px-3 flex items-center gap-2 bg-white transition-all focus-within:border-[#0891B2] focus-within:ring-2 focus-within:ring-teal-tint/60">
                   <Search className="w-[15px] h-[15px] text-warm-2" strokeWidth={1.8} />
                   <input
                     autoFocus
@@ -4905,7 +4970,7 @@ function TabButton({
         {label} <span className={active ? "text-warm-black" : "text-warm-2"}>({count})</span>
       </span>
       {active && (
-        <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[#6366F1] rounded-full" />
+        <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[#0891B2] rounded-full" />
       )}
     </button>
   );
@@ -4914,7 +4979,7 @@ function TabButton({
 function LinkCard({ tool }: { tool: LinkTool }) {
   const [imgFailed, setImgFailed] = useState(false);
   return (
-    <div className="group/link text-left rounded-xl border border-warm-gray-2 bg-white px-4 py-3 flex items-center gap-3 transition-all hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)]">
+    <div className="group/link text-left rounded-xl border border-warm-gray-2 bg-white px-4 py-3 flex items-center gap-3 transition-all hover:border-[#0891B2] hover:bg-[#EBEEEE] hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)]">
       <span
         className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-[15px] font-bold"
         style={{ background: tool.letterBg, color: tool.letterColor }}
@@ -5359,7 +5424,7 @@ function FlowDetailView({
           onScroll={flowFades.onScroll}
           className="h-full overflow-y-auto px-6 py-4 scrollbar-thin"
         >
-        <div className="max-w-[820px] mx-auto">
+        <div className="max-w-[820px] mx-auto px-3">
           {/* User query bubble */}
           <div className="flex justify-end mb-5">
             <div className="bg-warm-base rounded-2xl px-4 py-3 text-[15px] leading-snug max-w-[85%]">
@@ -5455,7 +5520,7 @@ function FlowDetailView({
       <div className="px-6 pb-6 pt-2">
         <div className="max-w-[820px] mx-auto">
           <div
-            className="rounded-2xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-3"
+            className="rounded-2xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-3 transition-all focus-within:border-[#0891B2] focus-within:ring-4 focus-within:ring-teal-tint/60"
             style={{
               backgroundImage:
                 "linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%)",

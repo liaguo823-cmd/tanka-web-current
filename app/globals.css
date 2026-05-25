@@ -10,6 +10,11 @@
   --warm-bg: #f2f1ee;
   --warm-bg-2: #fafaf9;
 
+  /* Subtle teal-tinted gray — for hover backgrounds and composer
+     focus rings, so interactive states pick up a faint cool undertone
+     without disturbing the overall warm palette. */
+  --teal-tint: #DAE3E5;
+
   --background: #ffffff;
   --foreground: var(--warm-black);
 }
@@ -24,6 +29,7 @@
   --color-warm-base: var(--warm-base);
   --color-warm-bg: var(--warm-bg);
   --color-warm-bg-2: var(--warm-bg-2);
+  --color-teal-tint: var(--teal-tint);
   --font-sans: var(--font-geist-sans), "Inter", "Noto Sans SC", "PingFang SC", sans-serif;
   --font-mono: var(--font-geist-mono);
 }
