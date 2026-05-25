@@ -1893,10 +1893,10 @@ function FlowHomeFeed({
               <button className="w-full text-left rounded-xl border border-warm-gray-2 bg-white px-4 py-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
                 <div className="flex items-baseline justify-between gap-3 mb-1">
                   <p className="text-[14px] font-medium text-warm-black truncate">{f.title}</p>
-                  <span className="text-[12px] text-warm-2 shrink-0">{f.time ?? "Yesterday"}</span>
+                  <span className="text-[12px] text-warm-2 shrink-0">{f.date}</span>
                 </div>
-                {f.snippet && (
-                  <p className="text-[12.5px] text-warm-2 line-clamp-1">{f.snippet}</p>
+                {f.preview && (
+                  <p className="text-[12.5px] text-warm-2 line-clamp-1">{f.preview}</p>
                 )}
               </button>
             </li>
