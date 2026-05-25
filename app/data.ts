@@ -49,6 +49,7 @@ export const workspaces: WorkspaceItem[] = [
 
 export type NavGroup = {
   id: string;
+  label?: string;
   items: NavItem[];
 };
 
@@ -74,12 +75,13 @@ export const navGroups: NavGroup[] = [
         ],
       },
       { id: "chat", label: "Chat", icon: "MessageSquare" },
-      { id: "link", label: "Link", icon: "Link2" },
     ],
   },
   {
-    id: "more",
+    id: "apps",
+    label: "Apps",
     items: [
+      { id: "link", label: "Link", icon: "Link2" },
       { id: "memos", label: "Memos", icon: "BookOpenText" },
       { id: "followups", label: "Follow-ups", icon: "Flag" },
       { id: "votes", label: "Votes", icon: "Check" },

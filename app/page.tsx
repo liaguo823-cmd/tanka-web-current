@@ -16,6 +16,7 @@ import {
   Check,
   CheckCircle,
   CheckCircle2,
+  CheckSquare,
   ClipboardList,
   Coins,
   Clock,
@@ -39,7 +40,9 @@ import {
   Flag,
   Folder,
   FolderPlus,
+  Grid3X3,
   Home as HomeIcon,
+  Layout,
   Share2,
   Trash2,
   Image as ImageIcon,
@@ -71,6 +74,7 @@ import {
   ThumbsUp,
   TrendingUp,
   Users,
+  Video,
   Vote,
   Workflow,
   type LucideIcon,
@@ -704,24 +708,24 @@ function NavRow({
       <button
         onClick={onClick}
         className={`flex-1 flex items-center gap-2.5 h-full min-w-0 ${
-          indent ? "pl-7 pr-2" : showBadge || createMenu ? "pl-2.5 pr-8" : "px-2.5"
+          indent ? "pl-7 pr-2" : createMenu ? "pl-2.5 pr-8" : "px-2.5"
         }`}
       >
-        <Icon
-          className="w-[18px] h-[18px] shrink-0"
-          style={{ color: active ? "#26201c" : "#56534E" }}
-          strokeWidth={1.6}
-        />
+        <span className="relative w-[18px] h-[18px] shrink-0 flex items-center justify-center">
+          <Icon
+            className="w-[18px] h-[18px]"
+            style={{ color: active ? "#26201c" : "#56534E" }}
+            strokeWidth={1.6}
+          />
+          {showBadge && (
+            <span className="absolute -top-0.5 -right-0.5 w-[7px] h-[7px] rounded-full bg-[#dc2626] ring-2 ring-warm-bg" />
+          )}
+        </span>
         <span className="flex-1 text-left truncate">{label}</span>
       </button>
 
-      {/* Right slot — badge sits where + appears; on hover the + slides in and pushes badge left */}
+      {/* Right slot — + plus button */}
       <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-1 pointer-events-none">
-        {showBadge && (
-          <span className="shrink-0 min-w-[16px] h-4 px-1 rounded-full bg-warm-black text-white text-[10px] font-medium flex items-center justify-center tabular-nums leading-none pointer-events-auto">
-            {badgeCount}
-          </span>
-        )}
         {createMenu && (
           <DropdownTrigger sections={createMenu} align="right-of-trigger" width={240}>
             {({ open, toggle }) => (
@@ -1028,6 +1032,11 @@ function NavSidebar({
         {navGroups.map((group, idx) => (
           <div key={group.id}>
             {idx > 0 && <div className="border-t border-warm-gray-2 mx-3 my-3.5" />}
+            {group.label && (
+              <p className="px-5 pb-1.5 text-[11px] font-medium text-warm-2 tracking-wide uppercase">
+                {group.label}
+              </p>
+            )}
             <ul className="space-y-0">
               {group.items.map((item) => {
                 const Icon = iconMap[item.icon] ?? LayoutGrid;
@@ -1618,6 +1627,308 @@ function EmptyList() {
 /* ===========================
  * Main content - empty state
  * =========================== */
+/* ===========================
+ * Unified app rail (Tanka + 3rd party in one drawer)
+ * =========================== */
+
+type AppItem = {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  color: string; // icon stroke color
+  navKey?: NavKey; // if set, clicking navigates to this nav
+};
+
+const PINNED_APPS: AppItem[] = [
+  { id: "memo", label: "Memo", icon: FileText, color: "#f59e0b", navKey: "memos" },
+  { id: "followup", label: "Follow-up", icon: Bell, color: "#a855f7", navKey: "followups" },
+  { id: "vote", label: "Vote", icon: CheckSquare, color: "#10a37f", navKey: "votes" },
+  { id: "calendar", label: "Calendar", icon: Calendar, color: "#2563eb", navKey: "calendar" },
+  { id: "dashboard", label: "Dashboard", icon: LayoutGrid, color: "#2563eb" },
+  { id: "policy", label: "Policy", icon: BookOpen, color: "#dc2626" },
+];
+
+const ALL_APPS: AppItem[] = [
+  ...PINNED_APPS,
+  { id: "slack", label: "Slack", icon: MessageSquare, color: "#e01e5a" },
+  { id: "zoom", label: "Zoom", icon: Video, color: "#2563eb" },
+  { id: "notion", label: "Notion", icon: Layout, color: "#26201c" },
+  { id: "jira", label: "Jira", icon: Briefcase, color: "#0d9488" },
+  { id: "drive", label: "Drive", icon: Folder, color: "#eab308" },
+  { id: "sheets", label: "Sheets", icon: Grid3X3, color: "#10a37f" },
+];
+
+function AppTile({
+  app,
+  size = 44,
+  onClick,
+}: {
+  app: AppItem;
+  size?: number;
+  onClick?: () => void;
+}) {
+  const Icon = app.icon;
+  return (
+    <button
+      onClick={onClick}
+      title={app.label}
+      className="group/app flex flex-col items-center gap-1.5 shrink-0 transition-transform hover:scale-105"
+    >
+      <span
+        className="rounded-full bg-white flex items-center justify-center shadow-[0_1px_3px_rgba(38,32,28,0.04),0_0_0_1px_rgba(38,32,28,0.04)] group-hover/app:shadow-[0_2px_8px_rgba(38,32,28,0.08),0_0_0_1px_rgba(38,32,28,0.06)] transition-shadow"
+        style={{ width: size, height: size }}
+      >
+        <Icon
+          className="shrink-0"
+          style={{ color: app.color, width: size * 0.5, height: size * 0.5 }}
+          strokeWidth={1.6}
+        />
+      </span>
+      <span className="text-[12px] text-warm-2 font-medium leading-none">
+        {app.label}
+      </span>
+    </button>
+  );
+}
+
+function AppRail({
+  onAppClick,
+  onShowAll,
+}: {
+  onAppClick: (app: AppItem) => void;
+  onShowAll: () => void;
+}) {
+  return (
+    <div className="flex items-start gap-5 overflow-x-auto pb-1 pl-1 pr-1 scrollbar-thin">
+      {PINNED_APPS.map((app) => (
+        <AppTile key={app.id} app={app} onClick={() => onAppClick(app)} />
+      ))}
+      <button
+        onClick={onShowAll}
+        title="All apps"
+        className="group/all flex flex-col items-center gap-1.5 shrink-0 transition-transform hover:scale-105"
+      >
+        <span className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-[0_1px_3px_rgba(38,32,28,0.04),0_0_0_1px_rgba(38,32,28,0.04)] group-hover/all:shadow-[0_2px_8px_rgba(38,32,28,0.08),0_0_0_1px_rgba(38,32,28,0.06)] transition-shadow">
+          <Grid3X3 className="w-[22px] h-[22px] text-warm-2" strokeWidth={1.6} />
+        </span>
+        <span className="text-[12px] text-warm-2 font-medium leading-none">All</span>
+      </button>
+    </div>
+  );
+}
+
+function AllAppsModal({
+  onClose,
+  onAppClick,
+}: {
+  onClose: () => void;
+  onAppClick: (app: AppItem) => void;
+}) {
+  if (typeof document === "undefined") return null;
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-warm-black/30 p-6"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-[520px] rounded-2xl bg-white shadow-[0_24px_60px_rgba(38,32,28,0.18)] overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="px-6 pt-5 pb-3 flex items-center justify-between">
+          <h2 className="text-[18px] font-semibold tracking-tight">All Apps</h2>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-md text-warm-2 hover:text-warm-black hover:bg-warm-base flex items-center justify-center"
+            title="Close"
+          >
+            <Check className="w-4 h-4 rotate-45 scale-0" />
+            <span className="text-[20px] leading-none">×</span>
+          </button>
+        </div>
+        <div className="px-6 pb-6 grid grid-cols-4 gap-x-4 gap-y-5">
+          {ALL_APPS.map((app) => (
+            <AppTile
+              key={app.id}
+              app={app}
+              size={48}
+              onClick={() => {
+                onAppClick(app);
+                onClose();
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>,
+    document.body,
+  );
+}
+
+/* ===========================
+ * Flow home feed (with app rail + SOPs + composer + flow list)
+ * =========================== */
+
+type FlowHomeTab = "active" | "complete" | "foryou";
+
+function FlowHomeFeed({
+  value,
+  onChange,
+  onSubmit,
+  suggestion,
+  onAppClick,
+}: {
+  value: string;
+  onChange: (s: string) => void;
+  onSubmit: () => void;
+  suggestion: string;
+  onAppClick: (app: AppItem) => void;
+}) {
+  const [tab, setTab] = useState<FlowHomeTab>("active");
+  const [allAppsOpen, setAllAppsOpen] = useState(false);
+
+  const tabs: Array<{ id: FlowHomeTab; label: string }> = [
+    { id: "active", label: "Active" },
+    { id: "complete", label: "Complete" },
+    { id: "foryou", label: "For You" },
+  ];
+
+  // Featured SOPs (first 4 from SOP_CARDS)
+  const featuredSops = SOP_CARDS.slice(0, 4);
+
+  // Demo flow items grouped by recency
+  const homeFlows = flowItems.slice(0, 10);
+
+  function handleKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === "Tab" && !value) {
+      e.preventDefault();
+      onChange(suggestion);
+    } else if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      onSubmit();
+    }
+  }
+
+  return (
+    <div className="h-full w-full bg-warm-bg-2 overflow-y-auto scrollbar-thin">
+      <div className="max-w-[840px] mx-auto px-8 pt-6 pb-10">
+        {/* App rail */}
+        <AppRail onAppClick={onAppClick} onShowAll={() => setAllAppsOpen(true)} />
+
+        {/* SOPs section */}
+        <div className="mt-7 mb-2 flex items-center justify-between">
+          <button className="flex items-center gap-1 text-[14px] font-semibold text-warm-black hover:text-warm-black/80">
+            All SOPs
+            <ChevronRight className="w-4 h-4" strokeWidth={2} />
+          </button>
+        </div>
+        <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
+          {featuredSops.map((s) => (
+            <SopMiniCard key={s.id} card={s} />
+          ))}
+        </div>
+
+        {/* Composer */}
+        <div
+          className="mt-3 rounded-2xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-4"
+          style={{
+            backgroundImage:
+              "linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%)",
+          }}
+        >
+          <div className="relative min-h-[28px]">
+            <textarea
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              onKeyDown={handleKey}
+              rows={1}
+              className="w-full bg-transparent text-[15px] leading-6 outline-none resize-none placeholder:text-transparent"
+              placeholder="Start a flow with a task..."
+            />
+            {!value && (
+              <div className="absolute left-0 top-0 flex items-center gap-2 pointer-events-none">
+                <span className="text-warm-2 text-[15px]">Start a flow with a task...</span>
+                <span className="bg-warm-base px-1.5 py-0.5 rounded text-[10px] font-semibold text-warm-2">
+                  TAB
+                </span>
+              </div>
+            )}
+          </div>
+          <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center gap-1.5">
+              <ComposerOutlineBtn title="Add content">
+                <Plus className="w-4 h-4" strokeWidth={1.8} />
+              </ComposerOutlineBtn>
+              <ComposerOutlineBtn title="AI suggestions">
+                <Sparkles className="w-4 h-4" strokeWidth={1.8} />
+              </ComposerOutlineBtn>
+            </div>
+            <SendBtn onClick={onSubmit} disabled={!value.trim()} />
+          </div>
+        </div>
+
+        {/* Active / Complete / For You chips */}
+        <div className="mt-7 flex items-center gap-2">
+          {tabs.map((t) => {
+            const isActive = tab === t.id;
+            return (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={`shrink-0 px-3.5 py-1.5 rounded-full text-[13px] font-medium transition-colors ${
+                  isActive
+                    ? "bg-warm-black text-white"
+                    : "text-warm-2 hover:bg-warm-base"
+                }`}
+              >
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Flow items continuous list */}
+        <ul className="mt-4 space-y-2.5">
+          {homeFlows.map((f) => (
+            <li key={f.id}>
+              <button className="w-full text-left rounded-xl border border-warm-gray-2 bg-white px-4 py-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
+                <div className="flex items-baseline justify-between gap-3 mb-1">
+                  <p className="text-[14px] font-medium text-warm-black truncate">{f.title}</p>
+                  <span className="text-[12px] text-warm-2 shrink-0">{f.time ?? "Yesterday"}</span>
+                </div>
+                {f.snippet && (
+                  <p className="text-[12.5px] text-warm-2 line-clamp-1">{f.snippet}</p>
+                )}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {allAppsOpen && (
+        <AllAppsModal
+          onClose={() => setAllAppsOpen(false)}
+          onAppClick={onAppClick}
+        />
+      )}
+    </div>
+  );
+}
+
+function SopMiniCard({ card }: { card: SopCard }) {
+  const Icon = card.icon;
+  return (
+    <button className="text-left rounded-xl border border-warm-gray-2 bg-white p-3 flex items-start gap-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
+      <span className="w-9 h-9 rounded-lg bg-warm-base flex items-center justify-center shrink-0 text-warm-black">
+        <Icon className="w-[18px] h-[18px]" strokeWidth={1.8} />
+      </span>
+      <div className="flex-1 min-w-0">
+        <p className="text-[13px] font-semibold text-warm-black truncate">{card.title}</p>
+        <p className="text-[11.5px] text-warm-2 mt-0.5 line-clamp-1">{card.description}</p>
+      </div>
+    </button>
+  );
+}
+
 function EmptyTaskView({
   value,
   onChange,
@@ -1686,6 +1997,19 @@ function EmptyTaskView({
               </ComposerOutlineBtn>
             </div>
             <SendBtn onClick={onSubmit} disabled={!value.trim()} />
+          </div>
+        </div>
+
+        {/* All SOPs section */}
+        <div className="mt-8">
+          <button className="flex items-center gap-1 text-[14px] font-semibold text-warm-black hover:text-warm-black/80 mb-3">
+            All SOPs
+            <ChevronRight className="w-4 h-4" strokeWidth={2} />
+          </button>
+          <div className="grid grid-cols-3 gap-3">
+            {SOP_CARDS.slice(0, 3).map((c) => (
+              <SopMiniCard key={c.id} card={c} />
+            ))}
           </div>
         </div>
       </div>
