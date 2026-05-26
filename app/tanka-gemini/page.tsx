@@ -263,7 +263,7 @@ export default function TankaGeminiPage() {
         id: `a-${Date.now() + 1}`,
         author: "Tanka",
         authorInitials: "T",
-        authorColor: "#1E1E21",
+        authorColor: "#1f1f1f",
         text: "Got it — I'll start working on that. Want me to pull in any specific data sources?",
         time: now,
       },
@@ -289,7 +289,7 @@ export default function TankaGeminiPage() {
           id: `a-${Date.now()}`,
           author: "Tanka",
           authorInitials: "T",
-          authorColor: "#1E1E21",
+          authorColor: "#1f1f1f",
           text: "Thanks — pulling that together now.",
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         },
@@ -305,12 +305,12 @@ export default function TankaGeminiPage() {
     <div
       style={
         {
-          "--warm-black": "#1E1E21",
-          "--warm-color-2": "#5F5F66",
-          "--warm-gray-2": "#E9E9EC",
-          "--warm-gray-border": "#DCDCDF",
-          "--warm-base": "#F2F1F5",
-          "--warm-bg": "#F2F1F5",
+          "--warm-black": "#1f1f1f",
+          "--warm-color-2": "#5f6368",
+          "--warm-gray-2": "#e8eaed",
+          "--warm-gray-border": "#dadce0",
+          "--warm-base": "#f0f4f9",
+          "--warm-bg": "#f0f4f9",
           "--warm-bg-2": "#ffffff",
           fontFamily:
             "var(--font-inter), Inter, system-ui, -apple-system, sans-serif",
@@ -708,7 +708,7 @@ function NavRow({
   return (
     <div
       className={`group/nav relative w-[156px] mx-3 h-9 rounded-full flex items-center text-[14px] leading-5 font-medium transition-colors ${
-        active ? "bg-[#E0DEFF] text-[#635BFF]" : "text-warm-black hover:bg-warm-gray-2/60"
+        active ? "bg-[#d3e3fd] text-[#0b57d0]" : "text-warm-black hover:bg-warm-gray-2/60"
       }`}
     >
       <button
@@ -719,7 +719,7 @@ function NavRow({
       >
         <Icon
           className="w-[18px] h-[18px] shrink-0"
-          style={{ color: active ? "#635BFF" : "#5F5F66" }}
+          style={{ color: active ? "#0b57d0" : "#5f6368" }}
           strokeWidth={2}
         />
         <span className="flex-1 text-left truncate">{label}</span>
@@ -897,7 +897,7 @@ function NavSidebar({
           title="yiran guo"
           className="flex-1 min-w-0 h-9 flex items-center px-1 transition-colors"
         >
-          <span className="w-8 h-8 rounded-full bg-[#5F5F66] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
+          <span className="w-8 h-8 rounded-full bg-[#5f6368] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
             YG
           </span>
         </button>
@@ -987,7 +987,7 @@ function NavSidebarCollapsed({
                   title={it.label}
                   className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
                     isActive
-                      ? "bg-[#E0DEFF] text-[#635BFF] font-medium"
+                      ? "bg-[#d3e3fd] text-[#0b57d0] font-medium"
                       : "text-warm-2 hover:text-warm-black hover:bg-warm-gray-2/60"
                   }`}
                 >
@@ -1008,7 +1008,7 @@ function NavSidebarCollapsed({
         </button>
       </div>
       <div className="h-[60px] w-full flex items-center justify-center">
-        <span className="w-8 h-8 rounded-full bg-[#5F5F66] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
+        <span className="w-8 h-8 rounded-full bg-[#5f6368] text-white text-[12px] font-bold flex items-center justify-center shrink-0">
           YG
         </span>
       </div>
@@ -1185,7 +1185,7 @@ function ListColumn({
                 <button
                   onClick={toggle}
                   className={`w-7 h-7 rounded-full flex items-center justify-center ${
-                    open ? "bg-[#E0DEFF] text-[#635BFF] font-medium" : "hover:bg-warm-gray-2/60"
+                    open ? "bg-[#d3e3fd] text-[#0b57d0] font-medium" : "hover:bg-warm-gray-2/60"
                   }`}
                   title="New"
                 >
@@ -1459,68 +1459,18 @@ function EmptyTaskView({
 
   return (
     <div className="relative h-full w-full bg-warm-bg-2 flex flex-col items-center justify-center px-6 overflow-hidden">
-      {/* Animated aurora glow — three pastel blobs drifting on their own loops */}
-      <style>{`
-        @keyframes tg-blob-a {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33%      { transform: translate(60px, 80px) scale(1.1); }
-          66%      { transform: translate(-40px, -50px) scale(0.95); }
-        }
-        @keyframes tg-blob-b {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50%      { transform: translate(-90px, 100px) scale(1.18); }
-        }
-        @keyframes tg-blob-c {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          40%      { transform: translate(80px, -50px) scale(0.92); }
-          80%      { transform: translate(50px, 90px) scale(1.12); }
-        }
-        @keyframes tg-blob-hue {
-          0%   { filter: blur(60px) hue-rotate(0deg); }
-          100% { filter: blur(60px) hue-rotate(360deg); }
-        }
-      `}</style>
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute h-[520px] w-[520px] rounded-full"
-          style={{
-            left: "calc(50% - 380px)",
-            top: "calc(50% - 320px)",
-            background: "radial-gradient(circle, #D6D2FF 0%, transparent 70%)",
-            mixBlendMode: "multiply",
-            animation:
-              "tg-blob-a 16s ease-in-out infinite, tg-blob-hue 22s linear infinite",
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute h-[460px] w-[460px] rounded-full"
-          style={{
-            left: "calc(50% - 80px)",
-            top: "calc(50% - 360px)",
-            background: "radial-gradient(circle, #FFD6E8 0%, transparent 70%)",
-            mixBlendMode: "multiply",
-            animation:
-              "tg-blob-b 20s ease-in-out infinite, tg-blob-hue 26s linear infinite reverse",
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute h-[500px] w-[500px] rounded-full"
-          style={{
-            left: "calc(50% + 60px)",
-            top: "calc(50% - 200px)",
-            background: "radial-gradient(circle, #C5E8FF 0%, transparent 70%)",
-            mixBlendMode: "multiply",
-            animation:
-              "tg-blob-c 24s ease-in-out infinite, tg-blob-hue 30s linear infinite",
-          }}
-        />
-      </div>
+      {/* Gemini-style soft blue radial glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[640px] w-[1100px] -translate-x-1/2 -translate-y-[55%] rounded-full opacity-90"
+        style={{
+          background:
+            "radial-gradient(closest-side, #cfe1ff 0%, #e3edff 35%, rgba(227,237,255,0) 75%)",
+        }}
+      />
       <div className="relative w-full max-w-[740px] -mt-12">
         <h1
-          className="text-center mb-7 text-[#1E1E21]"
+          className="text-center mb-7 text-[#1f1f1f]"
           style={{
             fontFamily:
               "Sohne, var(--font-inter), Inter, system-ui, sans-serif",
@@ -1791,7 +1741,7 @@ function ConversationView({
                 title="View group members"
                 className={`mt-0.5 -ml-1.5 self-start inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] transition-colors ${
                   membersPanelOpen
-                    ? "bg-[#E0DEFF] text-[#635BFF] font-medium"
+                    ? "bg-[#d3e3fd] text-[#0b57d0] font-medium"
                     : "text-warm-2 hover:bg-warm-base hover:text-warm-black"
                 }`}
               >
@@ -2260,7 +2210,7 @@ function Message({
       {!sameAuthor ? (
         <span
           className="w-8 h-8 rounded-full text-white text-[11px] font-semibold flex items-center justify-center shrink-0 mt-1"
-          style={{ background: message.authorColor ?? "#5F5F66" }}
+          style={{ background: message.authorColor ?? "#5f6368" }}
         >
           {message.authorInitials}
         </span>
@@ -2332,7 +2282,7 @@ function SendBtn({
       className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
         disabled
           ? "bg-warm-gray-2 text-warm-2 cursor-not-allowed"
-          : "bg-[#635BFF] text-white hover:bg-[#4F47E5]"
+          : "bg-[#0b57d0] text-white hover:bg-[#0a4fbf]"
       }`}
     >
       <ArrowUp className="w-4 h-4" strokeWidth={2.2} />
@@ -2823,15 +2773,15 @@ type AgentSpec = {
 };
 
 const AGENTS: AgentSpec[] = [
-  { id: "email", name: "Email Agent", description: "Triage inboxes, classify, draft replies, and follow up.", icon: Mail, iconBg: "#F2F1F5", iconColor: "#1E1E21", count: 2, status: "READY" },
-  { id: "schedule", name: "Schedule Agent", description: "Manage meetings, surface conflicts, propose times.", icon: CalendarDays, iconBg: "#F2F1F5", iconColor: "#1E1E21", status: "READY" },
-  { id: "knowledge", name: "Knowledge Agent", description: "Search across docs, summarize, answer questions.", icon: BookOpen, iconBg: "#F2F1F5", iconColor: "#1E1E21", status: "READY" },
-  { id: "message", name: "Message Agent", description: "Handle Slack/Teams messages, summarize threads.", icon: MessageSquare, iconBg: "#F2F1F5", iconColor: "#1E1E21", count: 1, status: "READY" },
-  { id: "project", name: "Project Agent", description: "Track tasks, surface blockers, auto-update.", icon: Briefcase, iconBg: "#F2F1F5", iconColor: "#1E1E21", status: "READY" },
-  { id: "sales", name: "Sales Agent", description: "Manage pipeline, update records, draft outreach.", icon: TrendingUp, iconBg: "#F2F1F5", iconColor: "#1E1E21", count: 2, status: "READY" },
-  { id: "data", name: "Data Agent", description: "Query warehouses, render charts, explain trends.", icon: BarChart3, iconBg: "#F2F1F5", iconColor: "#1E1E21", status: "READY" },
-  { id: "finance", name: "Finance Agent", description: "Track spend, generate reports, flag anomalies.", icon: Coins, iconBg: "#F2F1F5", iconColor: "#1E1E21", count: 1, status: "READY" },
-  { id: "hr", name: "HR Agent", description: "Recruiting funnel, employee data, policies.", icon: Users, iconBg: "#F2F1F5", iconColor: "#1E1E21", count: 1, status: "READY" },
+  { id: "email", name: "Email Agent", description: "Triage inboxes, classify, draft replies, and follow up.", icon: Mail, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 2, status: "READY" },
+  { id: "schedule", name: "Schedule Agent", description: "Manage meetings, surface conflicts, propose times.", icon: CalendarDays, iconBg: "#f0f4f9", iconColor: "#1f1f1f", status: "READY" },
+  { id: "knowledge", name: "Knowledge Agent", description: "Search across docs, summarize, answer questions.", icon: BookOpen, iconBg: "#f0f4f9", iconColor: "#1f1f1f", status: "READY" },
+  { id: "message", name: "Message Agent", description: "Handle Slack/Teams messages, summarize threads.", icon: MessageSquare, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 1, status: "READY" },
+  { id: "project", name: "Project Agent", description: "Track tasks, surface blockers, auto-update.", icon: Briefcase, iconBg: "#f0f4f9", iconColor: "#1f1f1f", status: "READY" },
+  { id: "sales", name: "Sales Agent", description: "Manage pipeline, update records, draft outreach.", icon: TrendingUp, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 2, status: "READY" },
+  { id: "data", name: "Data Agent", description: "Query warehouses, render charts, explain trends.", icon: BarChart3, iconBg: "#f0f4f9", iconColor: "#1f1f1f", status: "READY" },
+  { id: "finance", name: "Finance Agent", description: "Track spend, generate reports, flag anomalies.", icon: Coins, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 1, status: "READY" },
+  { id: "hr", name: "HR Agent", description: "Recruiting funnel, employee data, policies.", icon: Users, iconBg: "#f0f4f9", iconColor: "#1f1f1f", count: 1, status: "READY" },
 ];
 
 function AgentPage() {
@@ -2979,14 +2929,14 @@ type SopCard = {
 };
 
 const SOP_CARDS: SopCard[] = [
-  { id: "s1", title: "Customer Interview Synthesis", description: "Turns raw transcripts into themed insight report with...", icon: Users, bg: "#f1dfd9", iconBg: "#ffffff", iconColor: "#1E1E21", author: "Amanda", scope: "featured" },
-  { id: "s2", title: "Weekly Exec Digest", description: "Compiles key wins, risks, decisions across all active flow...", icon: ClipboardList, bg: "#f1e1c8", iconBg: "#ffffff", iconColor: "#1E1E21", author: "Chen", scope: "featured" },
-  { id: "s3", title: "Bug Triage Router", description: "Auto-categorizes incoming bugs by severity and owner, drafts...", icon: Sparkles, bg: "#dde3cc", iconBg: "#ffffff", iconColor: "#1E1E21", author: "Hua", scope: "featured" },
-  { id: "s4", title: "Release Comms Pack", description: "Generates changelog, customer email, and internal Slack post...", icon: Rocket, bg: "#e0d8ce", iconBg: "#ffffff", iconColor: "#1E1E21", author: "Junjie", scope: "featured" },
-  { id: "s5", title: "1:1 Meeting Notes", description: "From requirements gathering to priority assessment, ensuring clear", icon: Users, bg: "#E9E9EC", iconBg: "#ffffff", iconColor: "#1E1E21", author: "Koko", scope: "featured" },
-  { id: "s6", title: "Retro Action Items", description: "From requirements gathering to priority assessment, ensuring clear", icon: ClipboardList, bg: "#ecd3cb", iconBg: "#ffffff", iconColor: "#1E1E21", author: "Hua", scope: "featured" },
-  { id: "s7", title: "Onboarding Buddy Brief", description: "Generates day-1 schedule, intro list, and welcome doc.", icon: Users, bg: "#d4cfc4", iconBg: "#ffffff", iconColor: "#1E1E21", author: "Mei", scope: "featured" },
-  { id: "s8", title: "Quarterly OKR Rollup", description: "Aggregates progress across teams into a single OKR digest.", icon: ClipboardList, bg: "#ede3c4", iconBg: "#ffffff", iconColor: "#1E1E21", author: "Priya", scope: "featured" },
+  { id: "s1", title: "Customer Interview Synthesis", description: "Turns raw transcripts into themed insight report with...", icon: Users, bg: "#f1dfd9", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Amanda", scope: "featured" },
+  { id: "s2", title: "Weekly Exec Digest", description: "Compiles key wins, risks, decisions across all active flow...", icon: ClipboardList, bg: "#f1e1c8", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Chen", scope: "featured" },
+  { id: "s3", title: "Bug Triage Router", description: "Auto-categorizes incoming bugs by severity and owner, drafts...", icon: Sparkles, bg: "#dde3cc", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Hua", scope: "featured" },
+  { id: "s4", title: "Release Comms Pack", description: "Generates changelog, customer email, and internal Slack post...", icon: Rocket, bg: "#e0d8ce", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Junjie", scope: "featured" },
+  { id: "s5", title: "1:1 Meeting Notes", description: "From requirements gathering to priority assessment, ensuring clear", icon: Users, bg: "#e8eaed", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Koko", scope: "featured" },
+  { id: "s6", title: "Retro Action Items", description: "From requirements gathering to priority assessment, ensuring clear", icon: ClipboardList, bg: "#ecd3cb", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Hua", scope: "featured" },
+  { id: "s7", title: "Onboarding Buddy Brief", description: "Generates day-1 schedule, intro list, and welcome doc.", icon: Users, bg: "#d4cfc4", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Mei", scope: "featured" },
+  { id: "s8", title: "Quarterly OKR Rollup", description: "Aggregates progress across teams into a single OKR digest.", icon: ClipboardList, bg: "#ede3c4", iconBg: "#ffffff", iconColor: "#1f1f1f", author: "Priya", scope: "featured" },
 ];
 
 function SopsPage() {
@@ -3133,8 +3083,8 @@ const CAL_EVENT_STYLES: Record<
 > = {
   orange: { bg: "#e3b08b", fg: "#3d2614" },
   olive: { bg: "#c3cf99", fg: "#3a3f1f" },
-  blue: { bg: "#d4cfc4", fg: "#1E1E21" },
-  purple: { bg: "#DCDCDF", fg: "#1E1E21" },
+  blue: { bg: "#d4cfc4", fg: "#1f1f1f" },
+  purple: { bg: "#dadce0", fg: "#1f1f1f" },
 };
 
 const CAL_EVENTS: CalEvent[] = [
@@ -3590,24 +3540,24 @@ const ACTION_STATE_THEME: Record<
   { border: string; iconBg: string; iconColor: string; tagText: string; tagLabel: string }
 > = {
   proposed: {
-    border: "#E9E9EC",
-    iconBg: "#1E1E21",
+    border: "#e8eaed",
+    iconBg: "#1f1f1f",
     iconColor: "#ffffff",
-    tagText: "#DCDCDF",
+    tagText: "#dadce0",
     tagLabel: "PROPOSED ACTION",
   },
   completed: {
-    border: "#E9E9EC",
-    iconBg: "#F2F1F5",
-    iconColor: "#1E1E21",
-    tagText: "#DCDCDF",
+    border: "#e8eaed",
+    iconBg: "#f0f4f9",
+    iconColor: "#1f1f1f",
+    tagText: "#dadce0",
     tagLabel: "COMPLETED",
   },
   expired: {
-    border: "#E9E9EC",
-    iconBg: "#F2F1F5",
-    iconColor: "#DCDCDF",
-    tagText: "#DCDCDF",
+    border: "#e8eaed",
+    iconBg: "#f0f4f9",
+    iconColor: "#dadce0",
+    tagText: "#dadce0",
     tagLabel: "EXPIRED",
   },
 };
@@ -3689,7 +3639,7 @@ function SendEmailActionCard({
                 ) : (
                   <span
                     className="w-5 h-5 rounded-full text-white text-[9px] font-semibold flex items-center justify-center"
-                    style={{ background: r.color ?? "#5F5F66" }}
+                    style={{ background: r.color ?? "#5f6368" }}
                   >
                     {r.name.slice(0, 1)}
                   </span>
