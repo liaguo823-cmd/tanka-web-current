@@ -106,7 +106,6 @@ const iconMap: Record<string, LucideIcon> = {
 type NavKey =
   | "flow"
   | "sop"
-  | "agent"
   | "chat"
   | "link"
   | "memos"
@@ -117,7 +116,7 @@ type FilterKey = "all" | "active" | "completed" | "foryou";
 
 function hasListColumn(nav: NavKey): boolean {
   // Pages that own the full main area without the dual-column list+detail layout
-  return !["link", "memos", "followups", "votes", "calendar", "sop", "agent"].includes(
+  return !["link", "memos", "followups", "votes", "calendar", "sop"].includes(
     nav,
   );
 }
@@ -371,8 +370,6 @@ export default function Home() {
           <CalendarPage />
         ) : activeNav === "sop" ? (
           <PlaceholderPage title="SOP library" subtitle="Reusable procedures captured from flows" />
-        ) : activeNav === "agent" ? (
-          <AgentPage />
         ) : activeNav === "chat" ? (
           <ConversationView
             messages={messages}
@@ -413,6 +410,7 @@ export default function Home() {
             onChange={setTaskInput}
             onSubmit={handleTaskSubmit}
             suggestion={suggestedTasks[suggestionIdx]}
+            onAllSops={() => handleNavSelect("sop")}
           />
         )}
       </main>
@@ -564,12 +562,6 @@ function navCreateMenu(itemId: string): MenuSection[] | null {
               label: "New SOP",
               description: "Capture a reusable procedure",
               icon: BookOpen,
-            },
-            {
-              id: "new-agent",
-              label: "New agent",
-              description: "Specialized AI for recurring work",
-              icon: Box,
             },
           ],
         },
@@ -1407,11 +1399,13 @@ function EmptyTaskView({
   onChange,
   onSubmit,
   suggestion,
+  onAllSops,
 }: {
   value: string;
   onChange: (s: string) => void;
   onSubmit: () => void;
   suggestion: string;
+  onAllSops?: () => void;
 }) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -1424,6 +1418,8 @@ function EmptyTaskView({
       onSubmit();
     }
   }
+
+  const featuredCards = SOP_CARDS.slice(0, 3);
 
   return (
     <div className="h-full w-full bg-warm-bg-2 flex flex-col items-center justify-center px-6">
@@ -1472,8 +1468,39 @@ function EmptyTaskView({
             <SendBtn onClick={onSubmit} disabled={!value.trim()} />
           </div>
         </div>
+
+        {/* All SOPs section */}
+        <div className="mt-8">
+          <button
+            onClick={onAllSops}
+            className="flex items-center gap-1 text-[14px] font-semibold text-warm-black hover:text-warm-black/80 mb-3"
+          >
+            All SOPs
+            <ChevronRight className="w-4 h-4" strokeWidth={2} />
+          </button>
+          <div className="grid grid-cols-3 gap-3">
+            {featuredCards.map((c) => (
+              <SopMiniCard key={c.id} card={c} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
+  );
+}
+
+function SopMiniCard({ card }: { card: SopCard }) {
+  const Icon = card.icon;
+  return (
+    <button className="text-left rounded-xl border border-warm-gray-2 bg-white p-3 flex items-start gap-3 hover:border-warm-border hover:shadow-[0_2px_12px_rgba(38,32,28,0.06)] transition">
+      <span className="w-9 h-9 rounded-lg bg-warm-base flex items-center justify-center shrink-0 text-warm-black">
+        <Icon className="w-[18px] h-[18px]" strokeWidth={1.8} />
+      </span>
+      <div className="flex-1 min-w-0">
+        <p className="text-[13px] font-semibold text-warm-black truncate">{card.title}</p>
+        <p className="text-[11.5px] text-warm-2 mt-0.5 line-clamp-1">{card.description}</p>
+      </div>
+    </button>
   );
 }
 

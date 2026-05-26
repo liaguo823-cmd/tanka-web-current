@@ -26,6 +26,7 @@
   --color-warm-bg-2: var(--warm-bg-2);
   --font-sans: var(--font-geist-sans), "Inter", "Noto Sans SC", "PingFang SC", sans-serif;
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-serif), "Source Serif 4", "Iowan Old Style", "Charter", Georgia, serif;
 }
 
 body {
