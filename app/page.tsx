@@ -1967,6 +1967,101 @@ function SopMiniCard({ card }: { card: SopCard }) {
   );
 }
 
+function EmptyTaskView({
+  value,
+  onChange,
+  onSubmit,
+  suggestion,
+  onAllSops,
+}: {
+  value: string;
+  onChange: (s: string) => void;
+  onSubmit: () => void;
+  suggestion: string;
+  onAllSops?: () => void;
+}) {
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  function handleKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === "Tab" && !value) {
+      e.preventDefault();
+      onChange(suggestion);
+    } else if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      onSubmit();
+    }
+  }
+
+  const featuredCards = SOP_CARDS.slice(0, 3);
+
+  return (
+    <div className="h-full w-full bg-warm-bg-2 flex flex-col items-center justify-center px-6">
+      <div className="w-full max-w-[740px] -mt-12">
+        <h1 className="text-center text-[36px] leading-[40px] font-semibold tracking-tight mb-6">
+          Your task today?
+        </h1>
+
+        <div
+          className="rounded-3xl border border-warm-gray-2 bg-white shadow-[0_1px_1.5px_rgba(38,32,28,0.02),0_4px_6px_rgba(38,32,28,0.02)] p-4"
+          style={{
+            backgroundImage:
+              "linear-gradient(180deg, rgb(255,255,255) 0%, rgb(254,254,253) 33%, rgb(253,253,252) 66%, rgb(252,252,250) 100%)",
+          }}
+        >
+          <div className="relative min-h-[28px]">
+            <textarea
+              ref={inputRef}
+              autoFocus
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              onKeyDown={handleKey}
+              rows={1}
+              className="w-full bg-transparent text-[16px] leading-6 outline-none resize-none placeholder:text-transparent"
+              placeholder="Start your task..."
+            />
+            {!value && (
+              <div className="absolute left-0 top-0 flex items-center gap-2 pointer-events-none">
+                <span className="text-warm-2 text-[16px]">Start your task...</span>
+                <span className="bg-warm-base px-1.5 py-0.5 rounded text-[10px] font-semibold text-warm-2">
+                  TAB
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center gap-1.5">
+              <ComposerOutlineBtn title="Add content">
+                <Plus className="w-4 h-4" strokeWidth={1.8} />
+              </ComposerOutlineBtn>
+              <ComposerOutlineBtn title="AI suggestions">
+                <Sparkles className="w-4 h-4" strokeWidth={1.8} />
+              </ComposerOutlineBtn>
+            </div>
+            <SendBtn onClick={onSubmit} disabled={!value.trim()} />
+          </div>
+        </div>
+
+        {/* All SOPs section */}
+        <div className="mt-8">
+          <button
+            onClick={onAllSops}
+            className="flex items-center gap-1 text-[14px] font-semibold text-warm-black hover:text-warm-black/80 mb-3"
+          >
+            All SOPs
+            <ChevronRight className="w-4 h-4" strokeWidth={2} />
+          </button>
+          <div className="grid grid-cols-3 gap-3">
+            {featuredCards.map((c) => (
+              <SopMiniCard key={c.id} card={c} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ===========================
  * Members side panel (Feishu-style)
  * =========================== */
