@@ -561,14 +561,17 @@ function IconWithTooltip({
   );
 }
 
-/** Collapsed-menu pinned-docs button. Three visual states for the
- *  PushPin glyph: upright outline (idle), tilted outline (hover),
- *  tilted fill (open/clicked). Clicking toggles the portal dropdown
- *  listing PINNED items; closes on outside click or Escape. */
+/** Collapsed-menu pinned-docs button. Three visual states share the
+ *  same overall pushpin silhouette: upright Lucide Pin (idle), then
+ *  on hover/click we swap to Phosphor PushPin (regular for hover,
+ *  fill for click) — both rotated 30° so hover and click read as the
+ *  same tilt, just outline vs filled. Clicking toggles the portal
+ *  dropdown; closes on outside click or Escape. */
 function CollapsedPinnedButton() {
   const btnRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const [pos, setPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
 
   function toggle() {
@@ -601,34 +604,46 @@ function CollapsedPinnedButton() {
     };
   }, [open]);
 
+  const active = open || hovered;
+  const showIdle = !open && !hovered;
+  const showHover = hovered && !open;
+
   return (
     <>
       <button
         ref={btnRef}
         type="button"
         onClick={toggle}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocus={() => setHovered(true)}
+        onBlur={() => setHovered(false)}
         aria-label="Pinned docs"
         aria-expanded={open}
-        className={`group/pin w-[36px] h-[36px] flex items-center justify-center rounded-[8px] transition-colors ${
-          open
-            ? "bg-[#E3E8F2] text-[#35394C]"
-            : "text-[#455871] hover:text-[#35394C] hover:bg-[#E3E8F2]"
+        className={`w-[36px] h-[36px] flex items-center justify-center rounded-[8px] transition-colors ${
+          active ? "bg-[#E3E8F2] text-[#35394C]" : "text-[#455871]"
         }`}
       >
         <span className="grid place-items-center">
-          {/* Outline pushpin — visible until clicked. Lucide's Pin is
-              drawn purely vertical (no built-in lean), so the idle
-              state reads as upright. Tilts to 30° on hover via the
-              rule in globals.css keyed off data-pin. */}
+          {/* Idle — upright Lucide Pin. */}
           <Pin
             size={22}
             strokeWidth={1.8}
-            data-pin="outline"
-            className="col-start-1 row-start-1"
-            style={{ opacity: open ? 0 : 1 }}
+            className="col-start-1 row-start-1 transition-opacity duration-150"
+            style={{ opacity: showIdle ? 1 : 0 }}
           />
-          {/* Filled pushpin — only while open; always tilted 30°.
-              Phosphor's filled PushPin matches the design spec. */}
+          {/* Hover — Phosphor PushPin outline, tilted 30°. Same shape
+              as the click state so the tilt reads as continuous. */}
+          <PushPin
+            size={22}
+            weight="regular"
+            className="col-start-1 row-start-1 transition-opacity duration-150"
+            style={{
+              opacity: showHover ? 1 : 0,
+              transform: "rotate(30deg)",
+            }}
+          />
+          {/* Click — Phosphor PushPin fill, same 30° rotation. */}
           <PushPin
             size={22}
             weight="fill"
