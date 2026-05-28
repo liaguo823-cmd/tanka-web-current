@@ -615,21 +615,24 @@ function CollapsedPinnedButton() {
         }`}
       >
         <span className="grid place-items-center">
-          {/* Outline pushpin — visible until clicked. Tilts on hover. */}
+          {/* Outline pushpin — visible until clicked. Tilts on hover
+              via the rule in globals.css keyed off data-pin. */}
           <PushPin
             size={22}
             weight="regular"
-            className={`col-start-1 row-start-1 transition-[opacity,transform] duration-150 ${
-              open ? "opacity-0" : "opacity-100 group-hover/pin:rotate-[20deg]"
-            }`}
+            data-pin="outline"
+            className="col-start-1 row-start-1"
+            style={{ opacity: open ? 0 : 1 }}
           />
-          {/* Filled pushpin — only while open; stays tilted. */}
+          {/* Filled pushpin — only while open; always tilted 30°. */}
           <PushPin
             size={22}
             weight="fill"
-            className={`col-start-1 row-start-1 transition-opacity duration-150 rotate-[20deg] ${
-              open ? "opacity-100" : "opacity-0"
-            }`}
+            className="col-start-1 row-start-1 transition-opacity duration-150"
+            style={{
+              opacity: open ? 1 : 0,
+              transform: "rotate(30deg)",
+            }}
           />
         </span>
       </button>

@@ -41,6 +41,17 @@ body {
   font-family: var(--font-sans);
 }
 
+/* CollapsedPinnedButton — the outline pushpin tilts on hover.
+   Done as plain CSS because Tailwind v4's JIT was inconsistent
+   about generating `group-hover/pin:rotate-[30deg]` in dev. */
+button[aria-label="Pinned docs"] [data-pin="outline"] {
+  transition: opacity 150ms, transform 150ms;
+  transform: rotate(0deg);
+}
+button[aria-label="Pinned docs"]:hover [data-pin="outline"] {
+  transform: rotate(30deg);
+}
+
 /* Smooth scrollbars for chat lists */
 .scrollbar-thin::-webkit-scrollbar {
   width: 6px;
