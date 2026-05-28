@@ -560,54 +560,76 @@ function IconWithTooltip({
   );
 }
 
-/** Collapsed-menu pinned-docs button. PushPin glyph; on hover
- *  opens a portal dropdown listing the same PINNED items the
- *  expanded section renders inline. */
+/** Collapsed-menu pinned-docs button. Three visual states for the
+ *  PushPin glyph: upright outline (idle), tilted outline (hover),
+ *  tilted fill (open/clicked). Clicking toggles the portal dropdown
+ *  listing PINNED items; closes on outside click or Escape. */
 function CollapsedPinnedButton() {
   const btnRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
-  const closeTimer = useRef<number | null>(null);
 
-  function show() {
-    if (closeTimer.current !== null) {
-      window.clearTimeout(closeTimer.current);
-      closeTimer.current = null;
-    }
-    if (btnRef.current) {
+  function toggle() {
+    if (!open && btnRef.current) {
       const r = btnRef.current.getBoundingClientRect();
       setPos({ top: r.top - 8, left: r.right + 12 });
     }
-    setOpen(true);
+    setOpen((v) => !v);
   }
-  function scheduleHide() {
-    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
-    closeTimer.current = window.setTimeout(() => setOpen(false), 180);
-  }
+
+  useEffect(() => {
+    if (!open) return;
+    function onDoc(e: MouseEvent) {
+      const t = e.target as Node;
+      if (
+        btnRef.current && !btnRef.current.contains(t) &&
+        dropdownRef.current && !dropdownRef.current.contains(t)
+      ) {
+        setOpen(false);
+      }
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   return (
     <>
       <button
         ref={btnRef}
         type="button"
-        onMouseEnter={show}
-        onMouseLeave={scheduleHide}
-        onFocus={show}
-        onBlur={scheduleHide}
+        onClick={toggle}
         aria-label="Pinned docs"
-        className="group/pin w-[36px] h-[36px] flex items-center justify-center rounded-[8px] text-[#455871] hover:text-[#35394C] hover:bg-[#E3E8F2] transition-colors"
+        aria-expanded={open}
+        className={`group/pin w-[36px] h-[36px] flex items-center justify-center rounded-[8px] transition-colors ${
+          open
+            ? "bg-[#E3E8F2] text-[#35394C]"
+            : "text-[#455871] hover:text-[#35394C] hover:bg-[#E3E8F2]"
+        }`}
       >
         <span className="grid place-items-center">
+          {/* Outline pushpin — visible until clicked. Tilts on hover. */}
           <PushPin
             size={22}
             weight="regular"
-            className="col-start-1 row-start-1 transition-opacity duration-150 group-hover/pin:opacity-0"
+            className={`col-start-1 row-start-1 transition-[opacity,transform] duration-150 ${
+              open ? "opacity-0" : "opacity-100 group-hover/pin:rotate-[20deg]"
+            }`}
           />
+          {/* Filled pushpin — only while open; stays tilted. */}
           <PushPin
             size={22}
             weight="fill"
-            className="col-start-1 row-start-1 opacity-0 transition-[opacity,transform] duration-150 group-hover/pin:opacity-100 group-hover/pin:rotate-[20deg]"
+            className={`col-start-1 row-start-1 transition-opacity duration-150 rotate-[20deg] ${
+              open ? "opacity-100" : "opacity-0"
+            }`}
           />
         </span>
       </button>
@@ -615,8 +637,6 @@ function CollapsedPinnedButton() {
         createPortal(
           <div
             ref={dropdownRef}
-            onMouseEnter={show}
-            onMouseLeave={scheduleHide}
             className="fixed z-[100] w-[240px] rounded-[12px] bg-white border border-[#e7ebf8] shadow-[0_8px_24px_rgba(15,41,77,0.10),0_2px_4px_rgba(15,41,77,0.04)] overflow-hidden"
             style={{ top: pos.top, left: pos.left }}
             role="menu"
