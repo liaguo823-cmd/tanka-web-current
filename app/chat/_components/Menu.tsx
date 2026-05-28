@@ -22,7 +22,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Plus, X as PhosphorX, PushPin } from "@phosphor-icons/react/dist/ssr";
+import { Plus, X as PhosphorX } from "@phosphor-icons/react/dist/ssr";
 import type { IconProps } from "@phosphor-icons/react";
 import {
   PanelLeftClose,
@@ -33,7 +33,6 @@ import {
   ArrowRight,
   PlusCircle,
   ChevronDown,
-  Pin,
 } from "lucide-react";
 import {
   useCallback,
@@ -63,6 +62,9 @@ import { asset } from "../../_lib/asset";
 
 const imgPhoto = asset("/figma/user-photo.png");
 const imgPinnedDoc = asset("/figma/menu-pinned-doc.svg");
+const imgPinIdle = asset("/figma/menu-pin-idle.svg");
+const imgPinHover = asset("/figma/menu-pin-hover.svg");
+const imgPinActive = asset("/figma/menu-pin-active.svg");
 const imgTankaMark = asset("/figma/tanka-mark-menu.svg");
 const imgT = asset("/figma/t-letter.svg");
 const imgX = asset("/figma/org-x.svg");
@@ -620,40 +622,30 @@ function CollapsedPinnedButton() {
         onBlur={() => setHovered(false)}
         aria-label="Pinned docs"
         aria-expanded={open}
-        className={`w-[36px] h-[36px] flex items-center justify-center rounded-[8px] transition-colors ${
-          active ? "bg-[#E3E8F2] text-[#35394C]" : "text-[#455871]"
-        }`}
+        className="relative w-[36px] h-[36px] rounded-[8px]"
+        style={{ backgroundColor: active ? "#E3E8F2" : "transparent" }}
       >
-        <span className="grid place-items-center">
-          {/* Idle — upright Lucide Pin. */}
-          <Pin
-            size={22}
-            strokeWidth={1.8}
-            className="col-start-1 row-start-1 transition-opacity duration-150"
-            style={{ opacity: showIdle ? 1 : 0 }}
-          />
-          {/* Hover — Phosphor PushPin outline, tilted 30°. Same shape
-              as the click state so the tilt reads as continuous. */}
-          <PushPin
-            size={22}
-            weight="regular"
-            className="col-start-1 row-start-1 transition-opacity duration-150"
-            style={{
-              opacity: showHover ? 1 : 0,
-              transform: "rotate(30deg)",
-            }}
-          />
-          {/* Click — Phosphor PushPin fill, same 30° rotation. */}
-          <PushPin
-            size={22}
-            weight="fill"
-            className="col-start-1 row-start-1 transition-opacity duration-150"
-            style={{
-              opacity: open ? 1 : 0,
-              transform: "rotate(30deg)",
-            }}
-          />
-        </span>
+        {/* Three Figma-supplied SVGs, stacked. Each carries its own
+            tilt geometry + fill color (no CSS rotation), so the tilt
+            between hover and click stays identical. */}
+        <img
+          alt=""
+          src={imgPinIdle}
+          className="absolute inset-0 block w-full h-full"
+          style={{ opacity: showIdle ? 1 : 0 }}
+        />
+        <img
+          alt=""
+          src={imgPinHover}
+          className="absolute inset-0 block w-full h-full"
+          style={{ opacity: showHover ? 1 : 0 }}
+        />
+        <img
+          alt=""
+          src={imgPinActive}
+          className="absolute inset-0 block w-full h-full"
+          style={{ opacity: open ? 1 : 0 }}
+        />
       </button>
       {open && typeof window !== "undefined" &&
         createPortal(
