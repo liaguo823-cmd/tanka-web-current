@@ -489,39 +489,41 @@ function FlowDetail({ item }: { item: FlowItem }) {
         </div>
       </div>
 
-      {/* Composer — matches Chat page's 1080px cap + 180px height. */}
-      <div className="shrink-0 px-8 pb-6 pt-2 flex justify-center">
+      {/* Composer — matches Chat page's 1080px cap + 180px height +
+          12px outer padding (the gap from the conversation column to
+          the composer's bottom edge). */}
+      <div className="shrink-0 p-[12px] flex justify-center">
         <div className="w-full max-w-[1080px]">
-          <div className="h-[180px] rounded-[14px] bg-white border border-[#e7ebf8] shadow-[0_2px_8px_rgba(15,41,77,0.04)] flex flex-col">
-            <div className="px-4 pt-3 pb-2 flex-1 min-h-0">
+          <div className="h-[180px] rounded-[12px] bg-white border border-[#e7ebf8] shadow-[0_2px_8px_rgba(15,41,77,0.04)] flex flex-col">
+            <div className="px-[15px] pt-[15px] pb-2 flex-1 min-h-0">
               <input
                 type="text"
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder="Describe the task..."
-                className="w-full bg-transparent outline-none text-[14px] text-[#020617] placeholder:text-[#8793ab]"
+                className="w-full bg-transparent outline-none text-[16px] text-[#020617] placeholder:text-[#8d8d8d]"
               />
             </div>
-            <div className="px-3 pb-2 flex items-center justify-between shrink-0">
+            <div className="px-[12px] pb-[12px] flex items-center justify-between shrink-0">
               <div className="flex items-center gap-1.5">
-                <button type="button" className="w-7 h-7 flex items-center justify-center text-[#8793ab] hover:text-[#020617]" aria-label="Add">
-                  <Plus size={16} strokeWidth={1.8} />
+                <button type="button" className="w-9 h-9 flex items-center justify-center text-[#455871] hover:text-[#020617] hover:bg-[#f7f8fc] rounded-md" aria-label="Add">
+                  <Plus size={18} strokeWidth={1.8} />
                 </button>
-                <button type="button" className="w-7 h-7 flex items-center justify-center text-[#8793ab] hover:text-[#020617]" aria-label="AI">
-                  <Sparkles size={14} strokeWidth={1.8} />
+                <button type="button" className="w-9 h-9 flex items-center justify-center text-[#455871] hover:text-[#020617] hover:bg-[#f7f8fc] rounded-md" aria-label="AI">
+                  <Sparkles size={16} strokeWidth={1.8} />
                 </button>
               </div>
               <button
                 type="button"
                 disabled={!draft.trim()}
-                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
                   draft.trim()
                     ? "bg-[#006dff] text-white hover:bg-[#0055cc]"
                     : "bg-[#f5f5f5] text-[#8d8d8d] cursor-not-allowed"
                 }`}
                 aria-label="Send"
               >
-                <ArrowUp size={16} strokeWidth={2} />
+                <ArrowUp size={16} strokeWidth={2.2} />
               </button>
             </div>
           </div>
