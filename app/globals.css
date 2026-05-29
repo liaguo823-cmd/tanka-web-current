@@ -41,6 +41,12 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Tailwind v4's preflight leaves <button> at cursor:default — make
+   all enabled buttons show the hand cursor, matching modern UX. */
+button:not(:disabled) {
+  cursor: pointer;
+}
+
 /* Smooth scrollbars for chat lists */
 .scrollbar-thin::-webkit-scrollbar {
   width: 6px;
