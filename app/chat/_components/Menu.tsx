@@ -254,17 +254,15 @@ export default function Menu() {
         <div className="h-[72px] shrink-0 flex items-center w-full">
           {menuCollapsed ? (
             <div className="flex justify-center w-full">
-              {/* When the Menu is collapsed, the workspace logo is
-                  the OrgRail toggle: clicking it expands/collapses
-                  the workspace rail. Only active in collapsed mode. */}
-              <button
-                type="button"
-                onClick={toggle}
-                aria-label={collapsed ? "Expand workspace bar" : "Collapse workspace bar"}
-                className="rounded-[24px] hover:opacity-80 transition-opacity"
-              >
-                <WorkspaceLogo workspace={activeWorkspace} />
-              </button>
+              {/* Collapsed-menu workspace logo: clicking still toggles
+                  the OrgRail, but hovering pops the workspace menu
+                  (with name + actions) since the name isn't visible
+                  anywhere else in collapsed mode. */}
+              <CollapsedWorkspaceLogoButton
+                workspace={activeWorkspace}
+                onToggleOrgRail={toggle}
+                orgRailCollapsed={collapsed}
+              />
             </div>
           ) : (
             <div className="group/header flex items-center px-[14px] w-full relative">
@@ -675,6 +673,114 @@ function CollapsedPinnedButton() {
                 <span className="truncate">{item.shortName}</span>
               </button>
             ))}
+          </div>,
+          document.body,
+        )}
+    </>
+  );
+}
+
+/** Workspace logo in the collapsed-menu header. Clicking still
+ *  toggles the OrgRail (same as before), but hovering now pops the
+ *  same workspace menu as the expanded chevron — preceded by the
+ *  workspace name, since the name is hidden in collapsed mode. */
+function CollapsedWorkspaceLogoButton({
+  workspace,
+  onToggleOrgRail,
+  orgRailCollapsed,
+}: {
+  workspace: Workspace;
+  onToggleOrgRail: () => void;
+  orgRailCollapsed: boolean;
+}) {
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+  const closeTimer = useRef<number | null>(null);
+
+  function show() {
+    if (closeTimer.current !== null) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    if (btnRef.current) {
+      const r = btnRef.current.getBoundingClientRect();
+      setPos({ top: r.top, left: r.right + 12 });
+    }
+    setOpen(true);
+  }
+  function scheduleHide() {
+    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setOpen(false), 180);
+  }
+
+  return (
+    <>
+      <button
+        ref={btnRef}
+        type="button"
+        onClick={() => {
+          setOpen(false);
+          onToggleOrgRail();
+        }}
+        onMouseEnter={show}
+        onMouseLeave={scheduleHide}
+        onFocus={show}
+        onBlur={scheduleHide}
+        aria-label={orgRailCollapsed ? "Expand workspace bar" : "Collapse workspace bar"}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className="rounded-[24px] hover:opacity-80 transition-opacity"
+      >
+        <WorkspaceLogo workspace={workspace} />
+      </button>
+      {open && typeof window !== "undefined" &&
+        createPortal(
+          <div
+            ref={dropdownRef}
+            onMouseEnter={show}
+            onMouseLeave={scheduleHide}
+            className="fixed z-[100] w-[220px] rounded-[12px] bg-white border border-[#e7ebf8] shadow-[0_8px_24px_rgba(15,41,77,0.10),0_2px_4px_rgba(15,41,77,0.04)] overflow-hidden"
+            style={{ top: pos.top, left: pos.left }}
+            role="menu"
+          >
+            <div className="px-4 pt-3 pb-2 border-b border-[#f1f3f7]">
+              <p
+                className="text-[14px] font-semibold text-[#020617] truncate"
+                title={workspace.name}
+              >
+                {workspace.name}
+              </p>
+            </div>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => {
+                setOpen(false);
+                router.push("/team-settings");
+              }}
+              className="w-full text-left px-4 py-3 text-[14px] text-[#020617] hover:bg-[#f5f5f7] transition-colors border-b border-[#f1f3f7]"
+            >
+              Team Settings
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="w-full text-left px-4 py-3 text-[14px] text-[#020617] hover:bg-[#f5f5f7] transition-colors border-b border-[#f1f3f7]"
+            >
+              Invite Members
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="w-full text-left px-4 py-3 text-[14px] text-[#ef4444] hover:bg-[#fef2f2] transition-colors"
+            >
+              Leave
+            </button>
           </div>,
           document.body,
         )}
