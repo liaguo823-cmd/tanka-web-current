@@ -82,9 +82,9 @@ export default function OrgRail() {
             <button
               type="button"
               aria-label="Add workspace"
-              className="rounded-full size-[32px] flex items-center justify-center border border-dashed border-[#cbd5e1] text-[#8793ab] bg-transparent hover:bg-[#E3E8F2] hover:border-[#8793ab] hover:text-[#475569] transition-colors"
+              className="rounded-full size-[32px] flex items-center justify-center border-2 border-dashed border-[#cbd5e1] text-[#8793ab] bg-transparent hover:bg-[#E3E8F2] hover:border-[#8793ab] hover:text-[#475569] transition-colors"
             >
-              <Plus size={16} strokeWidth={1.5} />
+              <Plus size={16} strokeWidth={2} />
             </button>
           </div>
         </div>
