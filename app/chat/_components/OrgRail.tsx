@@ -3,12 +3,11 @@
 /**
  * OrgRail — 60px workspace switcher rail. Layout:
  *
- *  - 72px header at top: holds the `«` collapse toggle (centered).
+ *  - 60px header at top: holds the `«` collapse toggle (centered).
  *    Matches the Menu header height so the first workspace tile lines
  *    up vertically with the first nav tab (Flow) in the Menu.
  *  - Workspace tiles below, then a horizontal divider, then the
- *    permanent-white-circle `+` (Add workspace) button.
- *  - Bottom: gear icon only.
+ *    dashed-circle `+` (Add workspace) button.
  *
  * Collapse: width 60 ↔ 0 over 300ms ease-out, inner opacity 200ms
  * (delay-100 on expand). When collapsed the Menu's header owns the
@@ -16,18 +15,13 @@
  * disappearing column doesn't leave the button floating.
  */
 
-import Link from "next/link";
 import { ChevronsLeft, Plus } from "lucide-react";
-import { useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { useMenuCollapse, WORKSPACES, type WorkspaceId } from "./MenuContext";
 import { asset } from "../../_lib/asset";
 
 const imgTankaMark = asset("/figma/tanka-mark.svg");
 const imgT = asset("/figma/t-letter.svg");
 const imgX = asset("/figma/org-x.svg");
-const imgPlus = asset("/figma/org-plus.svg");
-const imgNut = asset("/figma/nut.svg");
 
 const FONT_SF_PRO_MED =
   "font-['SF_Pro',-apple-system,'BlinkMacSystemFont','Helvetica_Neue',sans-serif]";
@@ -87,15 +81,6 @@ export default function OrgRail() {
               <Plus size={16} strokeWidth={2} />
             </button>
           </div>
-        </div>
-
-        {/* Bottom: gear only — links to /team-settings with a
-            tooltip rendered via portal so it isn't clipped by the
-            rail's overflow-hidden (needed for the collapse animation). */}
-        <div className="flex items-center justify-center w-full">
-          <GearTooltipLink href="/team-settings" label="Team Settings">
-            <img alt="" className="block size-[24px]" src={imgNut} />
-          </GearTooltipLink>
         </div>
       </div>
     </div>
@@ -157,60 +142,6 @@ function WorkspaceTile({
         </div>
       )}
     </div>
-  );
-}
-
-/** Icon link with a portal-rendered tooltip anchored to the right
- *  side of the icon. Used by the gear at the bottom of the rail —
- *  the rail's overflow-hidden would clip an in-DOM tooltip, so we
- *  position it fixed against the viewport instead. */
-function GearTooltipLink({
-  href,
-  label,
-  children,
-}: {
-  href: string;
-  label: string;
-  children: React.ReactNode;
-}) {
-  const triggerRef = useRef<HTMLAnchorElement>(null);
-  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
-
-  function show() {
-    if (!triggerRef.current) return;
-    const r = triggerRef.current.getBoundingClientRect();
-    setPos({ top: r.top + r.height / 2, left: r.right + 8 });
-  }
-  function hide() {
-    setPos(null);
-  }
-
-  return (
-    <>
-      <Link
-        ref={triggerRef}
-        href={href}
-        aria-label={label}
-        onMouseEnter={show}
-        onMouseLeave={hide}
-        onFocus={show}
-        onBlur={hide}
-        className="size-[32px] flex items-center justify-center text-[#455871] hover:text-[#020617] rounded-md hover:bg-[#E3E8F2] transition-colors"
-      >
-        {children}
-      </Link>
-      {pos && typeof window !== "undefined" &&
-        createPortal(
-          <div
-            role="tooltip"
-            className="fixed z-[100] -translate-y-1/2 whitespace-nowrap rounded-md bg-[#020617] text-white text-[12px] font-medium px-2 py-1 pointer-events-none shadow-[0_2px_8px_rgba(15,41,77,0.15)]"
-            style={{ top: pos.top, left: pos.left }}
-          >
-            {label}
-          </div>,
-          document.body,
-        )}
-    </>
   );
 }
 
