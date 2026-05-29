@@ -434,68 +434,72 @@ export default function ChatC() {
             <div className="content-stretch flex flex-col h-[180px] items-center px-[0px] relative rounded-[12px] shrink-0 w-full" data-node-id="I3:8110;1915:17082" data-name="Desktop Chat Input">
               <div className="bg-[#fdfefe] content-stretch flex flex-[1_0_0] flex-col isolate items-start min-h-px overflow-clip relative rounded-[12px] w-full" data-node-id="I3:8110;1915:17082;1889:25884" data-name="web-input">
                 <div className="content-stretch flex flex-[1_0_0] flex-col gap-[15px] items-start min-h-px p-[15px] relative w-full z-[1]" data-node-id="I3:8110;1915:17082;1200:18748">
-                  <div className="content-stretch flex gap-[24px] h-[24px] items-center relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862" data-name="Feature">
-                    <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;1061:101295" data-name="Avatar">
-                      <div className="absolute bg-[#cce4ff] inset-0 rounded-[499.5px]" data-node-id="I3:8110;1915:17082;2541:159862;1061:101295;1956:65298" data-name="Tanka Service">
-                        <div className="absolute inset-[14.91%_14.21%]" data-node-id="I3:8110;1915:17082;2541:159862;1061:101295;1956:65298;44:55826" data-name="Union">
-                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgUnion1} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:142194" data-name="Button">
-                      <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:142194;1142:5662" data-name="icon-wrapper-2025">
-                        <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2531:142194;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
-                          <div className="absolute inset-[15.63%_9.38%]" data-node-id="I3:8110;1915:17082;2541:159862;2531:142194;1142:5662;732:109621;288:35266" data-name="Vector">
-                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector4} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2550:141782" data-name="Button">
-                      <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2550:141782;1142:5662" data-name="icon-wrapper-2025">
-                        <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2550:141782;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
-                          <div className="absolute inset-[18.75%_9.38%_15.63%_9.38%]" data-node-id="I3:8110;1915:17082;2541:159862;2550:141782;1142:5662;732:109621;288:68902" data-name="Vector">
-                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector5} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:146139" data-name="Button">
-                      <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:146139;1142:5662" data-name="icon-wrapper-2025">
-                        <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2531:146139;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
-                          <div className="absolute inset-[15.72%_6.26%_15.64%_9.37%]" data-node-id="I3:8110;1915:17082;2541:159862;2531:146139;1142:5662;732:109621;288:48327" data-name="Vector">
-                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector6} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:150674" data-name="Button">
-                      <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:150674;1142:5662" data-name="icon-wrapper-2025">
-                        <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2531:150674;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
-                          <div className="absolute inset-[12.5%]" data-node-id="I3:8110;1915:17082;2541:159862;2531:150674;1142:5662;732:109621;1100:45119" data-name="Vector">
-                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector7} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:153645" data-name="Button">
-                      <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:153645;1142:5662" data-name="icon-wrapper-2025">
-                        <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2531:153645;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
-                          <div className="absolute inset-[6.25%_18.75%_3.13%_18.75%]" data-node-id="I3:8110;1915:17082;2541:159862;2531:153645;1142:5662;732:109621;288:35539" data-name="Vector">
-                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector8} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="content-stretch flex flex-[1_0_0] gap-[15px] items-start min-h-[90px] relative w-full" data-node-id="I3:8110;1915:17082;1200:13427" data-name="Input">
+                  {/* Input row — text only, takes the available space at top. */}
+                  <div className="content-stretch flex flex-[1_0_0] items-start min-h-[90px] relative w-full" data-node-id="I3:8110;1915:17082;1200:13427" data-name="Input">
                     <div className="content-stretch flex flex-[1_0_0] h-full items-start min-w-px relative" data-node-id="I3:8110;1915:17082;1200:13427;823:19078" data-name="text area">
                       <div className="bg-[#006dff] h-[23px] mr-[-1px] relative shrink-0 w-[2px]" data-node-id="I3:8110;1915:17082;1200:13427;823:19035" data-name="focus" />
                       <p className="[word-break:break-word] font-['SF_Pro',-apple-system,'BlinkMacSystemFont','Helvetica_Neue',sans-serif] font-[400] leading-[22.4px] relative shrink-0 text-[#8d8d8d] text-[16px] whitespace-nowrap" data-node-id="I3:8110;1915:17082;1200:13427;823:19036" style={{ fontVariationSettings: "'wdth' 100" }}>
                         Type a message
                       </p>
                     </div>
-                    <div className="content-stretch flex h-full items-end relative shrink-0" data-node-id="I3:8110;1915:17082;1200:13427;841:20429" data-name="sent button">
+                  </div>
+                  {/* Bottom row — feature icons (left), Send button (right). */}
+                  <div className="content-stretch flex h-[24px] items-center justify-between relative shrink-0 w-full">
+                    <div className="content-stretch flex gap-[24px] items-center relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862" data-name="Feature">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;1061:101295" data-name="Avatar">
+                        <div className="absolute bg-[#cce4ff] inset-0 rounded-[499.5px]" data-node-id="I3:8110;1915:17082;2541:159862;1061:101295;1956:65298" data-name="Tanka Service">
+                          <div className="absolute inset-[14.91%_14.21%]" data-node-id="I3:8110;1915:17082;2541:159862;1061:101295;1956:65298;44:55826" data-name="Union">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgUnion1} />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:142194" data-name="Button">
+                        <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:142194;1142:5662" data-name="icon-wrapper-2025">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2531:142194;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
+                            <div className="absolute inset-[15.63%_9.38%]" data-node-id="I3:8110;1915:17082;2541:159862;2531:142194;1142:5662;732:109621;288:35266" data-name="Vector">
+                              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector4} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2550:141782" data-name="Button">
+                        <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2550:141782;1142:5662" data-name="icon-wrapper-2025">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2550:141782;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
+                            <div className="absolute inset-[18.75%_9.38%_15.63%_9.38%]" data-node-id="I3:8110;1915:17082;2541:159862;2550:141782;1142:5662;732:109621;288:68902" data-name="Vector">
+                              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector5} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:146139" data-name="Button">
+                        <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:146139;1142:5662" data-name="icon-wrapper-2025">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2531:146139;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
+                            <div className="absolute inset-[15.72%_6.26%_15.64%_9.37%]" data-node-id="I3:8110;1915:17082;2541:159862;2531:146139;1142:5662;732:109621;288:48327" data-name="Vector">
+                              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector6} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:150674" data-name="Button">
+                        <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:150674;1142:5662" data-name="icon-wrapper-2025">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2531:150674;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
+                            <div className="absolute inset-[12.5%]" data-node-id="I3:8110;1915:17082;2541:159862;2531:150674;1142:5662;732:109621;1100:45119" data-name="Vector">
+                              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector7} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-[#fdfefe] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[3px] relative rounded-[6px] shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:153645" data-name="Button">
+                        <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;2541:159862;2531:153645;1142:5662" data-name="icon-wrapper-2025">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I3:8110;1915:17082;2541:159862;2531:153645;1142:5662;732:109621" data-name="Format=Outline, Weight=Regular">
+                            <div className="absolute inset-[6.25%_18.75%_3.13%_18.75%]" data-node-id="I3:8110;1915:17082;2541:159862;2531:153645;1142:5662;732:109621;288:35539" data-name="Vector">
+                              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector8} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="content-stretch flex items-center relative shrink-0" data-node-id="I3:8110;1915:17082;1200:13427;841:20429" data-name="sent button">
                       <div className="content-stretch flex items-start relative shrink-0" data-node-id="I3:8110;1915:17082;1200:13427;2045:78184" data-name="Send">
                         <div className="bg-[#f5f5f5] content-stretch flex gap-[4px] items-center justify-center overflow-clip p-[6px] relative rounded-[999px] shrink-0" data-node-id="I3:8110;1915:17082;1200:13427;2045:78184;2045:77257" data-name="Button">
                           <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0" data-node-id="I3:8110;1915:17082;1200:13427;2045:78184;2045:77257;1142:5656" data-name="icon-wrapper-2025">
