@@ -899,7 +899,6 @@ function WorkspaceMenuButton() {
 function CollapsedCreateButton() {
   const btnRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const [modal, setModal] = useState<PlusModalKind | null>(null);
@@ -922,7 +921,6 @@ function CollapsedCreateButton() {
   }
 
   const items: Array<{ label: string; onSelect: () => void }> = [
-    { label: "New Chat", onSelect: () => router.push("/chat") },
     { label: "New Memo", onSelect: () => setModal("memo") },
     { label: "New Follow-up", onSelect: () => setModal("follow-up") },
     { label: "New Vote", onSelect: () => setModal("vote") },
