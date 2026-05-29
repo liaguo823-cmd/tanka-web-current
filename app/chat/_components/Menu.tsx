@@ -112,7 +112,6 @@ type PinnedItem = {
 
 const PINNED: PinnedItem[] = [
   { shortName: "设计资料总结 Copy", fullName: "设计资料总结 Copy-memo" },
-  { shortName: "Tanka 设计-2026", fullName: "Tanka 设计-2026-memo" },
 ];
 
 const APPS_NAV: NavItem[] = [
