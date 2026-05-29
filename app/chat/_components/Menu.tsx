@@ -294,13 +294,7 @@ export default function Menu() {
                 }`}
               >
                 <WorkspaceLogo workspace={activeWorkspace} />
-                <p
-                  className={`${FONT_SF_PRO} font-[600] leading-[25.2px] text-[#020617] text-[18px] whitespace-nowrap truncate min-w-0`}
-                  style={{ fontVariationSettings: "'wdth' 100" }}
-                  title={activeWorkspace.name}
-                >
-                  {activeWorkspace.name}
-                </p>
+                <WorkspaceNameTitle name={activeWorkspace.name} />
                 <WorkspaceMenuButton />
               </div>
             </div>
@@ -1128,6 +1122,56 @@ function UserMenuPopup({
   );
 }
 
+/** Workspace name in the Menu header. Truncates with ellipsis, and
+ *  on hover shows a portal tooltip with the full name — only when
+ *  the text is actually truncated (so short names like "Tanka" don't
+ *  get an unnecessary tooltip). Uses a portal so the tooltip isn't
+ *  clipped by the Menu's `overflow-hidden`. */
+function WorkspaceNameTitle({ name }: { name: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
+
+  function show() {
+    const el = ref.current;
+    if (!el) return;
+    // Only show the tooltip if the text overflows its container.
+    if (el.scrollWidth <= el.clientWidth + 1) return;
+    const r = el.getBoundingClientRect();
+    setPos({ top: r.bottom + 6, left: r.left });
+  }
+  function hide() {
+    setPos(null);
+  }
+
+  return (
+    <>
+      <p
+        ref={ref}
+        className={`${FONT_SF_PRO} font-[600] leading-[25.2px] text-[#020617] text-[18px] whitespace-nowrap truncate min-w-0`}
+        style={{ fontVariationSettings: "'wdth' 100" }}
+        onMouseEnter={show}
+        onMouseLeave={hide}
+        onFocus={show}
+        onBlur={hide}
+        tabIndex={0}
+      >
+        {name}
+      </p>
+      {pos && typeof window !== "undefined" &&
+        createPortal(
+          <div
+            role="tooltip"
+            className="fixed z-[100] max-w-[260px] whitespace-normal break-words rounded-md bg-[#020617] text-white text-[12px] font-medium px-2 py-1 pointer-events-none shadow-[0_2px_8px_rgba(15,41,77,0.15)]"
+            style={{ top: pos.top, left: pos.left }}
+          >
+            {name}
+          </div>,
+          document.body,
+        )}
+    </>
+  );
+}
+
 /** Renders the small 32×32 logo for the active workspace in the menu
  *  header. Different workspace identities get different visuals. */
 function WorkspaceLogo({ workspace }: { workspace: Workspace }) {
@@ -1157,7 +1201,7 @@ function WorkspaceLogo({ workspace }: { workspace: Workspace }) {
           className="text-white font-[600] leading-none"
           style={{ fontSize: 14 }}
         >
-          深
+          B
         </span>
       </div>
     );

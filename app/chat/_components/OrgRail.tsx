@@ -140,7 +140,7 @@ function WorkspaceTile({
             className="text-white font-[600] leading-none"
             style={{ fontSize: 14 }}
           >
-            深
+            B
           </span>
         )}
       </button>
