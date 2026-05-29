@@ -271,38 +271,49 @@ export default function Menu() {
               />
             </div>
           ) : (
-            <div className="group/header flex items-center px-[14px] w-full relative">
-              {/* `«` button — absolute positioned at the left so the
-                  Tanka logo+name underneath stays aligned with the
-                  menu icons (Flow / Chat / Link) when the button is
-                  hidden. Becomes visible on hover; the Tanka content
-                  then shifts right via the translate-x below. */}
-              {collapsed && (
-                <button
-                  type="button"
-                  onClick={toggle}
-                  aria-label="Expand workspace bar"
-                  className="absolute left-[14px] top-1/2 -translate-y-1/2 opacity-0 group-hover/header:opacity-100 transition-opacity w-[28px] h-[28px] flex items-center justify-center rounded-md text-[#455871] hover:text-[#020617] hover:bg-[#E3E8F2]"
+            <div className="flex items-center px-[14px] w-full relative gap-[8px]">
+              {/* Left side — workspace logo + name. When the OrgRail
+                  is collapsed, hovering THIS area reveals the « toggle
+                  and pushes the logo+name right by 36px. Chevron sits
+                  in a sibling div so hovering it doesn't trigger the
+                  indent. */}
+              <div className="peer group/leftside relative flex items-center gap-[8px] flex-1 min-w-0">
+                {collapsed && (
+                  <button
+                    type="button"
+                    onClick={toggle}
+                    aria-label="Expand workspace bar"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover/leftside:opacity-100 transition-opacity w-[28px] h-[28px] flex items-center justify-center rounded-md text-[#455871] hover:text-[#020617] hover:bg-[#E3E8F2]"
+                  >
+                    <ChevronsLeft
+                      size={18}
+                      strokeWidth={1.8}
+                      style={{ transform: "rotate(180deg)" }}
+                    />
+                  </button>
+                )}
+                <div
+                  className={`flex items-center gap-[8px] min-w-0 flex-1 transition-transform duration-200 ease-out ${
+                    collapsed ? "group-hover/leftside:translate-x-[36px]" : ""
+                  }`}
                 >
-                  <ChevronsLeft
-                    size={18}
-                    strokeWidth={1.8}
-                    style={{ transform: "rotate(180deg)" }}
-                  />
-                </button>
-              )}
+                  <WorkspaceLogo workspace={activeWorkspace} />
+                  <WorkspaceNameTitle name={activeWorkspace.name} />
+                </div>
+              </div>
+              {/* Chevron-dropdown trigger. Always visible in the
+                  default state, but fades out while the user is
+                  hovering the leftside (so it doesn't overflow the
+                  column when content shifts right by 36px). Hovering
+                  the chevron itself keeps it visible. */}
               <div
-                className={`flex items-center gap-[8px] min-w-0 flex-1 transition-transform duration-200 ease-out ${
-                  collapsed ? "group-hover/header:translate-x-[36px]" : ""
+                className={`shrink-0 transition-opacity ${
+                  collapsed
+                    ? "peer-hover:opacity-0 peer-hover:pointer-events-none"
+                    : ""
                 }`}
               >
-                <WorkspaceLogo workspace={activeWorkspace} />
-                <WorkspaceNameTitle name={activeWorkspace.name} />
-                {/* Hide the chevron-dropdown when the OrgRail is
-                    collapsed — the « toggle on the left already
-                    pushes everything right, and an extra chevron on
-                    the far right pokes out of the column. */}
-                {!collapsed && <WorkspaceMenuButton />}
+                <WorkspaceMenuButton />
               </div>
             </div>
           )}
