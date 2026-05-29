@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Search, ChevronRight } from "lucide-react";
 import OrgRail from "../chat/_components/OrgRail";
 import Menu from "../chat/_components/Menu";
+import { asset } from "../_lib/asset";
 
 
 const FONT =
@@ -23,16 +24,16 @@ type LinkedTool = {
 };
 
 const LINKED_TOOLS: LinkedTool[] = [
-  { name: "AI Work Memory", account: "Claude Code、Codex", icon: "/figma/link-open-ai.svg" },
-  { name: "AI Work Memory", account: "Claude Code、Codex", icon: "/figma/link-open-ai.svg" },
-  { name: "AI Work Memory", account: "Claude Code、Codex", icon: "/figma/link-open-ai.svg" },
-  { name: "AI Work Memory", account: "Claude Code、Codex", icon: "/figma/link-open-ai.svg" },
-  { name: "Outlook", account: "tankatest@tanka.ai", icon: "/figma/link-outlook.svg", badgeIcon: "envelope" },
-  { name: "ChatGPT", account: "tankatest@tanka.ai", icon: "/figma/link-open-ai.svg", badgeIcon: "chat" },
-  { name: "Zoom", account: "tankatest@tanka.ai", icon: "/figma/link-mask-group.svg", badgeIcon: "doc" },
-  { name: "Google Calendar", account: "tankatest@tanka.ai,test_0111...", icon: "/figma/link-gcalendar.svg", badgeIcon: "calendar" },
-  { name: "Google Sheets", account: "tankatest@tanka.ai", icon: "/figma/link-sheets.svg" },
-  { name: "Google Slides", account: "tankatest@tanka.ai", icon: "/figma/link-slides.svg" },
+  { name: "AI Work Memory", account: "Claude Code、Codex", icon: asset("/figma/link-open-ai.svg") },
+  { name: "AI Work Memory", account: "Claude Code、Codex", icon: asset("/figma/link-open-ai.svg") },
+  { name: "AI Work Memory", account: "Claude Code、Codex", icon: asset("/figma/link-open-ai.svg") },
+  { name: "AI Work Memory", account: "Claude Code、Codex", icon: asset("/figma/link-open-ai.svg") },
+  { name: "Outlook", account: "tankatest@tanka.ai", icon: asset("/figma/link-outlook.svg"), badgeIcon: "envelope" },
+  { name: "ChatGPT", account: "tankatest@tanka.ai", icon: asset("/figma/link-open-ai.svg"), badgeIcon: "chat" },
+  { name: "Zoom", account: "tankatest@tanka.ai", icon: asset("/figma/link-mask-group.svg"), badgeIcon: "doc" },
+  { name: "Google Calendar", account: "tankatest@tanka.ai,test_0111...", icon: asset("/figma/link-gcalendar.svg"), badgeIcon: "calendar" },
+  { name: "Google Sheets", account: "tankatest@tanka.ai", icon: asset("/figma/link-sheets.svg") },
+  { name: "Google Slides", account: "tankatest@tanka.ai", icon: asset("/figma/link-slides.svg") },
 ];
 
 type Integration = {
@@ -42,16 +43,16 @@ type Integration = {
 };
 
 const INTEGRATIONS: Integration[] = [
-  { name: "Google Calendar", icon: "/figma/link-gcalendar.svg", status: "Linked" },
-  { name: "Outlook Calendar", icon: "/figma/link-calendar.svg", status: "Unlinked" },
-  { name: "OneDrive", icon: "/figma/link-onedrive11.svg", status: "Unlinked" },
-  { name: "Outlook", icon: "/figma/link-outlook.svg", status: "Unlinked" },
-  { name: "Notion", icon: "/figma/link-memo.svg", status: "Linked" },
-  { name: "Google Drive", icon: "/figma/link-gdrive.svg", status: "Unlinked" },
-  { name: "Google Sheets", icon: "/figma/link-sheets.svg", status: "Linked" },
-  { name: "Google Docs", icon: "/figma/link-docs.svg", status: "Unlinked" },
-  { name: "Google Slides", icon: "/figma/link-slides.svg", status: "Linked" },
-  { name: "Zoom", icon: "/figma/link-mask-group.svg", status: "Linked" },
+  { name: "Google Calendar", icon: asset("/figma/link-gcalendar.svg"), status: "Linked" },
+  { name: "Outlook Calendar", icon: asset("/figma/link-calendar.svg"), status: "Unlinked" },
+  { name: "OneDrive", icon: asset("/figma/link-onedrive11.svg"), status: "Unlinked" },
+  { name: "Outlook", icon: asset("/figma/link-outlook.svg"), status: "Unlinked" },
+  { name: "Notion", icon: asset("/figma/link-memo.svg"), status: "Linked" },
+  { name: "Google Drive", icon: asset("/figma/link-gdrive.svg"), status: "Unlinked" },
+  { name: "Google Sheets", icon: asset("/figma/link-sheets.svg"), status: "Linked" },
+  { name: "Google Docs", icon: asset("/figma/link-docs.svg"), status: "Unlinked" },
+  { name: "Google Slides", icon: asset("/figma/link-slides.svg"), status: "Linked" },
+  { name: "Zoom", icon: asset("/figma/link-mask-group.svg"), status: "Linked" },
 ];
 
 const TAB_CATEGORIES = [
