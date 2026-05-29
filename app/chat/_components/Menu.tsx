@@ -1259,9 +1259,9 @@ function UserMenuPopup({
         </Link>
         <button
           type="button"
-          className="w-full px-5 py-2.5 flex items-center gap-3 text-[14px] text-[#020617] hover:bg-[#f7f8fc] transition-colors"
+          className="w-full px-5 py-2.5 flex items-center gap-3 text-[14px] text-[#ef4444] hover:bg-[#fef2f2] transition-colors"
         >
-          <LogOut size={18} strokeWidth={1.6} className="text-[#455871]" />
+          <LogOut size={18} strokeWidth={1.6} className="text-[#ef4444]" />
           Log out
         </button>
       </div>
