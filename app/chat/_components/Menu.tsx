@@ -271,13 +271,15 @@ export default function Menu() {
               />
             </div>
           ) : (
-            <div className="flex items-center px-[14px] w-full relative gap-[8px]">
-              {/* Left side — workspace logo + name. When the OrgRail
-                  is collapsed, hovering THIS area reveals the « toggle
-                  and pushes the logo+name right by 36px. Chevron sits
-                  in a sibling div so hovering it doesn't trigger the
-                  indent. */}
-              <div className="peer group/leftside relative flex items-center gap-[8px] flex-1 min-w-0">
+            <div className="flex items-center px-[14px] w-full relative gap-[6px] min-w-0">
+              {/* Left side — workspace logo + name. Sized to content
+                  so the chevron-dropdown sits right next to the name
+                  (instead of pushed to the far right by flex-1). When
+                  the OrgRail is collapsed, hovering THIS area reveals
+                  the « toggle and pushes the logo+name right by 36px.
+                  Chevron is a sibling so hovering it doesn't trigger
+                  the indent. */}
+              <div className="peer group/leftside relative flex items-center gap-[8px] min-w-0">
                 {collapsed && (
                   <button
                     type="button"
@@ -293,7 +295,7 @@ export default function Menu() {
                   </button>
                 )}
                 <div
-                  className={`flex items-center gap-[8px] min-w-0 flex-1 transition-transform duration-200 ease-out ${
+                  className={`flex items-center gap-[8px] min-w-0 transition-transform duration-200 ease-out ${
                     collapsed ? "group-hover/leftside:translate-x-[36px]" : ""
                   }`}
                 >
@@ -301,10 +303,9 @@ export default function Menu() {
                   <WorkspaceNameTitle name={activeWorkspace.name} />
                 </div>
               </div>
-              {/* Chevron-dropdown trigger. Always visible in the
-                  default state, but fades out while the user is
-                  hovering the leftside (so it doesn't overflow the
-                  column when content shifts right by 36px). Hovering
+              {/* Chevron-dropdown trigger sits right next to the name.
+                  Fades out while the user is hovering the leftside (so
+                  it doesn't crowd the indented « row), but hovering
                   the chevron itself keeps it visible. */}
               <div
                 className={`shrink-0 transition-opacity ${
